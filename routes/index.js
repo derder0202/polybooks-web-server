@@ -1,9 +1,15 @@
 var express = require('express');
+const {User} = require("../api_src/model/model");
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/',  async function(req, res, next) {
+  const users = await User.find()
+  res.render('index', {
+    title: 'hasifhasifh',
+     test:"abc" ,
+    // users: users
+  });
 });
 
 module.exports = router;

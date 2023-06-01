@@ -1,18 +1,48 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors')
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const admin = require("firebase-admin");
 
-var app = express();
+const serviceAccount = require("./credentials.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: "gs://polybooks-52282.appspot.com",
+});
+
+
+//connect mongoose
+mongoose.connect('mongodb+srv://polybooks:fptpolytechnic@polybooks.uxgwq74.mongodb.net/').then(()=>{
+  console.log("mongodb connected")
+})
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+
+const apiUserRouter = require('./api_src/route/user')
+const apiPostRouter = require('./api_src/route/post')
+const apiAuthorRouter = require('./api_src/route/author')
+const apiPublisherRouter = require('./api_src/route/pulisher')
+const apiReviewRouter = require('./api_src/route/review')
+const apiShopRouter = require('./api_src/route/shop')
+
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -21,6 +51,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+//API
+app.use('/api/users',apiUserRouter)
+app.use('/api/posts',apiPostRouter)
+app.use('/api/authors',apiAuthorRouter)
+app.use('/api/publishers',apiPublisherRouter)
+app.use('/api/reviews',apiReviewRouter)
+app.use('/api/shops',apiShopRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
