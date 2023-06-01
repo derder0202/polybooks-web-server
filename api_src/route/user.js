@@ -19,6 +19,10 @@ router.put('/:id', userController.updateUser);
 // DELETE /users/:id
 router.delete('/:id', userController.deleteUser);
 
+//add to favorite
+router.post('/:id/addToFavorite', userController.addToFavorite);
+router.post('/:id/removeFromFavorite', userController.removeFromFavorite);
+
 //const multer = require('multer')
 // const upload = multer({
 //     storage: multer.memoryStorage(),

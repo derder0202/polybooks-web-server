@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
+
+//change
 const UserSchema = new mongoose.Schema({
     uid: { type: String, unique: true, required: true ,immutable:true},
     fullName: { type: String, required: true },
-    phone: { type: String, required: true },
-    address: { type: String, required: true },
-    bio: { type: String },
+    phone: { type: String },
+    address: { type: String },
+    //bio: { type: String },
     avatar: { type: String },
-    gender: { type: String, enum: ['male', 'female', 'other'] , default: 'male'},
+    gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
     birthday: { type: Date },
-    cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
+    favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     role: { type: String, enum: ['manual', 'vip', 'admin'], default: 'manual' },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
@@ -38,18 +41,27 @@ const CategorySchema = new mongoose.Schema({
 // });
 const AuthorSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    birthday: { type: Date },
-    description: { type: String },
+    //birthday: { type: Date },
+    //description: { type: String },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
+
+//change
 const ShopSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    address: { type: String, required: true },
-    phone: { type: String, required: true },
+    name: { type: String, required: true },
+    rating: { type: Number},
+    description: { type: String, },
+    image: { type: String,},
+    address: { type: String, },
+    phone: { type: String,},
    // createAt: { type: Date, default: Date.now },
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-    taxCode: { type: String }
+   // taxCode: { type: String }
 }, {timestamps: true});
+
+//change
 const PostSchema = new mongoose.Schema({
     bookName: { type: String, required: true },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -60,10 +72,19 @@ const PostSchema = new mongoose.Schema({
     bookStatus: { type: String },
     bookSize: { type: String },
     language: { type: String },
+    startTime:{type:Date},
+    endTime:{type:Date},
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     publisher: { type: mongoose.Schema.Types.ObjectId, ref: 'Publisher' },
     totalPage: { type: Number },
+    address: {type:String},
+    isbn: {type:String},
+    postStatus: {type:String},
+    shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
+    startPrice: {type:String},
+    endPrice: {type:String},
+    salesType:{type:Number,default:0},
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
    // createAt: { type: Date, default: Date.now },
 }, {timestamps: true});

@@ -184,29 +184,110 @@ const postController = {
 
     updatePost: async (req, res) => {
         try {
-            const { bookName, postTitle, description, price, images, bookStatus, bookSize, language, category, publisher, totalPage,seller } = req.body;
-            const post = await Post.findById(req.params.id);
-            if (post) {
-                if (req.user._id.equals(post.seller)) {
-                    post.bookName = bookName;
-                    post.postTitle = postTitle;
-                    post.description = description;
-                    post.price = price;
-                    post.images = images;
-                    post.bookStatus = bookStatus;
-                    post.bookSize = bookSize;
-                    post.language = language;
-                    post.category = category;
-                    post.publisher = publisher;
-                    post.totalPage = totalPage;
-                    const updatedPost = await post.save();
-                    res.status(200).json(updatedPost);
-                } else {
-                    res.status(401).json({ message: 'You are not authorized to update this post' });
+            //const { bookName, postTitle, description, price, images, bookStatus, bookSize, language, category, publisher, totalPage,seller } = req.body;
+            let post = await Post.findById(req.params.id);
+            const bucket = admin.storage().bucket();
+            await bucket.deleteFiles({
+                prefix: "posts/"+post._id,
+            });
+
+            upload(req, res, async function (err) {
+                if (err instanceof multer.MulterError) {
+                    // A Multer error occurred when uploading.
+                } else if (err) {
+                    // An unknown error occurred when uploading.
                 }
-            } else {
-                res.status(404).json({ message: 'Post not found' });
-            }
+                const files = req.files;
+                if(files){
+                    const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller} = req.body;
+                    //const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller });
+                    //const bucket = admin.storage().bucket()
+                    const uploadPromises = files.map((file,index) => {
+                        const options = {
+                            //destination: `posts/${post._id}/${file.originalname}`, // set the destination path in the bucket
+                            destination: `posts/${post._id}/${index}`,
+                            metadata: {
+                                contentType: 'image/jpeg', // set the MIME type of the file
+                            },
+                        };
+                        const blob = bucket.file(options.destination); // create a reference to the file in the bucket
+                        const blobStream = blob.createWriteStream(options); // create a write stream to upload the file
+                        blobStream.end(file.buffer); // write the buffer to the stream
+                        return new Promise( (resolve, reject) => {
+                            blobStream.on('finish', async() => {
+                                await blob.makePublic();
+                                const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`; // get the public URL of the uploaded file
+                                resolve(publicUrl);
+                            });
+                            blobStream.on('error', reject);
+                        });
+                    });
+                    post.images = await Promise.all(uploadPromises)
+                    //console.log(results); // log the public URLs of the uploaded files
+                    //const seller = req.user._id;
+                    // if(seller){
+                    //     await User.findByIdAndUpdate(seller,{$push:{posts: post._id}})
+                    // }
+                    if(authorName){
+                        const authorTemp = await Author.findOne({name:authorName})
+                        if(authorTemp){
+                            post.author = authorTemp._id
+                            await authorTemp.updateOne({$push:{posts: post._id}})
+                        } else {
+                            const newAuthor = new Author({name:authorName})
+                            newAuthor.posts = [post._id]
+                            await  newAuthor.save()
+                            post.author = newAuthor._id
+                        }
+                    }
+                    if(publisherName){
+                        const publisherTemp = await Publisher.findOne({name:publisherName})
+                        if(publisherTemp){
+                            post.publisher = publisherTemp._id
+                            await publisherTemp.updateOne({$push:{posts: post._id}})
+                        } else {
+                            const newPublisher = new  Publisher({name:publisherName})
+                            newPublisher.posts = [post._id]
+                            newPublisher.save()
+                            post.publisher = newPublisher._id
+                        }
+                    }
+                    //post.addAll(req.body)
+                    Object.assign(post, req.body)
+                    await post.save()
+                    //const updatePost = await post.updateOne(req.body,{new:true})
+                    //const savedPost = await post.save();
+                    res.status(200).json({message: "post updated"});
+                } else {
+                    await post.updateOne(req.body)
+                    res.status(200).json({message: "post updated"});
+                }
+
+                // Everything went fine.
+
+            })
+
+            // if (post) {
+            //     if (req.user._id.equals(post.seller)) {
+            //         post.bookName = bookName;
+            //         post.postTitle = postTitle;
+            //         post.description = description;
+            //         post.price = price;
+            //         post.images = images;
+            //         post.bookStatus = bookStatus;
+            //         post.bookSize = bookSize;
+            //         post.language = language;
+            //         post.category = category;
+            //         post.publisher = publisher;
+            //         post.totalPage = totalPage;
+            //         const updatedPost = await post.save();
+            //         res.status(200).json(updatedPost);
+            //     } else {
+            //         res.status(401).json({ message: 'You are not authorized to update this post' });
+            //     }
+            // } else {
+            //     res.status(404).json({ message: 'Post not found' });
+            // }
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
