@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
 }, {timestamps: true});
 const CategorySchema = new mongoose.Schema({
     name: { type: String, required: true },
+    image:{type:String,require:true},
     description: { type: String },
    // createAt: { type: Date, default: Date.now },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]

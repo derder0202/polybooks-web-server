@@ -7,7 +7,7 @@ const userController = require('../controller/user_controller');
 const {getAuth} = require("firebase-admin/auth");
 const admin = require("firebase-admin");
 
-const authMiddleware = require("../auth/authMiddleware");
+const authMiddleware = require("../middleware/authMiddleware");
 // GET /users
 router.post('/filter', userController.getUsers);
 // GET /users/:id

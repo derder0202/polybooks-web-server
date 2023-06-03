@@ -1,6 +1,4 @@
 const {Author} = require("../model/model");
-
-
 const authorController = {
   // Get all authors
     getAllAuthors: async (req, res) => {

@@ -1,4 +1,4 @@
-const {Category, Publisher, User, Post, Author} = require("../model/model");
+const {Category, Publisher, User, Post, Author, Shop} = require("../model/model");
 const multer = require("multer");
 const admin = require("firebase-admin");
 
@@ -111,8 +111,8 @@ const postController = {
                 }
                 const files = req.files;
                 if(files){
-                    const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller} = req.body;
-                    const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller });
+                    const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller,shopId} = req.body;
+                    const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller,shopId });
                     const bucket = admin.storage().bucket()
                     const uploadPromises = files.map((file,index) => {
                         const options = {
@@ -140,11 +140,16 @@ const postController = {
                     if(seller){
                         await User.findByIdAndUpdate(seller,{$push:{posts: post._id}})
                     }
+                    if(seller){
+                        await Shop.findByIdAndUpdate(shopId,{$push:{posts: post._id}})
+                    }
                     if(authorName){
                         const authorTemp = await Author.findOne({name:authorName})
                         if(authorTemp){
                             post.author = authorTemp._id
-                            await authorTemp.updateOne({$push:{posts: post._id}})
+                            if(!authorTemp.posts.includes(post._id)){
+                                await authorTemp.updateOne({$push:{posts: post._id}})
+                            }
                         } else {
                             const newAuthor = new Author({name:authorName})
                             newAuthor.posts = [post._id]
@@ -152,11 +157,22 @@ const postController = {
                             post.author = newAuthor._id
                         }
                     }
+                    if(category){
+                        const categoryTemp = await  Category.findById(category)
+                        if(categoryTemp){
+                            if(!categoryTemp.posts.includes(post._id) ){
+                                await categoryTemp.updateOne({$push:{posts: post._id}})
+                            }
+                        }
+
+                    }
                     if(publisherName){
                         const publisherTemp = await Publisher.findOne({name:publisherName})
                         if(publisherTemp){
                             post.publisher = publisherTemp._id
-                            await publisherTemp.updateOne({$push:{posts: post._id}})
+                            if(!publisherTemp.posts.includes(post._id)){
+                                await publisherTemp.updateOne({$push:{posts: post._id}})
+                            }
                         } else {
                             const newPublisher = new  Publisher({name:publisherName})
                             newPublisher.posts = [post._id]
@@ -186,11 +202,45 @@ const postController = {
         try {
             //const { bookName, postTitle, description, price, images, bookStatus, bookSize, language, category, publisher, totalPage,seller } = req.body;
             let post = await Post.findById(req.params.id);
+            const {category, authorName,  publisherName} = req.body;
             const bucket = admin.storage().bucket();
             await bucket.deleteFiles({
                 prefix: "posts/"+post._id,
             });
-
+            if(authorName){
+                const authorTemp = await Author.findOne({name:authorName})
+                if(authorTemp){
+                    post.author = authorTemp._id
+                    if(!authorTemp.posts.includes(post._id)){
+                        await authorTemp.updateOne({$push:{posts: post._id}})
+                    }
+                } else {
+                    const newAuthor = new Author({name:authorName})
+                    newAuthor.posts = [post._id]
+                    await  newAuthor.save()
+                    post.author = newAuthor._id
+                }
+            }
+            if(category){
+                const categoryTemp = await  Category.findById(category)
+                if(!categoryTemp.posts.includes(post._id)){
+                    await categoryTemp.updateOne({$push:{posts: post._id}})
+                }
+            }
+            if(publisherName){
+                const publisherTemp = await Publisher.findOne({name:publisherName})
+                if(publisherTemp){
+                    post.publisher = publisherTemp._id
+                    if(!publisherTemp.posts.includes(post._id)){
+                        await publisherTemp.updateOne({$push:{posts: post._id}})
+                    }
+                } else {
+                    const newPublisher = new  Publisher({name:publisherName})
+                    newPublisher.posts = [post._id]
+                    newPublisher.save()
+                    post.publisher = newPublisher._id
+                }
+            }
             upload(req, res, async function (err) {
                 if (err instanceof multer.MulterError) {
                     // A Multer error occurred when uploading.
@@ -199,7 +249,6 @@ const postController = {
                 }
                 const files = req.files;
                 if(files){
-                    const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller} = req.body;
                     //const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller });
                     //const bucket = admin.storage().bucket()
                     const uploadPromises = files.map((file,index) => {
@@ -223,35 +272,7 @@ const postController = {
                         });
                     });
                     post.images = await Promise.all(uploadPromises)
-                    //console.log(results); // log the public URLs of the uploaded files
-                    //const seller = req.user._id;
-                    // if(seller){
-                    //     await User.findByIdAndUpdate(seller,{$push:{posts: post._id}})
-                    // }
-                    if(authorName){
-                        const authorTemp = await Author.findOne({name:authorName})
-                        if(authorTemp){
-                            post.author = authorTemp._id
-                            await authorTemp.updateOne({$push:{posts: post._id}})
-                        } else {
-                            const newAuthor = new Author({name:authorName})
-                            newAuthor.posts = [post._id]
-                            await  newAuthor.save()
-                            post.author = newAuthor._id
-                        }
-                    }
-                    if(publisherName){
-                        const publisherTemp = await Publisher.findOne({name:publisherName})
-                        if(publisherTemp){
-                            post.publisher = publisherTemp._id
-                            await publisherTemp.updateOne({$push:{posts: post._id}})
-                        } else {
-                            const newPublisher = new  Publisher({name:publisherName})
-                            newPublisher.posts = [post._id]
-                            newPublisher.save()
-                            post.publisher = newPublisher._id
-                        }
-                    }
+
                     //post.addAll(req.body)
                     Object.assign(post, req.body)
                     await post.save()
@@ -259,35 +280,15 @@ const postController = {
                     //const savedPost = await post.save();
                     res.status(200).json({message: "post updated"});
                 } else {
-                    await post.updateOne(req.body)
+                    console.log("day roi")
+                    Object.assign(post, req.body)
+                    await post.save()
                     res.status(200).json({message: "post updated"});
                 }
 
                 // Everything went fine.
 
             })
-
-            // if (post) {
-            //     if (req.user._id.equals(post.seller)) {
-            //         post.bookName = bookName;
-            //         post.postTitle = postTitle;
-            //         post.description = description;
-            //         post.price = price;
-            //         post.images = images;
-            //         post.bookStatus = bookStatus;
-            //         post.bookSize = bookSize;
-            //         post.language = language;
-            //         post.category = category;
-            //         post.publisher = publisher;
-            //         post.totalPage = totalPage;
-            //         const updatedPost = await post.save();
-            //         res.status(200).json(updatedPost);
-            //     } else {
-            //         res.status(401).json({ message: 'You are not authorized to update this post' });
-            //     }
-            // } else {
-            //     res.status(404).json({ message: 'Post not found' });
-            // }
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
@@ -311,7 +312,8 @@ const postController = {
                     prefix: "posts/"+post._id,
                 });
                 await post.deleteOne();
-                res.status(204).json({message: "post deleted"});
+
+                res.status(200).json({message: "post deleted"});
 
             } else {
                 res.status(404).json({ message: 'Post not found' });

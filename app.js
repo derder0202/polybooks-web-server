@@ -31,6 +31,7 @@ const apiAuthorRouter = require('./api_src/route/author')
 const apiPublisherRouter = require('./api_src/route/pulisher')
 const apiReviewRouter = require('./api_src/route/review')
 const apiShopRouter = require('./api_src/route/shop')
+const apiCategoryRouter = require('./api_src/route/category')
 
 
 const app = express();
@@ -59,6 +60,7 @@ app.use('/api/authors',apiAuthorRouter)
 app.use('/api/publishers',apiPublisherRouter)
 app.use('/api/reviews',apiReviewRouter)
 app.use('/api/shops',apiShopRouter)
+app.use('/api/categories',apiCategoryRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
