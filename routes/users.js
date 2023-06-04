@@ -1,9 +1,11 @@
 var express = require('express');
+const {User} = require("../api_src/model/model");
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/',async function(req, res, next) {
+  const users = await User.find()
+  res.render('test/table',{users})
 });
 
 module.exports = router;

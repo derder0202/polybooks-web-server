@@ -50,8 +50,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//Web Admin
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+
 
 //API
 app.use('/api/users',apiUserRouter)
