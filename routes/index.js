@@ -1,15 +1,15 @@
 var express = require('express');
-const {User} = require("../api_src/model/model");
+const {Post} = require("../api_src/model/model");
 var router = express.Router();
 
 /* GET home page. */
-router.get('/',  async function(req, res, next) {
-  const users = await User.find()
-  res.render('index', {
-    title: 'hasifhasifh',
-     users
-    // users: users
-  });
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+router.get('/tables', async function(req, res, next) {
+  const posts = await Post.find()
+
+  res.render('test/table',{posts} );
 });
 
 module.exports = router;
