@@ -7,7 +7,7 @@ router.get('/',  async function(req, res, next) {
   const users = await User.find()
   res.render('index', {
     title: 'hasifhasifh',
-     test:"abc" ,
+     users
     // users: users
   });
 });

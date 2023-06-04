@@ -126,6 +126,20 @@ const userController = {
         }
     },
 
+    checkPhoneNumber : async (req, res) => {
+        try {
+            console.log(req.body.phone)
+            const user = await  User.findOne({phone:req.body.phone})
+            if(user){
+                res.status(200).json(true)
+            } else {
+                res.status(200).json(false)
+            }
+        } catch (error) {
+            res.status(500).json({ message: 'Error deleting user', error })
+        }
+    },
+
     //disable account
     deleteUser : async (req, res) => {
         const { id } = req.params;
@@ -134,7 +148,7 @@ const userController = {
             await admin.auth().updateUser(user.uid,{
                 disabled:true
             })
-            res.status(204).json({
+            res.status(200).json({
                 message: `account with uid(${user.uid}) is disabled`
             })
         } catch (error) {
