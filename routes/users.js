@@ -8,4 +8,5 @@ router.get('/',async function(req, res, next) {
   res.render('test/table',{users})
 });
 
+
 module.exports = router;

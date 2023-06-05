@@ -4,8 +4,33 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('authentication/login-page');
 });
+
+router.get('/listUsers', function(req, res, next) {
+  res.render('users/listUsers');
+});
+router.get('/editUsers', function(req, res, next) {
+  res.render('users/editUsers');
+});
+router.get('/listPosts', function(req, res, next) {
+  res.render('posts/listPosts');
+});
+router.get('/account-info', function(req, res, next) {
+  res.render('account/account-info');
+});
+router.get('/login-page', function(req, res, next) {
+  res.render('authentication/login-page');
+});
+router.get('/register-page', function(req, res, next) {
+  res.render('authentication/register-page');
+});
+router.get('/forgot-password-page', function(req, res, next) {
+  res.render('authentication/forgot-password-page');
+});
+
+
+
 router.get('/tables', async function(req, res, next) {
   const posts = await Post.find()
 
