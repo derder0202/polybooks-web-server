@@ -29,8 +29,13 @@ const userController = {
     getUserById : async (req, res) => {
         const { id } = req.params;
         try {
-            const user = await User.findOne({uid: id});
-            res.status(200).json(user);
+            const user = await User.findById(id);
+            if(user){
+                res.status(200).json(user);
+            } else {
+                res.status(400).json({message: "user is not exists"})
+            }
+
         } catch (error) {
             res.status(500).json({ message: 'Error getting user', error });
         }
@@ -126,10 +131,30 @@ const userController = {
         }
     },
 
+    login : async (req, res) => {
+        try {
+            const {phone,password} = req.body
+            console.log(req.body)
+            const user = await  User.findOne({phone})
+            if(user){
+                if(user.password === password){
+                    res.status(200).json({message:"successfully", data: user})
+                } else {
+                    res.status(400).json({message: "password is not correct"})
+                }
+            } else {
+                res.status(400).json({message: "user is not exists"})
+            }
+        } catch (error) {
+            res.status(500).json({ message: 'Error deleting user', error })
+        }
+    },
+
+
     checkPhoneNumber : async (req, res) => {
         try {
             console.log(req.body.phone)
-            const user = await  User.findOne({phone:req.body.phone})
+            const user = await User.findOne({phone:req.body.phone})
             if(user){
                 res.status(200).json(true)
             } else {

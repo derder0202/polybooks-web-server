@@ -10,6 +10,8 @@ const admin = require("firebase-admin");
 const authMiddleware = require("../middleware/authMiddleware");
 // GET /users
 router.post('/filter', userController.getUsers);
+
+router.post('/login', userController.login);
 // GET /users/:id
 router.get('/:id', userController.getUserById);
 // POST /users
