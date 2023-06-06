@@ -10,6 +10,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Poly Books</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
@@ -183,8 +185,8 @@
                             <a class="nav-link" href="listUsers">
                                Danh sách Users
                             </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa Users</a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm Users</a>
+                            <a class="nav-link" href="editUser">Sửa Users</a>
+                            <a class="nav-link" href="addUser">Thêm Users</a>
                         </nav>
                     </div>
                     <!-- Sidenav Heading (Posts)-->
@@ -318,7 +320,7 @@
                                     <i class="me-1" data-feather="users"></i>
                                     Manage Groups
                                 </a>
-                                <a class="btn btn-sm btn-light text-primary" href="user-management-add-user.html">
+                                <a class="btn btn-sm btn-light text-primary" href="addUser">
                                     <i class="me-1" data-feather="user-plus"></i>
                                     Add New User
                                 </a>
@@ -334,20 +336,20 @@
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>User</th>
+                                <th>Họ tên</th>
                                 <th>Email</th>
+                                <th>Giới tính</th>
                                 <th>Role</th>
-                                <th>Groups</th>
                                 <th>Joined Date</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>User</th>
+                                <th>Họ tên</th>
                                 <th>Email</th>
+                                <th>Giới tính</th>
                                 <th>Role</th>
-                                <th>Groups</th>
                                 <th>Joined Date</th>
                                 <th>Actions</th>
                             </tr>
@@ -361,17 +363,13 @@
                                     </div>
                                 </td>
                                 <td>tiger@email.com</td>
-                                <td>Administrator</td>
+                                <td>Nữ</td>
                                 <td>
-                                    <span class="badge bg-green-soft text-green">Sales</span>
-                                    <span class="badge bg-blue-soft text-blue">Developers</span>
-                                    <span class="badge bg-red-soft text-red">Marketing</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
-                                    <span class="badge bg-yellow-soft text-yellow">Customer</span>
-                                </td>
+                                    <span class="badge bg-green-soft text-green">Manual</span>
+                                   </td>
                                 <td>20 Jun 2021</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                                 </td>
                             </tr>
@@ -383,17 +381,14 @@
                                     </div>
                                 </td>
                                 <td>gwinterse@email.com</td>
-                                <td>Administrator</td>
+                                <td>Nam</td>
                                 <td>
-                                    <span class="badge bg-green-soft text-green">Sales</span>
-                                    <span class="badge bg-blue-soft text-blue">Developers</span>
-                                    <span class="badge bg-red-soft text-red">Marketing</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
-                                    <span class="badge bg-yellow-soft text-yellow">Customer</span>
-                                </td>
+
+                                    <span class="badge bg-red-soft text-red">VIP</span>
+                                    </td>
                                 <td>20 Jun 2021</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                                 </td>
                             </tr>
@@ -405,14 +400,13 @@
                                     </div>
                                 </td>
                                 <td>ashtonc@email.com</td>
-                                <td>Registered</td>
+                                <td>Nữ</td>
                                 <td>
-                                    <span class="badge bg-green-soft text-green">Sales</span>
-                                    <span class="badge bg-red-soft text-red">Marketing</span>
+                                    <span class="badge bg-green-soft text-green">Manual</span>
                                 </td>
                                 <td>20 Jun 2021</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                                 </td>
                             </tr>
@@ -424,10 +418,9 @@
                                     </div>
                                 </td>
                                 <td>cedrickel@email.com</td>
-                                <td>Registered</td>
+                                <td>Nam</td>
                                 <td>
-                                    <span class="badge bg-green-soft text-green">Sales</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
+                                    <span class="badge bg-green-soft text-green">Manual</span>
                                 </td>
                                 <td>20 Jun 2021</td>
                                 <td>
@@ -443,9 +436,11 @@
                                     </div>
                                 </td>
                                 <td>asatou@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
+                                <td>Nam</td>
+                                <td>
+
+                                    <span class="badge bg-red-soft text-red">VIP</span>
+                                </td>                                <td>20 Jun 2021</td>
                                 <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
@@ -459,9 +454,11 @@
                                     </div>
                                 </td>
                                 <td>bwilliamson@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
+                                <td>Nữ</td>
+                                <td>
+
+                                    <span class="badge bg-red-soft text-red">VIP</span>
+                                </td>                                <td>20 Jun 2021</td>
                                 <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
@@ -475,8 +472,8 @@
                                     </div>
                                 </td>
                                 <td>harrodc@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-green-soft text-green">Sales</span></td>
+                                <td>Nữ</td>
+                                <td><span class="badge bg-green-soft text-green">Manual</span></td>
                                 <td>20 Jun 2021</td>
                                 <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
@@ -491,10 +488,9 @@
                                     </div>
                                 </td>
                                 <td>rhonadavidson@email.com</td>
-                                <td>Registered</td>
+                                <td>Nam</td>
                                 <td>
-                                    <span class="badge bg-green-soft text-green">Sales</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
+                                    <span class="badge bg-green-soft text-green">Manual</span>
                                 </td>
                                 <td>20 Jun 2021</td>
                                 <td>
@@ -510,9 +506,11 @@
                                     </div>
                                 </td>
                                 <td>churst@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-blue-soft text-blue">Developers</span></td>
-                                <td>20 Jun 2021</td>
+                                <td>Nữ</td>
+                                <td>
+
+                                    <span class="badge bg-red-soft text-red">VIP</span>
+                                </td>                                <td>20 Jun 2021</td>
                                 <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
@@ -526,9 +524,11 @@
                                     </div>
                                 </td>
                                 <td>sfrost@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
+                                <td>Nam</td>
+                                <td>
+
+                                    <span class="badge bg-red-soft text-red">VIP</span>
+                                </td>                                <td>20 Jun 2021</td>
                                 <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
