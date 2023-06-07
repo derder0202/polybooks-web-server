@@ -50,7 +50,7 @@ const AuthorSchema = new mongoose.Schema({
 
 //change
 const ShopSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' , immutable: true},
     name: { type: String, required: true },
     rating: { type: Number, default: 0},
     description: { type: String, },

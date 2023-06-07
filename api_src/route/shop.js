@@ -8,4 +8,7 @@ router.get('/:id', shopController.getShopById);
 router.put('/:id', shopController.updateShop);
 router.delete('/:id', shopController.deleteShop);
 
+router.get('/:id/posts', shopController.getPostsByShop);
+router.get('/:id/reviews', shopController.getReviewsByShop);
+
 module.exports = router;

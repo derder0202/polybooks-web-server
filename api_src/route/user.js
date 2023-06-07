@@ -24,6 +24,10 @@ router.post('/checkPhoneNumber', userController.checkPhoneNumber);
 router.post('/:id/addToFavorite', userController.addToFavorite);
 router.post('/:id/removeFromFavorite', userController.removeFromFavorite);
 
+router.get('/:id/posts', userController.getPostsByUser);
+router.get('/:id/reviews', userController.getReviewsByUser);
+router.get('/:id/favorite', userController.getFavoriteByUser);
+
 //const multer = require('multer')
 // const upload = multer({
 //     storage: multer.memoryStorage(),

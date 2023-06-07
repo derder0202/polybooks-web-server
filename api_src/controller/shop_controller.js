@@ -90,22 +90,30 @@ const shopController = {
                 const shop = await Shop.findById(id);
                 const file = req.file;
                 if(file){
+                    console.log("file")
                     const bucket = admin.storage().bucket()
                     const options = {
+                        overwrite: true,
                         destination: `shops/${shop._id}`, // set the destination path in the bucket
                         metadata: {
                             contentType: 'image/jpeg', // set the MIME type of the file
                         },
                     };
+
                     const blob = bucket.file(options.destination); // create a reference to the file in the bucket
                     const blobStream = blob.createWriteStream(options); // create a write stream to upload the file
                     blobStream.end(file.buffer); // write the buffer to the stream
                     return new Promise( (resolve, reject) => {
                         blobStream.on('finish', async() => {
-                            await blob.makePublic();
-                            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`; // get the public URL of the uploaded file
-                            resolve(publicUrl);
-                            await shop.updateOne({avatar:publicUrl,...req.body});
+                            //const blob = bucket.file(options.destination);
+                            const config = {
+                                action: 'read',
+                                expires: '03-17-3025', // set the expiration date of the URL
+                            };
+                            const [url] = await blob.getSignedUrl(config);
+                            resolve(url);
+                            console.log(url)
+                            await shop.updateOne({image:url,...req.body});
                             return res.status(200).json({message: "user updated"});
                             // newUser.avatar = publicUrl
                             // await newUser.save()
@@ -114,6 +122,7 @@ const shopController = {
                         blobStream.on('error', reject);
                     });
                 } else {
+                    console.log("none")
                     const updateShop = await User.findByIdAndUpdate(id,req.body, {new:true})
                     res.status(200).json({message: "user updated", data: updateShop});
                 }
@@ -131,9 +140,9 @@ const shopController = {
             const bucket = admin.storage().bucket();
             await bucket.file("shops/"+shop._id).delete()
             if (!shop) {
-                res.status(404).json({ error: 'Category not found.' });
+                res.status(404).json({ error: 'Shop not found.' });
             } else {
-                res.status(200).json({message: "category is deleted"});
+                res.status(200).json({message: "Shop is deleted"});
             }
 
         } catch (error) {
@@ -143,7 +152,14 @@ const shopController = {
 
     getReviewsByShop : async (req, res) => {
         try {
-            const shop = await Shop.findById(req.params.id).populate('reviews');
+            const { startIndex, limit } = req.query;
+            const shop = await Shop.findById(req.params.id).populate({
+                path: 'reviews',
+                options: {
+                    skip: parseInt(startIndex) || 0,
+                    limit: parseInt(limit) || 10,
+                },
+            });
             if (!shop) {
                 return res.status(404).json({ message: 'Shop not found' });
             }
@@ -156,7 +172,14 @@ const shopController = {
 
     getPostsByShop : async (req, res) => {
         try {
-            const shop = await Shop.findById(req.params.id).populate('posts');
+            const { startIndex, limit } = req.query;
+            const shop = await Shop.findById(req.params.id).populate({
+                path: 'posts',
+                options: {
+                    skip: parseInt(startIndex) || 0,
+                    limit: parseInt(limit) || 20,
+                },
+            });
             if (!shop) {
                 return res.status(404).json({ message: 'Shop not found' });
             }
