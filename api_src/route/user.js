@@ -2,10 +2,7 @@
 // user router
 const express = require('express');
 const router = express.Router();
-// const authMiddleware = require('../middleware/authMiddleware');
 const userController = require('../controller/user_controller');
-const {getAuth} = require("firebase-admin/auth");
-const admin = require("firebase-admin");
 
 const authMiddleware = require("../middleware/authMiddleware");
 // GET /users
@@ -26,6 +23,10 @@ router.post('/checkPhoneNumber', userController.checkPhoneNumber);
 //add to favorite
 router.post('/:id/addToFavorite', userController.addToFavorite);
 router.post('/:id/removeFromFavorite', userController.removeFromFavorite);
+
+router.get('/:id/posts', userController.getPostsByUser);
+router.get('/:id/reviews', userController.getReviewsByUser);
+router.get('/:id/favorite', userController.getFavoriteByUser);
 
 //const multer = require('multer')
 // const upload = multer({

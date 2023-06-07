@@ -8,12 +8,11 @@ const userController = {
     getUsers : async (req, res) => {
         try {
             // Extract query parameters from request body
-            const { uid, fullName, phone, startIndex = 0, limit = 20 } = req.body;
+            const { fullName, phone, startIndex = 0, limit = 20 } = req.body;
 
             // Create filter object based on queryo parameters
             // 1 ui//2 filter(tham s)
             const filter = {};
-            if (uid) filter.uid = uid;
             if (fullName) filter.fullName = fullName;
             if (phone) filter.phone = phone;
             // Retrieve users from database with filtering and pagination
@@ -33,7 +32,7 @@ const userController = {
             if(user){
                 res.status(200).json(user);
             } else {
-                res.status(400).json({message: "user is not exists"})
+                res.status(404).json({message: "user is not exists"})
             }
 
         } catch (error) {
@@ -101,15 +100,20 @@ const userController = {
                         metadata: {
                             contentType: 'image/jpeg', // set the MIME type of the file
                         },
+                        overwrite: true
                     };
                     const blob = bucket.file(options.destination); // create a reference to the file in the bucket
                     const blobStream = blob.createWriteStream(options); // create a write stream to upload the file
                     blobStream.end(file.buffer); // write the buffer to the stream
                     return new Promise( (resolve, reject) => {
                         blobStream.on('finish', async() => {
-                            await blob.makePublic();
-                            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`; // get the public URL of the uploaded file
-                            resolve(publicUrl);
+                            //const blob = bucket.file(options.destination);
+                            const config = {
+                                action: 'read',
+                                expires: '03-17-3025', // set the expiration date of the URL
+                            };
+                            const [url] = await blob.getSignedUrl(config);
+                            resolve(url);
                             await user.updateOne({avatar:publicUrl,...req.body});
                             return res.status(200).json({message: "user updated"});
                             // newUser.avatar = publicUrl
@@ -138,12 +142,12 @@ const userController = {
             const user = await  User.findOne({phone})
             if(user){
                 if(user.password === password){
-                    res.status(200).json({message:"successfully", data: user})
+                    res.status(200).json({message:"Đăng nhập thành công", data: user})
                 } else {
-                    res.status(400).json({message: "password is not correct"})
+                    res.status(404).json({message: "Sai mật khẩut"})
                 }
             } else {
-                res.status(400).json({message: "user is not exists"})
+                res.status(404).json({message: "Số điện thoại không tồn tại"})
             }
         } catch (error) {
             res.status(500).json({ message: 'Error deleting user', error })
@@ -186,10 +190,10 @@ const userController = {
         try {
             const user = await User.findById(userId);
             if (!user) {
-                return res.status(400).json({ message: "User not found" });
+                return res.status(404).json({ message: "User not found" });
             }
             if(user.favorite.includes(postId)){
-                return res.status(400).json({message: "you had added this post to favorite"})
+                return res.status(404).json({message: "you had added this post to favorite"})
             }
             user.favorite.push(postId);
             await user.save();
@@ -209,7 +213,7 @@ const userController = {
                 return res.status(404).json({ message: "User not found" });
             }
             if(!user.favorite.includes(postId)){
-                return res.status(400).json({ message: "this post is not in favorite of this user"});
+                return res.status(404).json({ message: "this post is not in favorite of this user"});
             }
             user.favorite.pull(postId);
             await user.save();
@@ -218,6 +222,49 @@ const userController = {
             return res.status(500).json({ message: err.message });
         }
     },
+    getPostsByUser : async (req, res) => {
+        const { startIndex, limit , id} = req.query;
+        //const { userId } = req.params;
+        try {
+            const user = await User.findById(id).populate({
+                path: 'posts',
+                options: { skip: parseInt(startIndex) || 0, limit: parseInt(limit) ||20}
+            });
+            console.log(user)
+            res.status(200).json(user.posts);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    },
+    getFavoriteByUser : async (req, res) => {
+        const { startIndex, limit, id } = req.query;
+        //const { userId } = req.body;
+        try {
+            const user = await User.findById(id).populate({
+                path: 'favorite',
+                options: { skip: parseInt(startIndex) || 0, limit: parseInt(limit) || 20 }
+            });
+            res.status(200).json(user.favorite);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    },
+    getReviewsByUser : async (req, res) => {
+        const { startIndex, limit, id } = req.query;
+       // const { userId } = req.body;
+        try {
+            const user = await User.findById(id).populate({
+                path: 'reviews',
+                options: { skip: parseInt(startIndex) ||0, limit: parseInt(limit) || 20 }
+            });
+            res.status(200).json(user.reviews);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    }
 }
 
 module.exports = userController

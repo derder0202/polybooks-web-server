@@ -140,7 +140,7 @@ const postController = {
                     if(seller){
                         await User.findByIdAndUpdate(seller,{$push:{posts: post._id}})
                     }
-                    if(seller){
+                    if(shopId){
                         await Shop.findByIdAndUpdate(shopId,{$push:{posts: post._id}})
                     }
                     if(authorName){
@@ -280,7 +280,7 @@ const postController = {
                     //const savedPost = await post.save();
                     res.status(200).json({message: "post updated"});
                 } else {
-                    console.log("day roi")
+                    //console.log("day roi")
                     Object.assign(post, req.body)
                     await post.save()
                     res.status(200).json({message: "post updated"});
