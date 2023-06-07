@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
 router.get('/listUsers', function(req, res, next) {
   res.render('users/listUsers');
 });
+
 router.get('/editUser', function(req, res, next) {
   res.render('users/editUser');
 });
