@@ -10,8 +10,12 @@ router.get('/', function(req, res, next) {
 router.get('/listUsers', function(req, res, next) {
   res.render('users/listUsers');
 });
-router.get('/editUsers', function(req, res, next) {
-  res.render('users/editUsers');
+
+router.get('/editUser', function(req, res, next) {
+  res.render('users/editUser');
+});
+router.get('/addUser', function(req, res, next) {
+  res.render('users/addUser');
 });
 router.get('/listPosts', function(req, res, next) {
   res.render('posts/listPosts');
