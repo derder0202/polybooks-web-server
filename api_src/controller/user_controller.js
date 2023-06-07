@@ -8,12 +8,11 @@ const userController = {
     getUsers : async (req, res) => {
         try {
             // Extract query parameters from request body
-            const { uid, fullName, phone, startIndex = 0, limit = 20 } = req.body;
+            const { fullName, phone, startIndex = 0, limit = 20 } = req.body;
 
             // Create filter object based on queryo parameters
             // 1 ui//2 filter(tham s)
             const filter = {};
-            if (uid) filter.uid = uid;
             if (fullName) filter.fullName = fullName;
             if (phone) filter.phone = phone;
             // Retrieve users from database with filtering and pagination
@@ -33,7 +32,7 @@ const userController = {
             if(user){
                 res.status(200).json(user);
             } else {
-                res.status(400).json({message: "user is not exists"})
+                res.status(404).json({message: "user is not exists"})
             }
 
         } catch (error) {
@@ -140,10 +139,10 @@ const userController = {
                 if(user.password === password){
                     res.status(200).json({message:"successfully", data: user})
                 } else {
-                    res.status(400).json({message: "password is not correct"})
+                    res.status(404).json({message: "password is not correct"})
                 }
             } else {
-                res.status(400).json({message: "user is not exists"})
+                res.status(404).json({message: "user is not exists"})
             }
         } catch (error) {
             res.status(500).json({ message: 'Error deleting user', error })
@@ -186,10 +185,10 @@ const userController = {
         try {
             const user = await User.findById(userId);
             if (!user) {
-                return res.status(400).json({ message: "User not found" });
+                return res.status(404).json({ message: "User not found" });
             }
             if(user.favorite.includes(postId)){
-                return res.status(400).json({message: "you had added this post to favorite"})
+                return res.status(404).json({message: "you had added this post to favorite"})
             }
             user.favorite.push(postId);
             await user.save();
@@ -209,7 +208,7 @@ const userController = {
                 return res.status(404).json({ message: "User not found" });
             }
             if(!user.favorite.includes(postId)){
-                return res.status(400).json({ message: "this post is not in favorite of this user"});
+                return res.status(404).json({ message: "this post is not in favorite of this user"});
             }
             user.favorite.pull(postId);
             await user.save();
@@ -218,6 +217,42 @@ const userController = {
             return res.status(500).json({ message: err.message });
         }
     },
+    getPostsByUser : async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const user = await User.findById(userId).populate('posts');
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.status(200).json(user.posts);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+    getFavoriteByUser : async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const user = await User.findById(userId).populate('favorite');
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.status(200).json(user.favorite);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    },
+    getReviewByUser : async (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const user = await User.findById(userId).populate('reviews');
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.status(200).json(user.reviews);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    }
 }
 
 module.exports = userController

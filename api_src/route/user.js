@@ -2,10 +2,7 @@
 // user router
 const express = require('express');
 const router = express.Router();
-// const authMiddleware = require('../middleware/authMiddleware');
 const userController = require('../controller/user_controller');
-const {getAuth} = require("firebase-admin/auth");
-const admin = require("firebase-admin");
 
 const authMiddleware = require("../middleware/authMiddleware");
 // GET /users

@@ -1,7 +1,6 @@
-
+const {Category} = require("../model/model");
 const multer = require("multer")
 const admin = require("firebase-admin");
-const {Category} = require("../model/model");
 const upload = require("../upload_image").single("image");
 const categoryController = {
     getCategories: async (req, res) => {
@@ -43,27 +42,31 @@ const categoryController = {
                 const newCategory = new Category(req.body);
 
                 const file = req.file;
-                const bucket = admin.storage().bucket()
-                const options = {
-                    destination: `categories/${newCategory._id}`, // set the destination path in the bucket
-                    metadata: {
-                        contentType: 'image/jpeg', // set the MIME type of the file
-                    },
-                };
-                const blob = bucket.file(options.destination); // create a reference to the file in the bucket
-                const blobStream = blob.createWriteStream(options); // create a write stream to upload the file
-                blobStream.end(file.buffer); // write the buffer to the stream
-                return new Promise( (resolve, reject) => {
-                    blobStream.on('finish', async() => {
-                        await blob.makePublic();
+                if (file){
+                    const bucket = admin.storage().bucket()
+                    const options = {
+                        destination: `categories/${newCategory._id}`, // set the destination path in the bucket
+                        metadata: {
+                            contentType: 'image/jpeg', // set the MIME type of the file
+                        },
+                    };
+                    const blob = bucket.file(options.destination); // create a reference to the file in the bucket
+                    const blobStream = blob.createWriteStream(options); // create a write stream to upload the file
+                    blobStream.end(file.buffer); // write the buffer to the stream
+                    return new Promise( (resolve, reject) => {
+                        blobStream.on('finish', async() => {
+                            await blob.makePublic();
                             const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`; // get the public URL of the uploaded file
-                        resolve(publicUrl);
-                        newCategory.image = publicUrl
-                        await newCategory.save()
-                        res.status(200).json(newCategory);
+                            resolve(publicUrl);
+                            newCategory.image = publicUrl
+                            await newCategory.save()
+                            res.status(200).json(newCategory);
+                        });
+                        blobStream.on('error', reject);
                     });
-                    blobStream.on('error', reject);
-                });
+                } else {
+                    res.status(404).json({ message: 'file not found' });
+                }
                 // Everything went fine.
             })
         } catch (error) {

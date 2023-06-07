@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 
 //change
 const UserSchema = new mongoose.Schema({
-    uid: { type: String, unique: true, required: true ,immutable:true},
     fullName: { type: String, required: true },
-    phone: { type: String },
+    phone: { type: String ,immutable:true, unique: true, required: true },
     password: { type: String },
     email: { type: String },
     address: { type: String },
@@ -53,7 +52,7 @@ const AuthorSchema = new mongoose.Schema({
 const ShopSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     name: { type: String, required: true },
-    rating: { type: Number},
+    rating: { type: Number, default: 0},
     description: { type: String, },
     image: { type: String,},
     address: { type: String, },
@@ -148,6 +147,25 @@ const BillSchema = new mongoose.Schema({
     address: { type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 },{timestamps:true});
+
+// ShopSchema.pre('update', async function (next) {
+//     try {
+//         const reviews = await mongoose.model('Review').find({ shop: this._id });
+//         if (reviews.length === 0) {
+//             this.rating = 0;
+//         } else {
+//             const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+//             const avgRating = totalRating / reviews.length;
+//             this.rating = avgRating;
+//         }
+//         next();
+//     } catch (err) {
+//         next(err);
+//     }
+// })
+
+
+
 const User = mongoose.model('User', UserSchema);
 const Category = mongoose.model('Category', CategorySchema);
 //const Book = mongoose.model('Book', BookSchema);
