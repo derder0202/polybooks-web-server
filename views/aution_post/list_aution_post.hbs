@@ -1,7 +1,4 @@
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +8,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Poly Books</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
@@ -151,7 +150,7 @@
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="account-info">
+                <a class="dropdown-item" href="admin_account_info">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Tài khoản
                 </a>
@@ -171,126 +170,118 @@
 
                 <div class="nav accordion" id="accordionSidenav">
 
-                    <!-- Sidenav Menu Heading (Users)-->
-                    <div class="sidenav-menu-heading">Users</div>
-                    <!-- Sidenav Accordion (Users)-->
+                    <!-- Sidenav Menu Heading (Statistical)-->
+                    <div class="sidenav-menu-heading">Statistical</div>
+                    <!-- Sidenav Accordion (Thống kê)-->
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
-                        <div class="nav-link-icon"><i data-feather="users"></i></div>
-                        Users
+                        <div class="nav-link-icon"><i data-feather="bar-chart-2"></i></div>
+                        Thống kê
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseUsers" data-bs-parent="#accordionUsers">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listUsers">
-                                Danh sách Users
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa Users</a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm Users</a>
-                        </nav>
-                    </div>
-                    <!-- Sidenav Heading (Posts)-->
-                    <div class="sidenav-menu-heading">Posts</div>
-                    <!-- Sidenav Accordion (Bài đăng)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
-                        <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
-                        Bài đăng
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapsePosts" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách bài đăng
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa bài đăng</a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm bài đăng</a>
+                            <a class="nav-link" href="account_statistics">Thống kê thành viên </a>
+                            <a class="nav-link" href="stall_statistics">Số lượng gian hàng</a>
+                            <a class="nav-link" href="books_sale_statistics">Số lượng sách đăng bán</a>
+                            <a class="nav-link" href="transaction_statistics">Lượt giao dịch</a>
+                            <a class="nav-link" href="aution_statistics">Thống kê sách đấu giá</a>
                         </nav>
                     </div>
 
-                    <!-- Sidenav Heading (Stores)-->
-                    <div class="sidenav-menu-heading">Stores</div>
+                    <!-- Sidenav Heading (Posts)-->
+                    <div class="sidenav-menu-heading">Account management</div>
+                    <!-- Sidenav Accordion (Pages)-->
+                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
+                        <div class="nav-link-icon"><i data-feather="grid"></i></div>
+                        Quản lý tài khoản
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePosts" data-bs-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAutionPost" aria-expanded="false" aria-controls="pagesCollapseAutionPost">
+                                Thành viên thường
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseAutionPost" data-bs-parent="#accordionSidenavPagesMenu">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" href="list_regular_member">Danh sách</a>
+                                    <a class="nav-link" href="edit_regular_member">Sửa thành viên</a>
+                                    <a class="nav-link" href="add_regular_member">Thêm thành viên</a>
+                                    <a class="nav-link" href="update_regular_member">Cập nhật trạng thái</a>
+                                </nav>
+                            </div>
+                            <!-- Nested Sidenav Accordion (Posts -> AutionPost)-->
+                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseVIPAccount" aria-expanded="false" aria-controls="pagesCollapseAutionPost">
+                                Thành viên VIP
+                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseVIPAccount" data-bs-parent="#accordionSidenavPagesMenu">
+                                <nav class="sidenav-menu-nested nav">
+                                    <a class="nav-link" href="list_vip_member">Danh sách</a>
+                                    <a class="nav-link" href="payment_vip_member">Lịch sử nạp vip</a>
+                                    <a class="nav-link" href="update_vip_member">Cập nhật trạng thái VIP</a>
+                                </nav>
+                            </div>
+
+
+                        </nav>
+                    </div>
+
+
+                    <!-- Sidenav Heading (Aution Post)-->
+                    <div class="sidenav-menu-heading">Aution Post</div>
                     <!-- Sidenav Accordion (Cửa hàng)-->
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseStores" aria-expanded="false" aria-controls="collapseStores">
                         <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
-                        Các cửa hàng
+                        Đấu giá
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseStores" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách cửa hàng
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
+                            <a class="nav-link" href="list_aution_post">Danh sách đấu giá</a>
                         </nav>
                     </div>
 
                     <!-- Sidenav Heading (Author and Pulisher)-->
-                    <div class="sidenav-menu-heading">Author and Pulisher</div>
+                    <div class="sidenav-menu-heading">Duyệt nội dung</div>
                     <!-- Sidenav Accordion (Author)-->
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
-                        <div class="nav-link-icon"><i data-feather="user"></i></div>
-                        Tác giả
+                        <div class="nav-link-icon"><i data-feather="align-center"></i></div>
+                        Duyệt nội dung
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách Tác giả
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
+                            <a class="nav-link" href="book_approval">Duyệt bài đăng sách</a>
+                            <a class="nav-link" href="new_approval">Duyệt bài đăng tin </a>
                         </nav>
                     </div>
 
-                    <!-- Sidenav Accordion (Pulisher)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePulisher" aria-expanded="false" aria-controls="collapsePulisher">
-                        <div class="nav-link-icon"><i data-feather="package"></i></div>
-                        Nhà xuất bản
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapsePulisher" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách Nhà xuất bản
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
-                        </nav>
-                    </div>
 
-                    <!-- Sidenav Heading (AutionPost and Review)-->
-                    <div class="sidenav-menu-heading">AutionPost and Review</div>
-                    <!-- Sidenav Accordion (AutionPost)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAutionPost" aria-expanded="false" aria-controls="collapseAutionPost">
-                        <div class="nav-link-icon"><i data-feather="trello"></i></div>
-                        Trang đấu giá
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseAutionPost" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
-                        </nav>
-                    </div>
+
+                    <!-- Sidenav Heading ( Report)-->
+                    <div class="sidenav-menu-heading">Report</div>
+
 
                     <!-- Sidenav Accordion (Review)-->
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseReview" aria-expanded="false" aria-controls="collapseReview">
-                        <div class="nav-link-icon"><i data-feather="thumbs-up"></i></div>
-                        Bài đánh giá
+                        <div class="nav-link-icon"><i data-feather="flag"></i></div>
+                        Quản lý report
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseReview" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
+                            <a class="nav-link" href="pending_report">Report chờ xử lý</a>
+                            <a class="nav-link" href="processed_report">Report đã xử lý </a>
                         </nav>
                     </div>
+
+
+                    <a class="nav-link" href="ad_management">
+                        <div class="nav-link-icon"><i data-feather="award"></i></div>
+                        Quản lý quảng cáo
+                    </a>
 
 
                 </div>
@@ -302,132 +293,6 @@
 
     <!--          Start Content-->
 
-    <div id="layoutSidenav_content">
-        <main>
-            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-                <div class="container-fluid px-4">
-                    <div class="page-header-content">
-                        <div class="row align-items-center justify-content-between pt-3">
-                            <div class="col-auto mb-3">
-                                <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="clipboard"></i></div>
-                                    Bài đăng
-                                </h1>
-                            </div>
-                            <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="blog-management-create-post.html">
-                                    <i class="me-1" data-feather="plus"></i>
-                                    Create New Post
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- Main page content-->
-            <div class="container-fluid px-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Post Title</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Post Title</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                            <tr>
-                                <td>Boots on the Ground, Inclusive Thought Provoking Ideas</td>
-                                <td>20 Jun 2021</td>
-                                <td><div class="badge bg-gray-200 text-dark">Draft</div></td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="blog-management-edit-post.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Invest In Social Impact</td>
-                                <td>19 Jun 2021</td>
-                                <td><div class="badge bg-yellow-soft text-yellow">Pending Approval</div></td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="blog-management-edit-post.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Save the World, Social Entrepreneur</td>
-                                <td>18 Jun 2021</td>
-                                <td><div class="badge bg-green-soft text-green">Published</div></td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="blog-management-edit-post.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Design Thinking Benefits Corporation Thought Leadership</td>
-                                <td>17 Jun 2021</td>
-                                <td><div class="badge bg-green-soft text-green">Published</div></td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="blog-management-edit-post.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Collaborative Consumption, Human-Centered Technology Thought Leader Systems</td>
-                                <td>16 Jun 2021</td>
-                                <td><div class="badge bg-green-soft text-green">Published</div></td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="blog-management-edit-post.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Co-create, Empower - Moving the Needle on Investor Interests</td>
-                                <td>14 Jun 2021</td>
-                                <td><div class="badge bg-green-soft text-green">Published</div></td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="blog-management-edit-post.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Inclusive Shared Units of Analysis</td>
-                                <td>13 Jun 2021</td>
-                                <td><div class="badge bg-green-soft text-green">Published</div></td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="blog-management-edit-post.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <footer class="footer-admin mt-auto footer-light">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
-                    <div class="col-md-6 text-md-end small">
-                        <a href="#!">Privacy Policy</a>
-                        &middot;
-                        <a href="#!">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
 
     <!--            End Content-->
 
