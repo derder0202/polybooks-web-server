@@ -181,9 +181,11 @@ const postController = {
                         }
                     }
                     const savedPost = await post.save();
-                    res.status(201).json(savedPost);
+                    res.status(200).json(savedPost);
                 } else {
-                    res.status(500).json("you have to add images")
+                    // res.status(500).json("you have to add images")
+                    const savePost = await Post.create(req.body)
+                    res.status(200).json(savePost)
                 }
 
                 // Everything went fine.

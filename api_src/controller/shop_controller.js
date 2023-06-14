@@ -114,7 +114,7 @@ const shopController = {
                             resolve(url);
                             console.log(url)
                             await shop.updateOne({image:url,...req.body});
-                            return res.status(200).json({message: "user updated"});
+                            return res.status(200).json({message: "shop updated"});
                             // newUser.avatar = publicUrl
                             // await newUser.save()
                             //res.status(201).json(newUser);
@@ -122,9 +122,12 @@ const shopController = {
                         blobStream.on('error', reject);
                     });
                 } else {
-                    console.log("none")
-                    const updateShop = await User.findByIdAndUpdate(id,req.body, {new:true})
-                    res.status(200).json({message: "user updated", data: updateShop});
+                    //console.log("none")
+                    // const shop = await  Shop.findById(id)
+                    // Object.assign(shop, req.body)
+                    // const updateShop = await shop.save()
+                     const updateShop = await Shop.findByIdAndUpdate(id,req.body, {new:true})
+                    res.status(200).json({message: "shop updated", data: updateShop});
                 }
 
                 // Everything went fine.

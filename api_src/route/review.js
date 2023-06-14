@@ -4,7 +4,7 @@ const reviewController = require('../controller/review_controller');
 const router = express.Router();
 
 // Create a new review
-router.post('/', reviewController.create);
+router.post('/', reviewController.createReview);
 
 // Update an existing review
 router.put('/:id', reviewController.update);

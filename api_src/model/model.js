@@ -109,6 +109,7 @@ const ReviewSchema = new mongoose.Schema({
 const NotificationSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     message: { type: String, required: true },
+    title: { type: String, required: true },
     read: { type: Boolean, default: false },
     //createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
@@ -148,17 +149,20 @@ const BillSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 },{timestamps:true});
 
-ShopSchema.post('update', async function (next) {
+ShopSchema.pre('save',async function (next) {
     try {
-        const reviews = await mongoose.model('Review').find({ shop: this._id });
-        if (reviews.length === 0) {
-            this.rating = 0;
-        } else {
-            const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-            const avgRating = totalRating / reviews.length;
-            this.rating = avgRating;
+        if(this.isModified("reviews")){
+            await this.populate('reviews','rating')
+            const reviews = this.reviews
+            console.log(reviews)
+            if (reviews.length === 0) {
+                this.rating = 0;
+            } else {
+                const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+                this.rating = totalRating / reviews.length;
+            }
+            next();
         }
-        next();
     } catch (err) {
         next(err);
     }
