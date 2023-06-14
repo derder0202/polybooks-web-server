@@ -16,9 +16,10 @@ admin.initializeApp({
   storageBucket: "gs://polybooks-52282.appspot.com",
 });
 
+require('dotenv').config()
 
 //connect mongoose
-mongoose.connect('mongodb+srv://polybooks:fptpolytechnic@polybooks.uxgwq74.mongodb.net/').then(()=>{
+mongoose.connect(process.env.MONGODBURL).then(()=>{
   console.log("mongodb connected")
 })
 
