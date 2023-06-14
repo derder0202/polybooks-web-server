@@ -4,24 +4,24 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({
     fullName: { type: String, required: true },
     phone: { type: String ,immutable:true, unique: true, required: true },
-    password: { type: String },
-    email: { type: String },
-    address: { type: String },
+    password: { type: String , required: true},
+    email: { type: String , default:"" },
+    address: { type: String, default:"" },
     //bio: { type: String },
     avatar: { type: String },
     gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
-    birthday: { type: Date },
+    birthday: { type: Date , default:"" },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
     favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-    role: { type: String, enum: ['manual', 'vip', 'admin'], default: 'manual' },
+    role: { type: Number, default: 0 },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-
+    notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
 }, {timestamps: true});
 const CategorySchema = new mongoose.Schema({
     name: { type: String, required: true },
     image:{type:String,require:true},
-    description: { type: String },
+    description: { type: String, default:""  },
    // createAt: { type: Date, default: Date.now },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
@@ -53,10 +53,10 @@ const ShopSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' , immutable: true},
     name: { type: String, required: true },
     rating: { type: Number, default: 0},
-    description: { type: String, },
+    description: { type: String, default:"" },
     image: { type: String,},
-    address: { type: String, },
-    phone: { type: String,},
+    address: { type: String, default:"" },
+    phone: { type: String, default:"" },
    // createAt: { type: Date, default: Date.now },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
@@ -68,21 +68,21 @@ const PostSchema = new mongoose.Schema({
     bookName: { type: String, required: true },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     postTitle: { type: String, required: true },
-    description: { type: String },
-    price: { type: Number },
+    description: { type: String, default:""  },
+    price: { type: Number,required: true },
     images: [{ type: String }],
-    bookStatus: { type: String },
-    bookSize: { type: String },
-    language: { type: String },
+    bookStatus: { type: String, default:0 },
+    bookSize: { type: String, default:"" },
+    language: { type: String, default:"" },
     startTime:{type:Date},
     endTime:{type:Date},
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     publisher: { type: mongoose.Schema.Types.ObjectId, ref: 'Publisher' },
-    totalPage: { type: Number },
-    address: {type:String},
-    isbn: {type:String},
-    postStatus: {type:String},
+    totalPage: { type: Number,default:0 },
+    address: {type:String, default: ""},
+    isbn: {type:String,default:""},
+    postStatus: {type:String,default:"0"},
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
     startPrice: {type:String},
     endPrice: {type:String},
@@ -101,7 +101,7 @@ const ReviewSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
     rating: { type: Number, required: true },
-    message: { type: String },
+    message: { type: String ,required: true},
     image: { type: String },
     //createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
@@ -148,21 +148,21 @@ const BillSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 },{timestamps:true});
 
-// ShopSchema.pre('update', async function (next) {
-//     try {
-//         const reviews = await mongoose.model('Review').find({ shop: this._id });
-//         if (reviews.length === 0) {
-//             this.rating = 0;
-//         } else {
-//             const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-//             const avgRating = totalRating / reviews.length;
-//             this.rating = avgRating;
-//         }
-//         next();
-//     } catch (err) {
-//         next(err);
-//     }
-// })
+ShopSchema.post('update', async function (next) {
+    try {
+        const reviews = await mongoose.model('Review').find({ shop: this._id });
+        if (reviews.length === 0) {
+            this.rating = 0;
+        } else {
+            const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+            const avgRating = totalRating / reviews.length;
+            this.rating = avgRating;
+        }
+        next();
+    } catch (err) {
+        next(err);
+    }
+})
 
 
 
