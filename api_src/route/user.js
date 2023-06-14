@@ -19,6 +19,7 @@ router.put('/:id', userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 
 router.post('/checkPhoneNumber', userController.checkPhoneNumber);
+router.post('/changePasswordByPhone', userController.changePasswordByPhone);
 
 //add to favorite
 router.post('/:id/addToFavorite', userController.addToFavorite);
