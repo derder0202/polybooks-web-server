@@ -2,7 +2,7 @@ const {Category, Publisher, User, Post, Author, Shop} = require("../model/model"
 const multer = require("multer");
 const admin = require("firebase-admin");
 
-const upload = require('../upload_image').array("images",4)
+const upload = require('../upload_image').array("multiImage",4)
 
 const postController = {
     getPosts: async (req, res) => {
