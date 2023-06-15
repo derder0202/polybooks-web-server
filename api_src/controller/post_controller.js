@@ -109,10 +109,53 @@ const postController = {
                 } else if (err) {
                     // An unknown error occurred when uploading.
                 }
+                const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller,shopId} = req.body;
+                const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller,shopId });
+                if(seller){
+                    await User.findByIdAndUpdate(seller,{$push:{posts: post._id}})
+                }
+                if(shopId){
+                    await Shop.findByIdAndUpdate(shopId,{$push:{posts: post._id}})
+                }
+                if(authorName){
+                    const authorTemp = await Author.findOne({name:authorName})
+                    if(authorTemp){
+                        post.author = authorTemp._id
+                        if(!authorTemp.posts.includes(post._id)){
+                            await authorTemp.updateOne({$push:{posts: post._id}})
+                        }
+                    } else {
+                        const newAuthor = new Author({name:authorName})
+                        newAuthor.posts = [post._id]
+                        await  newAuthor.save()
+                        post.author = newAuthor._id
+                    }
+                }
+                if(category){
+                    const categoryTemp = await  Category.findById(category)
+                    if(categoryTemp){
+                        if(!categoryTemp.posts.includes(post._id) ){
+                            await categoryTemp.updateOne({$push:{posts: post._id}})
+                        }
+                    }
+
+                }
+                if(publisherName){
+                    const publisherTemp = await Publisher.findOne({name:publisherName})
+                    if(publisherTemp){
+                        post.publisher = publisherTemp._id
+                        if(!publisherTemp.posts.includes(post._id)){
+                            await publisherTemp.updateOne({$push:{posts: post._id}})
+                        }
+                    } else {
+                        const newPublisher = new  Publisher({name:publisherName})
+                        newPublisher.posts = [post._id]
+                        newPublisher.save()
+                        post.publisher = newPublisher._id
+                    }
+                }
                 const files = req.files;
-                if(files){
-                    const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller,shopId} = req.body;
-                    const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller,shopId });
+                if(files.length !== 0){
                     const bucket = admin.storage().bucket()
                     const uploadPromises = files.map((file,index) => {
                         const options = {
@@ -137,55 +180,16 @@ const postController = {
                     post.images = await Promise.all(uploadPromises)
                     //console.log(results); // log the public URLs of the uploaded files
                     //const seller = req.user._id;
-                    if(seller){
-                        await User.findByIdAndUpdate(seller,{$push:{posts: post._id}})
-                    }
-                    if(shopId){
-                        await Shop.findByIdAndUpdate(shopId,{$push:{posts: post._id}})
-                    }
-                    if(authorName){
-                        const authorTemp = await Author.findOne({name:authorName})
-                        if(authorTemp){
-                            post.author = authorTemp._id
-                            if(!authorTemp.posts.includes(post._id)){
-                                await authorTemp.updateOne({$push:{posts: post._id}})
-                            }
-                        } else {
-                            const newAuthor = new Author({name:authorName})
-                            newAuthor.posts = [post._id]
-                            await  newAuthor.save()
-                            post.author = newAuthor._id
-                        }
-                    }
-                    if(category){
-                        const categoryTemp = await  Category.findById(category)
-                        if(categoryTemp){
-                            if(!categoryTemp.posts.includes(post._id) ){
-                                await categoryTemp.updateOne({$push:{posts: post._id}})
-                            }
-                        }
 
-                    }
-                    if(publisherName){
-                        const publisherTemp = await Publisher.findOne({name:publisherName})
-                        if(publisherTemp){
-                            post.publisher = publisherTemp._id
-                            if(!publisherTemp.posts.includes(post._id)){
-                                await publisherTemp.updateOne({$push:{posts: post._id}})
-                            }
-                        } else {
-                            const newPublisher = new  Publisher({name:publisherName})
-                            newPublisher.posts = [post._id]
-                            newPublisher.save()
-                            post.publisher = newPublisher._id
-                        }
-                    }
+                    Object.assign(post, req.body)
                     const savedPost = await post.save();
                     res.status(200).json(savedPost);
                 } else {
                     // res.status(500).json("you have to add images")
-                    const savePost = await Post.create(req.body)
-                    res.status(200).json(savePost)
+                    console.log(authorName)
+                    Object.assign(post, req.body)
+                    const savedPost = await post.save();
+                    res.status(200).json(savedPost);
                 }
 
                 // Everything went fine.
