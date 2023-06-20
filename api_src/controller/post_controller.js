@@ -23,7 +23,7 @@ const postController = {
     //         let filter = {};
     //         // if (sellerFullName) {
     //         //     const seller = await User.findOne({ fullName: sellerFullName });
-    //         //     if (seller) {
+    //         //     if (seller) { 
     //         //         filter.seller = seller._id;
     //         //     }
     //         // }
