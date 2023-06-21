@@ -204,7 +204,7 @@ const discountSchema = new mongoose.Schema({
     },
     discountCode: {
         type: String,
-        required: true
+        required: true,
     },
     discountValue: {
         type: Number,
@@ -225,7 +225,7 @@ const discountSchema = new mongoose.Schema({
 });
 // Schema cho lịch sử đặt cọc
 const depositHistorySchema = new mongoose.Schema({
-    userID: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -239,8 +239,8 @@ const depositHistorySchema = new mongoose.Schema({
         required: true
     },
     status: {
-        type: String,
-        required: true
+        type: Number,
+        default:0
     },
     description: {
         type: String,
@@ -250,10 +250,6 @@ const depositHistorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    transactionID: {
-        type: String,
-        //required: true
-    }
 });
 const bannerSchema = new mongoose.Schema({
     userId: {
