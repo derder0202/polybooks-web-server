@@ -255,9 +255,28 @@ const depositHistorySchema = new mongoose.Schema({
         //required: true
     }
 });
+const bannerSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    isActive: {
+        type: Boolean,
+        default:true
+    }
+});
 
 
-
+const Banner = mongoose.model('Banner', bannerSchema);
 const User = mongoose.model('User', UserSchema);
 const Category = mongoose.model('Category', CategorySchema);
 //const Book = mongoose.model('Book', BookSchema);
@@ -276,6 +295,7 @@ const DepositHistory = mongoose.model('DepositHistory', depositHistorySchema)
 //const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = {
+    Banner,
     Report,
     Discount,
     DepositHistory,

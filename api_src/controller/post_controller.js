@@ -17,43 +17,6 @@ const postController = {
             res.status(500).json({ message: err.message });
         }
     },
-    // getPostsWithFilter: async (req, res) => {
-    //     const {  bookName, postTitle, categoryName, publisherName } = req.body;
-    //     try {
-    //         let filter = {};
-    //         // if (sellerFullName) {
-    //         //     const seller = await User.findOne({ fullName: sellerFullName });
-    //         //     if (seller) { 
-    //         //         filter.seller = seller._id;
-    //         //     }
-    //         // }
-    //         if (bookName) {
-    //             filter.bookName = { $regex: bookName, $options: 'i' };
-    //         }
-    //         if (postTitle) {
-    //             filter.postTitle = { $regex: postTitle, $options: 'i' };
-    //         }
-    //         if (categoryName) {
-    //             const categoryDoc = await Category.findOne({ name: categoryName });
-    //             if (categoryDoc) {
-    //                 filter.category = categoryDoc._id;
-    //             }
-    //         }
-    //         if (publisherName) {
-    //             const publisherDoc = await Publisher.findOne({ name: publisherName });
-    //             if (publisherDoc) {
-    //                 filter.publisher = publisherDoc._id;
-    //             }
-    //         }
-    //         const posts = await Post.find(filter)
-    //             .populate('category', 'name')
-    //             .populate('publisher', 'name')
-    //             .populate('seller', 'fullName');
-    //         res.status(200).json(posts);
-    //     } catch (err) {
-    //         res.status(500).json({ message: err.message });
-    //     }
-    // },
     getPostsWithFilter: async (req, res) => {
         const { bookName, authorName, publisherName, category, startIndex=0, limit=20} = req.body;
         let filter = {}

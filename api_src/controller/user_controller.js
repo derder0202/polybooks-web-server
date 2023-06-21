@@ -114,7 +114,7 @@ const userController = {
                             };
                             const [url] = await blob.getSignedUrl(config);
                             resolve(url);
-                            await user.updateOne({avatar:publicUrl,...req.body});
+                            await user.updateOne({avatar:url,...req.body});
                             return res.status(200).json({message: "user updated"});
                             // newUser.avatar = publicUrl
                             // await newUser.save()
