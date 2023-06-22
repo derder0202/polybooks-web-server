@@ -75,7 +75,7 @@ const PostSchema = new mongoose.Schema({
     bookSize: { type: String, default:"" },
     language: { type: String, default:"" },
     startTime:{type:Date},
-    endTime:{type:Date},
+    endTime:{type:Date,default:Date.now()+ (30 * 24 * 60 * 60 * 1000)},
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     publisher: { type: mongoose.Schema.Types.ObjectId, ref: 'Publisher' },
