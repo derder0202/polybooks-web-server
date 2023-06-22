@@ -25,6 +25,7 @@ mongoose.connect(process.env.MONGODBURL).then(()=>{
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const memberRouter = require('./routes/member');
 
 const apiUserRouter = require('./api_src/route/user')
 const apiPostRouter = require('./api_src/route/post')
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Web Admin
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/regularMembers',memberRouter)
 
 
 
@@ -66,6 +68,7 @@ app.use('/users', usersRouter);
 app.use('/api/users',apiUserRouter)
 app.use('/api/posts',apiPostRouter)
 app.use('/api/authors',apiAuthorRouter)
+//base url
 app.use('/api/publishers',apiPublisherRouter)
 app.use('/api/reviews',apiReviewRouter)
 app.use('/api/shops',apiShopRouter)

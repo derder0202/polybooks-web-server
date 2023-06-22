@@ -3,7 +3,7 @@ const express = require('express');
 const authorController = require("../controller/author_controller");
 const router = express.Router();
 // GET /authors
-router.get('/', authorController.getAllAuthors);
+router.get('/', authorController.getAllAuthors); // /api/author/
 router.get('/test',(req,res)=>{
     res.json("test git")
 })
