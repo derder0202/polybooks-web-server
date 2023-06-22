@@ -168,126 +168,86 @@
 
                 <div class="nav accordion" id="accordionSidenav">
 
-                    <!-- Sidenav Menu Heading (Users)-->
-                    <div class="sidenav-menu-heading">Users</div>
-                    <!-- Sidenav Accordion (Users)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
-                        <div class="nav-link-icon"><i data-feather="users"></i></div>
-                        Users
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <!-- Sidenav Menu Heading (Statistical)-->
+                    <div class="sidenav-menu-heading">Statistical</div>
+                    <!-- Sidenav Accordion (Thống kê)-->
+                    <a class="nav-link " href="account_statistics">
+                        <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                        Thống kê
                     </a>
-                    <div class="collapse" id="collapseUsers" data-bs-parent="#accordionUsers">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listUsers">
-                                Danh sách Users
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa Users</a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm Users</a>
-                        </nav>
-                    </div>
+
                     <!-- Sidenav Heading (Posts)-->
-                    <div class="sidenav-menu-heading">Posts</div>
-                    <!-- Sidenav Accordion (Bài đăng)-->
+                    <div class="sidenav-menu-heading">Account management</div>
+                    <!-- Sidenav Accordion (Pages)-->
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
-                        <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
-                        Bài đăng
+                        <div class="nav-link-icon"><i data-feather="grid"></i></div>
+                        Quản lý tài khoản
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapsePosts" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách bài đăng
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+
+                            <a class="nav-link" href="list_regular_member">
+                                <!--                                <div class="nav-link-icon"><i data-feather="user"></i></div>-->
+                                Thành viên thường
                             </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa bài đăng</a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm bài đăng</a>
+                            <!-- Nested Sidenav Accordion (Posts -> AutionPost)-->
+                            <a class="nav-link " href="list_vip_member">
+                                <!--                                <div class="nav-link-icon"><i data-feather="star"></i></div>-->
+                                Thành viên VIP
+                            </a>
+
+
                         </nav>
                     </div>
 
-                    <!-- Sidenav Heading (Stores)-->
-                    <div class="sidenav-menu-heading">Stores</div>
+                    <!-- Sidenav Heading (Aution Post)-->
+                    <div class="sidenav-menu-heading">Aution Post</div>
                     <!-- Sidenav Accordion (Cửa hàng)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseStores" aria-expanded="false" aria-controls="collapseStores">
-                        <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
-                        Các cửa hàng
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <a class="nav-link" href="list_aution_post">
+                        <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
+                        Danh sách đấu giá
                     </a>
-                    <div class="collapse" id="collapseStores" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách cửa hàng
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
-                        </nav>
-                    </div>
 
                     <!-- Sidenav Heading (Author and Pulisher)-->
-                    <div class="sidenav-menu-heading">Author and Pulisher</div>
+                    <div class="sidenav-menu-heading">Duyệt nội dung</div>
                     <!-- Sidenav Accordion (Author)-->
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
-                        <div class="nav-link-icon"><i data-feather="user"></i></div>
-                        Tác giả
+                        <div class="nav-link-icon"><i data-feather="align-center"></i></div>
+                        Duyệt nội dung
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách Tác giả
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
+                            <a class="nav-link" href="book_approval">Duyệt bài đăng sách</a>
+                            <a class="nav-link" href="new_approval">Duyệt bài đăng tin </a>
                         </nav>
                     </div>
 
-                    <!-- Sidenav Accordion (Pulisher)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePulisher" aria-expanded="false" aria-controls="collapsePulisher">
-                        <div class="nav-link-icon"><i data-feather="package"></i></div>
-                        Nhà xuất bản
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapsePulisher" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách Nhà xuất bản
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
-                        </nav>
-                    </div>
 
-                    <!-- Sidenav Heading (AutionPost and Review)-->
-                    <div class="sidenav-menu-heading">AutionPost and Review</div>
-                    <!-- Sidenav Accordion (AutionPost)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAutionPost" aria-expanded="false" aria-controls="collapseAutionPost">
-                        <div class="nav-link-icon"><i data-feather="trello"></i></div>
-                        Trang đấu giá
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseAutionPost" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
-                        </nav>
-                    </div>
+
+                    <!-- Sidenav Heading ( Report)-->
+                    <div class="sidenav-menu-heading">Report</div>
+
 
                     <!-- Sidenav Accordion (Review)-->
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseReview" aria-expanded="false" aria-controls="collapseReview">
-                        <div class="nav-link-icon"><i data-feather="thumbs-up"></i></div>
-                        Bài đánh giá
+                        <div class="nav-link-icon"><i data-feather="flag"></i></div>
+                        Quản lý report
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseReview" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="listPosts">
-                                Danh sách
-                            </a>
-                            <a class="nav-link" href="dashboard-2.html">Sửa </a>
-                            <a class="nav-link" href="dashboard-3.html">Thêm </a>
+                            <a class="nav-link" href="pending_report">Report chờ xử lý</a>
+                            <a class="nav-link" href="processed_report">Report đã xử lý </a>
                         </nav>
                     </div>
+
+
+                    <a class="nav-link " href="ad_management">
+                        <div class="nav-link-icon"><i data-feather="award"></i></div>
+                        Quản lý quảng cáo
+                    </a>
 
 
                 </div>
@@ -295,6 +255,7 @@
 
         </nav>
     </div>
+
     <!--            End Sidebar-->
 
     <!--          Start Content-->

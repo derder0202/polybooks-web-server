@@ -173,75 +173,43 @@
                     <!-- Sidenav Menu Heading (Statistical)-->
                     <div class="sidenav-menu-heading">Statistical</div>
                     <!-- Sidenav Accordion (Thống kê)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
-                        <div class="nav-link-icon"><i data-feather="bar-chart-2"></i></div>
+                    <a class="nav-link " href="account_statistics">
+                        <div class="nav-link-icon"><i data-feather="activity"></i></div>
                         Thống kê
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseUsers" data-bs-parent="#accordionUsers">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="account_statistics">Thống kê thành viên </a>
-                            <a class="nav-link" href="stall_statistics">Số lượng gian hàng</a>
-                            <a class="nav-link" href="books_sale_statistics">Số lượng sách đăng bán</a>
-                            <a class="nav-link" href="transaction_statistics">Lượt giao dịch</a>
-                            <a class="nav-link" href="aution_statistics">Thống kê sách đấu giá</a>
-                        </nav>
-                    </div>
 
                     <!-- Sidenav Heading (Posts)-->
                     <div class="sidenav-menu-heading">Account management</div>
                     <!-- Sidenav Accordion (Pages)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
+                    <a class="nav-link active" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
                         <div class="nav-link-icon"><i data-feather="grid"></i></div>
                         Quản lý tài khoản
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapsePosts" data-bs-parent="#accordionSidenav">
+                    <div class="collapse show" id="collapsePosts" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
 
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAutionPost" aria-expanded="false" aria-controls="pagesCollapseAutionPost">
+                            <a class="nav-link" href="list_regular_member">
+                                <!--                                <div class="nav-link-icon"><i data-feather="user"></i></div>-->
                                 Thành viên thường
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="pagesCollapseAutionPost" data-bs-parent="#accordionSidenavPagesMenu">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="list_regular_member">Danh sách</a>
-                                    <a class="nav-link" href="edit_regular_member">Sửa thành viên</a>
-                                    <a class="nav-link" href="add_regular_member">Thêm thành viên</a>
-                                    <a class="nav-link" href="update_regular_member">Cập nhật trạng thái</a>
-                                </nav>
-                            </div>
                             <!-- Nested Sidenav Accordion (Posts -> AutionPost)-->
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseVIPAccount" aria-expanded="false" aria-controls="pagesCollapseAutionPost">
+                            <a class="nav-link active" href="list_vip_member">
+                                <!--                                <div class="nav-link-icon"><i data-feather="star"></i></div>-->
                                 Thành viên VIP
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="pagesCollapseVIPAccount" data-bs-parent="#accordionSidenavPagesMenu">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="list_vip_member">Danh sách</a>
-                                    <a class="nav-link" href="payment_vip_member">Lịch sử nạp vip</a>
-                                    <a class="nav-link" href="update_vip_member">Cập nhật trạng thái VIP</a>
-                                </nav>
-                            </div>
 
 
                         </nav>
                     </div>
-
 
                     <!-- Sidenav Heading (Aution Post)-->
                     <div class="sidenav-menu-heading">Aution Post</div>
                     <!-- Sidenav Accordion (Cửa hàng)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseStores" aria-expanded="false" aria-controls="collapseStores">
-                        <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
-                        Đấu giá
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <a class="nav-link" href="list_aution_post">
+                        <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
+                        Danh sách đấu giá
                     </a>
-                    <div class="collapse" id="collapseStores" data-bs-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="list_aution_post">Danh sách đấu giá</a>
-                        </nav>
-                    </div>
 
                     <!-- Sidenav Heading (Author and Pulisher)-->
                     <div class="sidenav-menu-heading">Duyệt nội dung</div>
@@ -278,7 +246,7 @@
                     </div>
 
 
-                    <a class="nav-link" href="ad_management">
+                    <a class="nav-link " href="ad_management">
                         <div class="nav-link-icon"><i data-feather="award"></i></div>
                         Quản lý quảng cáo
                     </a>
