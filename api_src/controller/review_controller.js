@@ -135,26 +135,6 @@ const reviewController = {
       res.status(500).json({ success: false, message: 'Server error' });
     }
   },
-  // getReviewsByUser: async (req, res) => {
-  //   try {
-  //     const user = await User.findById(req.params.userId).populate('reviews');
-  //     const reviews = user.reviews;
-  //     res.status(200).json(reviews);
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ success: false, message: 'Server error' });
-  //   }
-  // },
-  // getReviewsByPost: async (req, res) => {
-  //   try {
-  //     const post = await Post.findById(req.params.postId).populate('reviews');
-  //     const reviews = post.reviews;
-  //     res.status(200).json(reviews);
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ success: false, message: 'Server error' });
-  //   }
-  // },
 };
 
 module.exports = reviewController;
