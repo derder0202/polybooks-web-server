@@ -291,6 +291,6 @@ const userController = {
         }
     }
 }
-//for nothing just test git
+//for nothing just test gitx
 
 module.exports = userController
