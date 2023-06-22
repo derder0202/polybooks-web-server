@@ -1,9 +1,23 @@
-const {Review, User, Post, Shop} = require("../model/model");
+const {Review, User, Post, Shop, } = require("../model/model");
 const multer = require("multer");
 const admin = require('firebase-admin')
 const upload = require('../upload_image').array("images",4)
 
 const reviewController = {
+  getReviews: async (req,res)=>{
+    try {
+      const startIndex = parseInt(req.query.startIndex) || 0;
+      const limit = parseInt(req.query.limit) || 20;
+      const reviews = await Review.find({})
+          .skip(startIndex)
+          .limit(limit);
+      //test
+      res.status(200).json(reviews);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error: 'Error getting authors from database.'});
+    }
+  },
   createReview: async (req, res) => {
     try {
       const { user, post, rating, message } = req.body;
@@ -42,12 +56,11 @@ const reviewController = {
             await User.findByIdAndUpdate(user,{$push:{reviews: review._id}})
           }
           if(post){
-            const postTemp = await Post.findById(post)
-            await post.updateOne({$push:{reviews: review._id}})
+            const postTemp = await Post.findById(postTemp)
+            await postTemp.updateOne({$push:{reviews: review._id}})
             //await Post.findByIdAndUpdate(post,)
-            if(post.shopId){
-              console.log("shop")
-              const shop = await Shop.findById(post.shopId)
+            if(postTemp.shopId){
+              const shop = await Shop.findById(postTemp.shopId)
               //shop.updateOne({$push:{reviews: review._id}})
               shop.reviews.push(review._id)
               await shop.save()
@@ -100,7 +113,7 @@ const reviewController = {
 },
   delete: async (req, res) => {
     try {
-      const review = await Review.findByIdAndDelete(req.params.id);
+      const review = await Review.findByIdAndDelete(req.params.id,{new:true});
       if (!review) {
         return res.status(404).json({ success: false, message: 'Review not found' });
       }
@@ -122,26 +135,6 @@ const reviewController = {
       res.status(500).json({ success: false, message: 'Server error' });
     }
   },
-  // getReviewsByUser: async (req, res) => {
-  //   try {
-  //     const user = await User.findById(req.params.userId).populate('reviews');
-  //     const reviews = user.reviews;
-  //     res.status(200).json(reviews);
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ success: false, message: 'Server error' });
-  //   }
-  // },
-  // getReviewsByPost: async (req, res) => {
-  //   try {
-  //     const post = await Post.findById(req.params.postId).populate('reviews');
-  //     const reviews = post.reviews;
-  //     res.status(200).json(reviews);
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ success: false, message: 'Server error' });
-  //   }
-  // },
 };
 
 module.exports = reviewController;
