@@ -26,6 +26,16 @@ mongoose.connect(process.env.MONGODBURL).then(()=>{
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const memberRouter = require('./routes/member');
+const vipmemberRouter = require('./routes/vipmember');
+const autionPostRouter = require('./routes/autionpost');
+const contentRouter = require('./routes/content');
+const newContentRouter = require('./routes/newcontent');
+const pendingReportRouter = require('./routes/pendingreport');
+const processedreportRouter = require('./routes/processedreport');
+const admanagementRouter = require('./routes/admanagement');
+const statisticalRouter = require('./routes/statistical');
+const authenticationRouter = require('./routes/authentication');
+
 
 const apiUserRouter = require('./api_src/route/user')
 const apiPostRouter = require('./api_src/route/post')
@@ -59,9 +69,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Web Admin
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/regularMembers',memberRouter)
-
+app.use('/Users', usersRouter);
+app.use('/RegularMembers',memberRouter)
+app.use('/VipMembers',vipmemberRouter)
+app.use('/AutionPost',autionPostRouter)
+app.use('/BookApproval',contentRouter)
+app.use('/NewApproval',newContentRouter)
+app.use('/PendingReport',pendingReportRouter)
+app.use('/ProcessedReport',processedreportRouter)
+app.use('/AdvertisingManagement',admanagementRouter)
+app.use('/Statistical',statisticalRouter)
+app.use('/Login',authenticationRouter)
 
 
 //API

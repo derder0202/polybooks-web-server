@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,15 +25,10 @@
     <!-- * * Tip * * You can use text or an image for your navbar brand.-->
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-orange" href="listUsers">Poly Books</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-orange" href="#">Poly Books</a>
     <!-- Navbar Search Input-->
     <!-- * * Note: * * Visible only on and above the lg breakpoint-->
-    <form class="form-inline me-auto d-none d-lg-block me-3">
-        <div class="input-group input-group-joined input-group-solid">
-            <input class="form-control pe-0" type="search" placeholder="Search" aria-label="Search" />
-            <div class="input-group-text"><i data-feather="search"></i></div>
-        </div>
-    </form>
+    
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- Navbar Search Dropdown-->
@@ -173,7 +167,7 @@
                     <!-- Sidenav Menu Heading (Statistical)-->
                     <div class="sidenav-menu-heading">Statistical</div>
                     <!-- Sidenav Accordion (Thống kê)-->
-                    <a class="nav-link" href="account_statistics">
+                    <a class="nav-link " href="/Statistical">
                         <div class="nav-link-icon"><i data-feather="activity"></i></div>
                         Thống kê
                     </a>
@@ -182,19 +176,19 @@
                     <div class="sidenav-menu-heading">Account management</div>
                     <!-- Sidenav Accordion (Pages)-->
                     <a class="nav-link active" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
-                        <div class="nav-link-icon"><i data-feather="grid"></i></div>
+                        <div class="nav-link-icon "><i data-feather="grid"></i></div>
                         Quản lý tài khoản
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse show" id="collapsePosts" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
 
-                            <a class="nav-link active" href="list_regular_member">
+                            <a class="nav-link active" href="/RegularMembers">
                                 <!--                                <div class="nav-link-icon"><i data-feather="user"></i></div>-->
                                 Thành viên thường
                             </a>
                             <!-- Nested Sidenav Accordion (Posts -> AutionPost)-->
-                            <a class="nav-link " href="list_vip_member">
+                            <a class="nav-link" href="/VipMembers">
                                 <!--                                <div class="nav-link-icon"><i data-feather="star"></i></div>-->
                                 Thành viên VIP
                             </a>
@@ -206,7 +200,7 @@
                     <!-- Sidenav Heading (Aution Post)-->
                     <div class="sidenav-menu-heading">Aution Post</div>
                     <!-- Sidenav Accordion (Cửa hàng)-->
-                    <a class="nav-link" href="list_aution_post">
+                    <a class="nav-link" href="/AutionPost">
                         <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                         Danh sách đấu giá
                     </a>
@@ -221,8 +215,8 @@
                     </a>
                     <div class="collapse" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="book_approval">Duyệt bài đăng sách</a>
-                            <a class="nav-link" href="new_approval">Duyệt bài đăng tin </a>
+                            <a class="nav-link" href="/BookApproval">Duyệt bài đăng sách</a>
+                            <a class="nav-link" href="/NewApproval">Duyệt bài đăng tin </a>
                         </nav>
                     </div>
 
@@ -240,13 +234,13 @@
                     </a>
                     <div class="collapse" id="collapseReview" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="pending_report">Report chờ xử lý</a>
-                            <a class="nav-link" href="processed_report">Report đã xử lý </a>
+                            <a class="nav-link" href="/PendingReport">Report chờ xử lý</a>
+                            <a class="nav-link" href="/ProcessedReport">Report đã xử lý </a>
                         </nav>
                     </div>
 
 
-                    <a class="nav-link " href="ad_management">
+                    <a class="nav-link " href="/AdvertisingManagement">
                         <div class="nav-link-icon"><i data-feather="award"></i></div>
                         Quản lý quảng cáo
                     </a>
@@ -260,7 +254,7 @@
     <!--            End Sidebar-->
 
     <!--          Start Content-->
-    <div id="layoutSidenav_content">
+ <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
                 <div class="container-fluid px-4">
@@ -269,17 +263,13 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="users"></i></div>
-                                    Users List
+                                    Danh Sách Người Dùng
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="user-management-groups-list.html">
-                                    <i class="me-1" data-feather="users"></i>
-                                    Manage Groups
-                                </a>
-                                <a class="btn btn-sm btn-light text-primary" href="addUser">
+                                <a class="btn btn-sm btn-light text-primary" href="/RegularMembers/add_regular_member">
                                     <i class="me-1" data-feather="user-plus"></i>
-                                    Add New User
+                                    Thêm Mới Người Dùng
                                 </a>
                             </div>
                         </div>
@@ -290,46 +280,165 @@
             <div class="container-fluid px-4">
                 <div class="card">
                     <div class="card-body">
+                        <label style="font-weight: bold;margin-bottom: 10px;">Bộ Lọc Tìm Kiếm</label><br>
+                        <div class="row gx-3 mb-3">
+                                <!-- Form Group (Ngày Sinh)-->
+                            <div class="col-md-6">
+                                    <select  style="width: 200px;" class="form-select" id="gender">
+                                        <option disabled selected value="" style="font-size: 15px; font-family: Arial, sans-serif;">Chọn giới tính</option>
+                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Tất cả</option>
+                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nam</option>
+                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nữ</option>
+                                    </select>
+                                    <script>
+                                        // Lắng nghe sự kiện khi người dùng thay đổi giới tính
+                                        document.getElementById('gender').addEventListener('change', function() {
+                                            var selectedGender = this.value; // Lấy giá trị giới tính đã chọn
+
+                                            // Lặp qua từng hàng trong bảng
+                                            var tableRows = document.querySelectorAll('#datatablesSimple tbody tr');
+                                            tableRows.forEach(function(row) {
+                                                var genderCell = row.querySelector('td:nth-child(6)'); // Lấy ô chứa thông tin giới tính
+
+                                                // Kiểm tra giới tính và ẩn/hiện hàng tương ứng
+                                                if (selectedGender === 'Tất cả' || selectedGender === genderCell.textContent) {
+                                                    row.style.display = 'table-row'; // Hiện hàng
+                                                } else {
+                                                    row.style.display = 'none'; // Ẩn hàng
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                        </div>
+                                <hr style="border-top: 1px solid #828080; height: 0.5px;margin-top: 20px;">
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
+                                <th>Ảnh</th>
                                 <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
                                 <th>Địa chỉ</th>
-                                <th>Avatar</th>
                                 <th>Giới tính</th>
-                                <th>Role</th>
                                 <th>Ngày sinh</th>
-                                <th>Actions</th>
+                                <th>Vài trò</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
+                                <th>Ảnh</th>
                                 <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
                                 <th>Địa chỉ</th>
-                                <th>Avatar</th>
                                 <th>Giới tính</th>
-                                <th>Role</th>
                                 <th>Ngày sinh</th>
-                                <th>Actions</th>
+                                <th>Vai trò</th>
+                                <th>Hành động</th>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Tiger Nixon
-                                    </div>
-                                </td>
-                                <td>tiger@email.com</td>
-                                <td>tiger@email.com</td>
-                                <td>Nữ</td>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
+
+                                <td>Quang</td>
+                                <td>quang@gmail.com</td>
+                                 <td>0386566002</td>
+                                <td>HN</td>
+                                <td>Nam</td>
+                                <td>20 Jun 2021</td>
                                 <td>
                                     <span class="badge bg-green-soft text-green">Manual</span>
                                 </td>
-                                <td>20 Jun 2021</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
+
+                                <td>Hưng</td>
+                                <td>hưng@gmail.com</td>
+                                 <td>0386566001</td>
+                                <td>YB</td>
+                                <td>Nam</td>
+                                <td>21 Jun 2022</td>
+                                <td>
+                                    <span class="badge bg-red-soft text-red">Vip</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
+
+                                <td>Sáng</td>
+                                <td>sang@gmail.com</td>
+                                 <td>0386566006</td>
+                                <td>YB</td>
+                                <td>Nữ</td>
+                                <td>22 Jun 2022</td>
+                                <td>
+                                    <span class="badge bg-red-soft text-red">Vip</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
+
+                                <td>Nam</td>
+                                <td>nam@gmail.com</td>
+                                 <td>0386566000</td>
+                                <td>AL</td>
+                                <td>Nam</td>
+                                <td>22 Jun 2023</td>
+                                <td>
+                                    <span class="badge bg-green-soft text-green">Manual</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
+
+                                <td>Hùng</td>
+                                <td>hùng@gmail.com</td>
+                                 <td>0386566007</td>
+                                <td>YB</td>
+                                <td>Nữ</td>
+                                <td>6 Jun 2022</td>
+                                <td>
+                                    <span class="badge bg-red-soft text-red">Vip</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
+
+                                <td>Hiển</td>
+                                <td>hiển@gmail.com</td>
+                                 <td>0386566111</td>
+                                <td>YB</td>
+                                <td>Nam</td>
+                                <td>5 Jun 2022</td>
+                                <td>
+                                    <span class="badge bg-red-soft text-red">Vip</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                                 </td>
                             </tr>
