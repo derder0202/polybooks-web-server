@@ -10,7 +10,11 @@ var router = express.Router();
 
 router.get('/',memberController.listRegularMember)
 
-router.post('/',memberController.addRegularMember)
+router.get('/add_regular_member',memberController.formAddRegularMember)
+router.get('/edit_regular_member',memberController.formEditRegularMember)
+router.get('/change_password',memberController.formChangePassword)
+
+router.post('/',memberController.formAddRegularMember)
 
 router.put('/:id',memberController.addRegularMember) // nho sua lai
 

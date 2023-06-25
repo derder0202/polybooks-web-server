@@ -1,5 +1,6 @@
-// var userModel = require("../api_src/model/model");
-//
-// exports.showListUsers = function (req,res,next) {
-//     res.render('./users/listUsers');
+// const statisticalController = {
+//     formLogin: async (req,res)=>{
+//         res.render('statistical/account_statistics');
+//     },
 // }
+// module.exports = statisticalController
