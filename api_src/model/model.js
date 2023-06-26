@@ -141,12 +141,11 @@ const BillSchema = new mongoose.Schema({
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     //createAt: { type: Date, default: Date.now },
     status: {
-        type: String,
-        enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
-        default: 'pending',
+        type: Number,
+        default: 0,
     },
     address: { type: String },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 },{timestamps:true});
 
 ShopSchema.pre('save',async function (next) {
