@@ -17,6 +17,7 @@
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src="../js/listmember.js"></script>
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -269,17 +270,13 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="users"></i></div>
-                                    Users List
+                                    Danh Sách Người Dùng VIP
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="user-management-groups-list.html">
-                                    <i class="me-1" data-feather="users"></i>
-                                    Manage Groups
-                                </a>
                                 <a class="btn btn-sm btn-light text-primary" href="addUser">
                                     <i class="me-1" data-feather="user-plus"></i>
-                                    Add New User
+                                    Thêm Mới Người Dùng Vip
                                 </a>
                             </div>
                         </div>
@@ -290,49 +287,59 @@
             <div class="container-fluid px-4">
                 <div class="card">
                     <div class="card-body">
+                        <label style="font-weight: bold;margin-bottom: 10px;">Bộ Lọc Tìm Kiếm</label><br>
+                        <div class="row gx-3 mb-3">
+                                <!-- Form Group (Ngày Sinh)-->
+                            <div class="col-md-6">
+                                <select  style="width: 200px;" class="form-select" id="gender">
+                                        <option disabled selected value="" style="font-size: 15px; font-family: Arial, sans-serif;">Chọn giới tính</option>
+                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Tất cả</option>
+                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nam</option>
+                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nữ</option>
+                                </select>
+                            </div>
+                        </div>
+                                <hr style="border-top: 1px solid #828080; height: 0.5px;margin-top: 20px;">
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
+                                <th>Ảnh</th>
                                 <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
                                 <th>Địa chỉ</th>
-                                <th>Avatar</th>
                                 <th>Giới tính</th>
-                                <th>Role</th>
                                 <th>Ngày sinh</th>
-                                <th>Actions</th>
+                                <th>Vài trò</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Họ tên</th>
-                                <th>Địa chỉ</th>
-                                <th>Avatar</th>
-                                <th>Giới tính</th>
-                                <th>Role</th>
-                                <th>Ngày sinh</th>
-                                <th>Actions</th>
-                            </tr>
-                            </tfoot>
+                            
+                            
                             <tbody>
+                                {{#each listUsersVip}} 
                             <tr>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
+                                <td>{{this.fullName}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{this.phone}}</td>
+                                <td>{{this.address}}</td>
                                 <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Tiger Nixon
-                                    </div>
+                                    <span id="genderValue">{{this.gender}}</span>
                                 </td>
-                                <td>tiger@email.com</td>
-                                <td>tiger@email.com</td>
-                                <td>Nữ</td>
+
+                                <td>{{this.birthday}}</td>
                                 <td>
-                                    <span class="badge bg-red-soft text-red">Vip</span>
+                                    <span id="roleValue" class="badge bg-red-soft text-red">{{this.role}}</span>
                                 </td>
-                                <td>20 Jun 2021</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/VipMembers/edit_vip_member/{{this._id}}"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                                 </td>
                             </tr>
+                            {{/each}}
+                            
+                            
                             </tbody>
                         </table>
                     </div>
