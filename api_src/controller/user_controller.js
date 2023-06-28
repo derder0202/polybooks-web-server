@@ -254,12 +254,14 @@ const userController = {
         const { startIndex, limit } = req.query;
         //const { userId } = req.body;
         try {
-            const user = await User.findById(req.params.id).populate({
-                path: 'favorite',
-                options: { skip: parseInt(startIndex) || 0,
-                    limit: parseInt(limit) || 20
+            const user = await User.findById(req.params.id).populate(
+                {
+                    path: 'favorite',
+                    options: { skip: parseInt(startIndex) || 0,
+                        limit: parseInt(limit) || 20
+                    }
                 }
-            });
+            )
             res.status(200).json(user.favorite);
         } catch (err) {
             console.log(err);
