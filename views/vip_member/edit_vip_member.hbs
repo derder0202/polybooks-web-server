@@ -263,7 +263,7 @@
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a onclick="confirmRedirectToRegularMembers()" class="btn btn-sm btn-light text-primary">
+                                <a onclick="confirmRedirectToVipMembers()" class="btn btn-sm btn-light text-primary">
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Quay lại danh sách người dùng
                                 </a>
@@ -277,7 +277,7 @@
                 <!-- Account page navigation-->
                 <div  id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
                     <nav class="nav nav-borders">
-                        <a class="nav-link active ms-0" href="/RegularMembers/edit_regular_member">Hồ sơ</a>
+                        <a class="nav-link active ms-0" href="/VipMembers/edit_vip_member">Hồ sơ</a>
                         <a style="margin-left: 4px;" class="nav-link" href="/RegularMembers/change_password">Bảo mật</a>
                     </nav>
             </div>
@@ -291,27 +291,27 @@
                                 <!-- Profile picture image-->
                                 <img  class="mb-3" src="/assets/img/illustrations/profiles/profile-3.png" alt="" style="width: 150px; height: 150px; border-radius: 50%;">
                                 <!-- Profile picture help block-->
-                                <div class="mb-2" style="font-weight: bold;font-size: 20px;">{{itemMember.fullName}}</div>
+                                <div class="mb-2" style="font-weight: bold;font-size: 20px;">{{itemVipMember.fullName}}</div>
                                 <!-- Profile picture upload button-->
-                                <span id="roleValue" class="badge bg-green-soft text-green">{{itemMember.role}}</span>
+                                <span id="roleValue" class="badge bg-red-soft text-red">{{itemVipMember.role}}</span>
                                 <hr style="border-top: 1px solid #000;">
                                 
                                 <div style="text-align: left">
                                     <label class="small text-muted mb-3">Chi Tiết</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Họ tên:</label>
-                                    <span class="small mb-1">{{itemMember.fullName}}</span><br>
+                                    <span class="small mb-1">{{itemVipMember.fullName}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Email:</label>
-                                    <span class="small mb-1">{{itemMember.email}}</span><br>
+                                    <span class="small mb-1">{{itemVipMember.email}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Số điện thoại:</label>
-                                    <span class="small mb-1">{{itemMember.phone}}</span><br>
+                                    <span class="small mb-1">{{itemVipMember.phone}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
-                                    <label class="small mb-1">{{itemMember.address}}</label><br>
+                                    <label class="small mb-1">{{itemVipMember.address}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Giới tính:</label>
-                                    <label class="small mb-1">{{itemMember.gender}}</label><br>
+                                    <label class="small mb-1">{{itemVipMember.gender}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Ngày sinh:</label>
-                                    <label class="small mb-1">{{itemMember.birthday}}</label><br>
+                                    <label class="small mb-1">{{itemVipMember.birthday}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Vai trò:</label>
-                                    <label id="roleValue" class="small mb-1">{{itemMember.role}}</label><br>
+                                    <label id="roleValue" class="small mb-1">{{itemVipMember.role}}</label><br>
                                 </div>
 
                             </div>
@@ -334,7 +334,7 @@
                                     <!-- Form Group (Phone)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="phoneNumber">Số điện thoại</label>
-                                        <input name="member_phone" class="form-control" id="phoneNumber" type="text" pattern="[0-9]+" placeholder="Nhập số điện thoại của bạn" />                                        
+                                        <input name="member_phone" class="form-control" id="phoneNumber" type="text" pattern="[0-9]+" placeholder="Nhập số điện thoại của bạn" />                                        <div id="phoneNumberError" class="error-message" style="color: red; font-size: 12px;"></div>
                                         <div id="phoneNumberError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
                                     <!-- Form Group (email address)-->

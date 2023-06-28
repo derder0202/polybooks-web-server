@@ -4,4 +4,7 @@ var router = express.Router();
 
 router.get('/',vipMembersController.listVipMembers)
 
+router.get('/edit_vip_member/:id',vipMembersController.formEditVipMember)
+router.post('/edit_vip_member/:id',vipMembersController.postEditVipMember)
+
 module.exports = router;
