@@ -49,6 +49,8 @@ const apiDiscountRouter = require('./api_src/route/discount')
 const apiReportRouter = require('./api_src/route/report')
 const apiBannerRouter = require('./api_src/route/banner')
 const apiPublisherRouter = require('./api_src/route/publisher')
+const apiBillRouter = require('./api_src/route/bill')
+
 
 
 const app = express();
@@ -96,6 +98,8 @@ app.use('/api/depositHistory',apiDepositHistoryRouter)
 app.use('/api/discounts',apiDiscountRouter)
 app.use('/api/banners',apiBannerRouter)
 app.use('/api/publishers',apiPublisherRouter)
+app.use('/api/bills',apiBillRouter)
+
 
 
 
