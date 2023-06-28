@@ -18,7 +18,7 @@ const postController = {
         }
     },
     getPostsWithFilter: async (req, res) => {
-        const { bookName, authorName, publisherName, category, startIndex=0, limit=20, postStatus} = req.body;
+        const { bookName, authorName, publisherName, category, startIndex=0, limit=20, postStatus,newest} = req.body;
         let filter = {}
         if(bookName){
             filter.bookName = { $regex: new RegExp(bookName, 'i') }
@@ -46,6 +46,7 @@ const postController = {
                 .select("-__v")
                 .skip(startIndex)
                 .limit(limit)
+                .sort({createdAt: newest?newest:1})
                 .exec();
             res.status(200).json(posts);
         } catch (err) {
