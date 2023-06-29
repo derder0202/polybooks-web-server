@@ -1,7 +1,18 @@
 const authenticationController = {
     formLogin: async (req,res)=>{
         // cần list đầy đủ của member thường
-        res.render('authentication/login-page');
+        if (req.isAuthenticated()) {
+            res.redirect('/Statistical');
+        }
+        else{
+            res.render('authentication/login-page')
+        }
+        //res.render('authentication/login-page');
     },
+
+    logout: async (req,res)=>{
+        req.logout()
+    },
+
 }
 module.exports = authenticationController

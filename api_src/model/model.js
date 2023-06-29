@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
     role: { type: Number, default: 0 },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
+    active: {type: Boolean, default:true}
 }, {timestamps: true});
 const CategorySchema = new mongoose.Schema({
     name: { type: String, required: true },

@@ -1,10 +1,16 @@
 var express = require('express');
 const {Post} = require("../api_src/model/model");
 const authenticationController = require("../controllers/authentication_controller");
+const passport = require("passport");
+const checkAuth = require("../api_src/middleware/checkAuth");
 var router = express.Router();
 
 /* GET home page. */
 router.get('/',authenticationController.formLogin)
+router.post('/login',
+    passport.authenticate('local', { successRedirect: '/Statistical',
+      failureRedirect: '/Login' }));
+
 
 
 

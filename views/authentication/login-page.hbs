@@ -32,16 +32,16 @@
                             <hr class="my-0" />
                             <div class="card-body p-5">
                                 <!-- Login form-->
-                                <form>
+                                <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
                                     <!-- Form Group (email address)-->
                                     <div class="mb-3">
                                         <label class="text-gray-600 small" for="emailExample">Email address</label>
-                                        <input class="form-control form-control-solid" type="text" placeholder="" aria-label="Email Address" aria-describedby="emailExample" />
+                                        <input class="form-control form-control-solid" type="text" placeholder="" aria-label="Email Address" aria-describedby="emailExample" name="username"/>
                                     </div>
                                     <!-- Form Group (password)-->
                                     <div class="mb-3">
                                         <label class="text-gray-600 small" for="passwordExample">Password</label>
-                                        <input class="form-control form-control-solid" type="password" placeholder="" aria-label="Password" aria-describedby="passwordExample" />
+                                        <input class="form-control form-control-solid" type="password" placeholder="" name="password" aria-label="Password" aria-describedby="passwordExample" />
                                     </div>
                                     <!-- Form Group (forgot password link)-->
                                     <div class="mb-3"><a class="small" href="forgot-password-page">Quên mật khẩu?</a></div>
@@ -51,7 +51,7 @@
                                             <input class="form-check-input" id="checkRememberPassword" type="checkbox" value="" />
                                             <label class="form-check-label" for="checkRememberPassword">Lưu mật khẩu</label>
                                         </div>
-                                        <a class="btn btn-primary" href="/Statistical">Đăng nhập</a>
+                                        <button class="btn btn-primary" type="submit">Đăng nhập</button>
                                     </div>
                                 </form>
                             </div>

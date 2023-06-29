@@ -6,7 +6,7 @@ const logger = require('morgan');
 const cors = require('cors')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
-
+const LocalStrategy = require('passport-local').Strategy;
 const admin = require("firebase-admin");
 
 const serviceAccount = require("./credentials.json");
@@ -50,6 +50,8 @@ const apiReportRouter = require('./api_src/route/report')
 const apiBannerRouter = require('./api_src/route/banner')
 const apiPublisherRouter = require('./api_src/route/publisher')
 const apiBillRouter = require('./api_src/route/bill')
+const passport = require("passport");
+const {User} = require("./api_src/model/model");
 
 
 
@@ -68,7 +70,36 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.use(new LocalStrategy(
+    async function(username, password, done) {
+      const user = await User.findOne({ phone: username })
+
+      if (!user) {
+        console.log("no user")
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      console.log(user.password)
+      console.log(password)
+      if (user.password !== password) {
+        console.log("???")
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+
+      return done(null, user);
+    }
+));
 
 
 //Web Admin
