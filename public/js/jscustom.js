@@ -40,8 +40,7 @@ function clearInputs() {
 function validateForm() {
     // Lấy giá trị từ các trường nhập liệu
     var fullName = document.getElementById('inputUsername').value;
-    var phone = document.getElementById('phoneNumber').value;
-    // var email = document.getElementById('email').value;
+    var email = document.getElementById('email').value;
     // var address = document.getElementById('address').value;
     var gender = document.getElementById('gender').value;
     // var birthday = document.getElementById('inputBirthday').value;
@@ -57,19 +56,15 @@ function validateForm() {
         displayErrorMessage('fullNameError', 'Vui lòng nhập họ tên');
         isValid = false;
     }
-    if (phone === '') {
-        displayErrorMessage('phoneNumberError', 'Vui lòng nhập số điện thoại');
+    if (email === '') {
+        displayErrorMessage('emailError', 'Vui lòng nhập email');
         isValid = false;
     }
-    // if (email === '') {
-    //     displayErrorMessage('emailError', 'Vui lòng nhập email');
-    //     isValid = false;
-    // }
     // if (address === '') {
     //     displayErrorMessage('addressError', 'Vui lòng nhập địa chỉ');
     //     isValid = false;
     // }
-    if (gender === '') {
+    if (gender === 'Mời bạn chọn giới tính') {
         displayErrorMessage('genderError', 'Vui lòng nhập giới tính');
         isValid = false;
     }
@@ -77,8 +72,8 @@ function validateForm() {
     //     displayErrorMessage('birthdayError', 'Vui lòng nhập ngày sinh');
     //     isValid = false;
     // }
-    if (role === '') {
-        displayErrorMessage('roleError', 'Vui lòng chọn role');
+    if (role === 'Mời bạn chọn vai trò') {
+        displayErrorMessage('roleError', 'Vui lòng chọn vai trò');
         isValid = false;
     }
     return isValid;

@@ -24,10 +24,16 @@ router.post('/changePasswordByPhone', userController.changePasswordByPhone);
 //add to favorite
 router.post('/:id/addToFavorite', userController.addToFavorite);
 router.post('/:id/removeFromFavorite', userController.removeFromFavorite);
+router.get('/:id/favorite', userController.getFavoriteByUser);
+
+//address
+router.get('/:id/address', userController.getAddressByUser);
+router.post('/:id/addAddress', userController.addAddress);
+router.post('/:id/removeAddress', userController.removeAddress);
 
 router.get('/:id/posts', userController.getPostsByUser);
 router.get('/:id/reviews', userController.getReviewsByUser);
-router.get('/:id/favorite', userController.getFavoriteByUser);
+router.get('/:id/notification', userController.getNotificationsByUser);
 
 //const multer = require('multer')
 // const upload = multer({

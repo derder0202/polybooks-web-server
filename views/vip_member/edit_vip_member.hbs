@@ -305,13 +305,13 @@
                                     <label style="font-weight: bold;" class="small mb-1">Số điện thoại:</label>
                                     <span class="small mb-1">{{itemVipMember.phone}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
-                                    <label class="small mb-1">{{itemVipMember.address}}</label><br>
+                                    <span class="small mb-1">{{itemVipMember.address}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Giới tính:</label>
-                                    <label class="small mb-1">{{itemVipMember.gender}}</label><br>
+                                    <span id="genderValue" class="small mb-1">{{itemVipMember.gender}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Ngày sinh:</label>
-                                    <label class="small mb-1">{{itemVipMember.birthday}}</label><br>
+                                    <span class="small mb-1">{{itemVipMember.birthday}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Vai trò:</label>
-                                    <label id="roleValue" class="small mb-1">{{itemVipMember.role}}</label><br>
+                                    <span id="roleValue" class="small mb-1">{{itemVipMember.role}}</span><br>
                                 </div>
 
                             </div>
@@ -326,55 +326,58 @@
                                 <!-- Form Group (Họ Tên)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputUsername">Họ tên</label>
-                                    <input name="member_name" class="form-control" id="inputUsername" type="text" placeholder="Nhập họ tên của bạn"/>
+                                    <input value="{{itemVipMember.fullName}}" name="member_name" class="form-control" id="inputUsername" type="text" placeholder="Nhập họ tên của bạn"/>
                                     <div id="fullNameError" class="error-message" style="color: red; font-size: 12px;"></div>
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
-                                    <!-- Form Group (Phone)-->
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="phoneNumber">Số điện thoại</label>
-                                        <input name="member_phone" class="form-control" id="phoneNumber" type="text" pattern="[0-9]+" placeholder="Nhập số điện thoại của bạn" />                                        <div id="phoneNumberError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                        <div id="phoneNumberError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div>
+
                                     <!-- Form Group (email address)-->
-                                    {{!-- <div class="col-md-6">
-                                        <label class="small mb-1" for="email">Email</label>
-                                        <input name="member_email" class="form-control" id="email" type="email" placeholder="Nhập email của bạn"/>
-                                        <div id="emailError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div> --}}
-                                </div>
-                                <!-- Form Row        -->
-                                <div class="row gx-3 mb-3">
-                                    <!-- Form Group (Địa chỉ)-->
-                                    {{!-- <div class="col-md-6">
-                                        <label class="small mb-1" for="address">Địa chỉ</label>
-                                        <input name="member_address" class="form-control" id="address" type="text" placeholder="Nhập địa chỉ của bạn"/>
-                                        <div id="addressError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div> --}}
-                                    <!-- Form Group (Giới Tính)-->
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="gender">Giới tính</label>
-                                        <input name="member_gender" class="form-control" id="gender" type="text" placeholder="Nhập giới tính của bạn"/>
-                                        <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                        <label class="small mb-1" for="email">Email</label>
+                                        <input value="{{itemVipMember.email}}" name="member_email" class="form-control" id="email" type="email" placeholder="Nhập email của bạn"/>
+                                        <div id="emailError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
-                                </div>
-                                <!-- Form Row-->
-                                <div class="row gx-3 mb-3">
+
                                     <!-- Form Group (Ngày Sinh)-->
                                     {{!-- <div class="col-md-6">
                                         <label class="small mb-1" for="inputBirthday">Ngày sinh</label>
                                         <input name="member_birthday" class="form-control" id="inputBirthday" type="date"  placeholder="Nhập ngày sinh của bạn"/>
                                         <div id="birthdayError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div> --}}
+                                </div>
+                                <!-- Form Group (Địa chỉ)-->
+                                {{!-- <div class="mb-3">
+                                        <label class="small mb-1" for="address">Địa chỉ</label>
+                                        <input name="member_address" class="form-control" id="address" type="text" placeholder="Nhập địa chỉ của bạn"/>
+                                        <div id="addressError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                </div> --}}
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+
+                                    {{!-- <div class="col-md-6">
+                                        <label class="small mb-1" for="gender">Giới tính</label>
+                                        <input value="{{itemMember.gender}}" name="member_gender" class="form-control" id="gender" type="text" placeholder="Nhập giới tính của bạn"/>
+                                        <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div> --}}
+                                    <!-- Form Group (gender)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="gender">Giới tính</label>
+                                            <select name="member_gender" class="form-select" id="gender">
+                                                <option disabled selected>Mời bạn chọn giới tính</option>
+                                                <option value="male" data-display-value="Nam">Nam</option>
+                                                <option value="female" data-display-value="Nữ">Nữ</option>
+                                            </select>
+                                        <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
                                     <!-- Form Group (Role)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="role">Vai trò</label>
-                                        <select name="member_role" class="form-select" id="role">
-                                            <option disabled selected value="">Mời bạn chọn vai trò</option>
-                                            <option >0</option>
-                                            <option>1</option>
-                                        </select>
+                                            <select name="member_role" class="form-select" id="role">
+                                                <option disabled selected>Mời bạn chọn vai trò</option>
+                                                <option value="0" data-display-value="Thường">Thường</option>
+                                                <option value="1" data-display-value="VIP">VIP</option>
+                                            </select>
                                         <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
                                 </div>

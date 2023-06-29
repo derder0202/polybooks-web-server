@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     phone: { type: String ,immutable:true, unique: true, required: true },
     password: { type: String , required: true},
     email: { type: String , default:"" },
-    address: { type: String, default:"" },
+    address: [{ type: String,}],
     //bio: { type: String },
     avatar: { type: String },
     gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
@@ -48,20 +48,71 @@ const AuthorSchema = new mongoose.Schema({
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
-//change
+// //change
+// const ShopSchema = new mongoose.Schema({
+//     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' , immutable: true},
+//     name: { type: String, required: true },
+//     rating: { type: Number, default: 0},
+//     description: { type: String, default:"" },
+//     image: { type: String,},
+//     address: { type: String, default:"" },
+//     phone: { type: String, default:"" },
+//    // createAt: { type: Date, default: Date.now },
+//     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+//     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+//    // taxCode: { type: String }
+// }, {timestamps: true});
 const ShopSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' , immutable: true},
-    name: { type: String, required: true },
-    rating: { type: Number, default: 0},
-    description: { type: String, default:"" },
-    image: { type: String,},
-    address: { type: String, default:"" },
-    phone: { type: String, default:"" },
-   // createAt: { type: Date, default: Date.now },
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-   // taxCode: { type: String }
-}, {timestamps: true});
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+            immutable: true
+        },
+        address: {
+            type: String,
+            default: ""
+        },
+        phone1: {
+            type: String,
+            default: ""
+        },
+        phone2: {
+            type: String,
+            default:""
+        },
+        rating: {
+            type: Number,
+            default: 0
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        description: {
+            type: String,
+            default:""
+        },
+        shopImage: {
+            type: String
+        },
+        coverImage: {
+            type: String
+        },
+        posts: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Post'
+            }
+        ],
+        reviews: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Review'
+            }
+        ]
+    },{ timestamps: true }
+)
 
 //change
 const PostSchema = new mongoose.Schema({
@@ -141,12 +192,11 @@ const BillSchema = new mongoose.Schema({
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     //createAt: { type: Date, default: Date.now },
     status: {
-        type: String,
-        enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
-        default: 'pending',
+        type: Number,
+        default: 0,
     },
     address: { type: String },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 },{timestamps:true});
 
 ShopSchema.pre('save',async function (next) {

@@ -37,8 +37,7 @@ const memberController = {
             };
             const du_lieu = {
               fullName: req.body.member_name,
-              phone: req.body.member_phone,
-            //   email: req.body.member_email,
+              email: req.body.member_email,
               role: Number(req.body.member_role),
               gender: req.body.member_gender,
             //   address: req.body.member_address,

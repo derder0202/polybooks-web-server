@@ -42,7 +42,6 @@ const autionApprovalRouter = require('./routes/aution_approval');
 const apiUserRouter = require('./api_src/route/user')
 const apiPostRouter = require('./api_src/route/post')
 const apiAuthorRouter = require('./api_src/route/author')
-const apiPublisherRouter = require('./api_src/route/pulisher')
 const apiReviewRouter = require('./api_src/route/review')
 const apiShopRouter = require('./api_src/route/shop')
 const apiCategoryRouter = require('./api_src/route/category')
@@ -50,6 +49,10 @@ const apiDepositHistoryRouter = require('./api_src/route/deposit_history')
 const apiDiscountRouter = require('./api_src/route/discount')
 const apiReportRouter = require('./api_src/route/report')
 const apiBannerRouter = require('./api_src/route/banner')
+const apiPublisherRouter = require('./api_src/route/publisher')
+const apiBillRouter = require('./api_src/route/bill')
+
+
 
 const app = express();
 
@@ -89,8 +92,6 @@ app.use('/Login',authenticationRouter)
 app.use('/api/users',apiUserRouter)
 app.use('/api/posts',apiPostRouter)
 app.use('/api/authors',apiAuthorRouter)
-//base url
-app.use('/api/publishers',apiPublisherRouter)
 app.use('/api/reviews',apiReviewRouter)
 app.use('/api/shops',apiShopRouter)
 app.use('/api/categories',apiCategoryRouter)
@@ -98,6 +99,10 @@ app.use('/api/reports',apiReportRouter)
 app.use('/api/depositHistory',apiDepositHistoryRouter)
 app.use('/api/discounts',apiDiscountRouter)
 app.use('/api/banners',apiBannerRouter)
+app.use('/api/publishers',apiPublisherRouter)
+app.use('/api/bills',apiBillRouter)
+
+
 
 
 // catch 404 and forward to error handler
