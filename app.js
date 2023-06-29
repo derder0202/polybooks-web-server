@@ -36,6 +36,7 @@ const processedreportRouter = require('./routes/processedreport');
 const admanagementRouter = require('./routes/admanagement');
 const statisticalRouter = require('./routes/statistical');
 const authenticationRouter = require('./routes/authentication');
+const autionApprovalRouter = require('./routes/aution_approval');
 
 
 const apiUserRouter = require('./api_src/route/user')
@@ -75,6 +76,7 @@ app.use('/RegularMembers',memberRouter)
 app.use('/VipMembers',vipmemberRouter)
 app.use('/AutionPost',autionPostRouter)
 app.use('/BookApproval',contentRouter)
+app.use('/AutionApproval',autionApprovalRouter);
 app.use('/NewApproval',newContentRouter)
 app.use('/PendingReport',pendingReportRouter)
 app.use('/ProcessedReport',processedreportRouter)

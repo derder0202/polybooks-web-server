@@ -17,6 +17,9 @@
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+
+    <script src="../js/listposts.js"></script>
+
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -221,7 +224,7 @@
                     </a>
                     <div class="collapse show" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link active" href="/BookApproval">Duyệt bài đăng sách</a>
+                            <a class="nav-link active lift" href="/BookApproval">Duyệt bài đăng sách</a>
                             <a class="nav-link" href="/NewApproval">Duyệt bài đăng tin </a>
                         </nav>
                     </div>
@@ -248,7 +251,7 @@
 
                     <a class="nav-link " href="/AdvertisingManagement">
                         <div class="nav-link-icon"><i data-feather="award"></i></div>
-                        Quản lý quảng cáo
+                        Quản lý banner
                     </a>
 
 
@@ -262,421 +265,81 @@
 
     <!--          Start Content-->
     <div id="layoutSidenav_content">
+        <ul class="nav nav-tabs mt-2 mx-2 mb-2">
+            <li class="nav-item">
+                <a class="nav-link active text-primary" aria-current="page" href="/BookApproval">Duyệt bài đăng bán</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/AutionApproval">Duyệt bài đấu giá</a>
+            </li>
+        </ul>
         <main>
-            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-                <div class="container-fluid px-4">
-                    <div class="page-header-content">
-                        <div class="row align-items-center justify-content-between pt-3">
-                            <div class="col-auto mb-3">
-                                <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="users"></i></div>
-                                    Users List
-                                </h1>
-                            </div>
-                            <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="user-management-groups-list.html">
-                                    <i class="me-1" data-feather="users"></i>
-                                    Manage Groups
-                                </a>
-                                <a class="btn btn-sm btn-light text-primary" href="addUser">
-                                    <i class="me-1" data-feather="user-plus"></i>
-                                    Add New User
-                                </a>
+            <!-- Main page content-->
+            <div class="container-fluid px-4 ">
+                <div class="col-sm-3">
+                    <!-- Dashboard info Tai khoan moi-->
+                    <div class="card border-start-lg border-start-primary h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <div class="uppercase fw-bold text-primary mb-3">Bài đăng bán cần duyệt</div>
+                                    <div class="row">
+                                        <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
+                                        <div class="col-6 ml-1 h5 mt-1">10</div>
+                                    </div>
+
+                                </div>
+                                <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
                             </div>
                         </div>
                     </div>
                 </div>
-            </header>
-            <!-- Main page content-->
-            <div class="container-fluid px-4">
-                <div class="card">
+                <div class="card mt-4">
                     <div class="card-body">
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Giới tính</th>
-                                <th>Role</th>
-                                <th>Joined Date</th>
-                                <th>Actions</th>
+                                <th>Người đăng</th>
+                                <th>Tiêu đề</th>
+                                <th>Bán/Miễn phí</th>
+                                <th>Vai trò</th>
+                                <th>Thời gian đăng</th>
+                                <th>Xem tin</th>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Giới tính</th>
-                                <th>Role</th>
-                                <th>Joined Date</th>
-                                <th>Actions</th>
-                            </tr>
-                            </tfoot>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Tiger Nixon
-                                    </div>
-                                </td>
-                                <td>tiger@email.com</td>
-                                <td>Nữ</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Garrett Winters
-                                    </div>
-                                </td>
-                                <td>gwinterse@email.com</td>
-                                <td>Nam</td>
-                                <td>
+                            {{#each listBook}}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                           {{this.seller}}
+                                        </div>
+                                    </td>
+                                    <td>{{this.postTitle}}</td>
+                                    <td>
+                                        <span id="salesType" class="badge bg-green-soft text-green">{{this.salesType}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-green-soft text-green">Manual</span>
+                                    </td>
+                                    <td>{{this.endTime}}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_approval_detail"><i data-feather="eye"></i></a>
+                                    </td>
+                                </tr>
+                            {{/each}}
 
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></div>
-                                        Ashton Cox
-                                    </div>
-                                </td>
-                                <td>ashtonc@email.com</td>
-                                <td>Nữ</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-4.png" /></div>
-                                        Cedric Kelly
-                                    </div>
-                                </td>
-                                <td>cedrickel@email.com</td>
-                                <td>Nam</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-5.png" /></div>
-                                        Airi Satou
-                                    </div>
-                                </td>
-                                <td>asatou@email.com</td>
-                                <td>Nam</td>
-                                <td>
 
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-6.png" /></div>
-                                        Brielle Williamson
-                                    </div>
-                                </td>
-                                <td>bwilliamson@email.com</td>
-                                <td>Nữ</td>
-                                <td>
 
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Herrod Chandler
-                                    </div>
-                                </td>
-                                <td>harrodc@email.com</td>
-                                <td>Nữ</td>
-                                <td><span class="badge bg-green-soft text-green">Manual</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Rhona Davidson
-                                    </div>
-                                </td>
-                                <td>rhonadavidson@email.com</td>
-                                <td>Nam</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></div>
-                                        Colleen Hurst
-                                    </div>
-                                </td>
-                                <td>churst@email.com</td>
-                                <td>Nữ</td>
-                                <td>
-
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-4.png" /></div>
-                                        Sonya Frost
-                                    </div>
-                                </td>
-                                <td>sfrost@email.com</td>
-                                <td>Nam</td>
-                                <td>
-
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-5.png" /></div>
-                                        Jena Gaines
-                                    </div>
-                                </td>
-                                <td>jenagaines@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-6.png" /></div>
-                                        Quinn Flynn
-                                    </div>
-                                </td>
-                                <td>qflynn@email.com</td>
-                                <td>Registered</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Sales</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Charde Marshall
-                                    </div>
-                                </td>
-                                <td>chardmarsh@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-green-soft text-green">Sales</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Haley Kennedy
-                                    </div>
-                                </td>
-                                <td>hkennedy@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></div>
-                                        Tatyana Fitzpatrick
-                                    </div>
-                                </td>
-                                <td>tatfitz@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-4.png" /></div>
-                                        Michael Silva
-                                    </div>
-                                </td>
-                                <td>michaelsilva@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-blue-soft text-blue">Developers</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-5.png" /></div>
-                                        Paul Byrd
-                                    </div>
-                                </td>
-                                <td>pbyrd@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-6.png" /></div>
-                                        Gloria Little
-                                    </div>
-                                </td>
-                                <td>glorialittle@email.com</td>
-                                <td>Registered</td>
-                                <td>
-                                    <span class="badge bg-blue-soft text-blue">Developers</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Bradley Greer
-                                    </div>
-                                </td>
-                                <td>bgreer@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Dai Rios
-                                    </div>
-                                </td>
-                                <td>drios@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-blue-soft text-blue">Developers</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </main>
-        <footer class="footer-admin mt-auto footer-light">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
-                    <div class="col-md-6 text-md-end small">
-                        <a href="#!">Privacy Policy</a>
-                        &middot;
-                        <a href="#!">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
+
 
     <!--            End Content-->
 
