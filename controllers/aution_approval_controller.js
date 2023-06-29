@@ -15,7 +15,7 @@ const autionApprovalController ={
     },
 
     detailAutionApproval: async (req,res) =>{
-        let detailAution = await Post.findById(req.params.id)
+        let detailAution = await Post.findById(req.params.id).populate("author","name")
             .exec()
             .catch(function (err) {
                 console.log(err)

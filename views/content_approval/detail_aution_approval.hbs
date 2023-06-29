@@ -437,12 +437,12 @@
                                         <!-- Form Group (phone number)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputPhone">Tác giả</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{detailAution.author}}" disabled readonly/>
+                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{detailAution.author.name}}" disabled readonly/>
                                         </div>
                                         <!-- Form Group (birthday)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Giá bán</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.price}}" disabled readonly/>
+                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.price}} đ" disabled readonly/>
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -450,13 +450,13 @@
                                         <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="{{detailAution.address}}" disabled readonly/>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
-                                        <label class="form-check-label" for="flexCheckDefault">Đã kiểm tra thông tin</label>
+                                        <input class="form-check-input" name="postStatus" id="checkBox" type="checkbox" value="">
+                                        <label class="form-check-label" for="flexCheckDefault" id="text">Đã kiểm tra thông tin</label>
                                     </div>
                                     <div class="mb-3">
                                     </div>
                                     <!-- Save changes button-->
-                                    <a class="btn btn-primary" type="button" href="book_approval">Duyệt bài</a>
+                                    <a class="btn btn-primary" type="button" href="/AutionApproval">Duyệt bài</a>
                                 </form>
                             </div>
                         </div>
@@ -482,6 +482,17 @@
 <script src="/js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
 <script src="js/litepicker.js"></script>
+
+<script>
+    let checkbox = document.getElementById("checkBox");
+
+    checkbox.addEventListener("change",()=>{
+        if (checkbox.checked){
+            {{detailAution.postStatus}} == 1;
+            console.log({{detailAution.postStatus}});
+        }
+    })
+</script>
 
 </body>
 </html>
