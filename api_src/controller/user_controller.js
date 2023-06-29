@@ -241,7 +241,25 @@ const userController = {
         try {
             const user = await User.findById(req.params.id).populate({
                 path: 'posts',
-                options: { skip: parseInt(startIndex) || 0, limit: parseInt(limit) ||20}
+                options: { skip: parseInt(startIndex) || 0, limit: parseInt(limit) ||20},
+                populate:[
+                    {
+                        path:"seller",
+                        select:"fullName"
+                    },
+                    {
+                        path:"author",
+                        select:"name"
+                    },
+                    {
+                        path:"publisher",
+                        select:"name"
+                    },
+                    {
+                        path:"category",
+                        select:"name"
+                    },
+                ]
             });
             console.log(user)
             res.status(200).json(user.posts);
