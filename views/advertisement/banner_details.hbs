@@ -8,35 +8,24 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Poly Books</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/polyBooks.png" />
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-    <script src="../js/listmember.js"></script>
-    
+    <script src="/js/jscustom.js"></script>
+    <script src="/js/jscustomchange.js"></script>
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-    <!-- Navbar Brand-->
-    <!-- * * Tip * * You can use text or an image for your navbar brand.-->
-    <!-- * * * * * * When using an image, we recommend the SVG format.-->
-    <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-orange" href="listUsers">Poly Books</a>
-    <!-- Navbar Search Input-->
-    <!-- * * Note: * * Visible only on and above the lg breakpoint-->
-    <form class="form-inline me-auto d-none d-lg-block me-3">
-        <div class="input-group input-group-joined input-group-solid">
-            <input class="form-control pe-0" type="search" placeholder="Search" aria-label="Search" />
-            <div class="input-group-text"><i data-feather="search"></i></div>
-        </div>
-    </form>
+   
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-orange" href="#">Poly Books</a>
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- Navbar Search Dropdown-->
@@ -142,10 +131,10 @@
         </li>
         <!-- User Dropdown-->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="/assets/img/illustrations/profiles/profile-1.png" /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
-                    <img class="dropdown-user-img" src="assets/img/illustrations/profiles/profile-1.png" />
+                    <img class="dropdown-user-img" src="/assets/img/illustrations/profiles/profile-1.png" />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">Valerie Luna</div>
                         <div class="dropdown-user-details-email">vluna@aol.com</div>
@@ -196,7 +185,7 @@
                                 Thành viên thường
                             </a>
                             <!-- Nested Sidenav Accordion (Posts -> AutionPost)-->
-                            <a class="nav-link active" href="/VipMembers">
+                            <a class="nav-link" href="/VipMembers">
                                 <!--                                <div class="nav-link-icon"><i data-feather="star"></i></div>-->
                                 Thành viên VIP
                             </a>
@@ -208,7 +197,7 @@
                     <!-- Sidenav Heading (Aution Post)-->
                     <div class="sidenav-menu-heading">Aution Post</div>
                     <!-- Sidenav Accordion (Cửa hàng)-->
-                    <a class="nav-link" href="AutionPost">
+                    <a class="nav-link" href="/AutionPost">
                         <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                         Danh sách đấu giá
                     </a>
@@ -262,22 +251,22 @@
     <!--            End Sidebar-->
 
     <!--          Start Content-->
-    <div id="layoutSidenav_content">
+ <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-                <div class="container-fluid px-4">
+                <div class="container-xl px-4">
                     <div class="page-header-content">
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="users"></i></div>
-                                    Danh Sách Người Dùng VIP
+                                    <div class="page-header-icon"><i data-feather="user"></i></div>
+                                    Thông tin chi tiết
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="addUser">
-                                    <i class="me-1" data-feather="user-plus"></i>
-                                    Thêm Mới Người Dùng Vip
+                                <a onclick="confirmRedirectToRegularMembers()" class="btn btn-sm btn-light text-primary">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Quay lại
                                 </a>
                             </div>
                         </div>
@@ -286,61 +275,53 @@
             </header>
             <!-- Main page content-->
             <div class="container-fluid px-4">
-                <div class="card">
-                    <div class="card-body">
-                        <label style="font-weight: bold;margin-bottom: 10px;">Bộ Lọc Tìm Kiếm</label><br>
-                        <div class="row gx-3 mb-3">
-                                <!-- Form Group (Ngày Sinh)-->
-                            <div class="col-md-6">
-                                <select  style="width: 200px;" class="form-select" id="gender">
-                                        <option disabled selected value="" style="font-size: 15px; font-family: Arial, sans-serif;">Chọn giới tính</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Tất cả</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nam</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nữ</option>
-                                </select>
+                <!-- Account page navigation-->
+               
+                <hr class="mt-0 mb-4" />
+                    <div class="container-fluid px-4">
+                        <!-- Account details card-->
+                        <div class="card mb-3" style="width: 104%; margin-left: -25px;">
+                            <div class="card-header">Chi tiết banner</div>
+                            <div class="card-body">
+                                <form onsubmit="return validateForm()">
+                                    <div class="row gx-3 mb-3">
+                                        <!-- Form Group (New pass)-->
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="newpass">Người dùng</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="newpass" type="text" placeholder="abcabc"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="confirmpass">ID người dùng</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="confirmpass" type="text" placeholder="1232132" />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="">Tình trạng</label>
+                                            <input class="form-control" type="text" placeholder="Đang sử dụng"/>
+                                        </div>
+                                         <div class="mb-3">
+                                            <label class="small mb-1" for="">Nội dung</label>
+                                            <input class="form-control" type="text" placeholder="Đây là nội dung"/>
+                                        </div>
+                                        <label class="small mb-1" for="">Các hình ảnh</label>
+                                        <div style="margin-bottom: 10px;" class=" me-2 ">
+                                            <img class="img-fluid" style="object-fit: fill" src="https://inquangcaopcm.com/upload/images/54.jpeg" />
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    <!-- Save changes button-->
+                                    {{!-- <div class="card-body text-center">
+                                        <button style="font-weight: bold; margin-right: 15px;" class="btn btn-primary" type="submit">Đổi mật khẩu</button>
+                                        <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
+                                    </div> --}}
+                                </form>
                             </div>
                         </div>
-                                <hr style="border-top: 1px solid #828080; height: 0.5px;margin-top: 20px;">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Ảnh</th>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th>Địa chỉ</th>
-                                <th>Giới tính</th>
-                                <th>Ngày sinh</th>
-                                <th>Vài trò</th>
-                                <th>Hành động</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {{#each listUsersVip}} 
-                            <tr>
-                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
-                                <td>{{this.fullName}}</td>
-                                <td>{{this.email}}</td>
-                                <td>{{this.phone}}</td>
-                                <td>{{this.address}}</td>
-                                <td>
-                                    <span id="genderValue">{{this.gender}}</span>
-                                </td>
-
-                                <td>{{this.birthday}}</td>
-                                <td>
-                                    <span id="roleValue" class="badge bg-red-soft text-red">{{this.role}}</span>
-                                </td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/VipMembers/edit_vip_member/{{this._id}}"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            {{/each}}
-                            </tbody>
-                        </table>
                     </div>
-                </div>
             </div>
         </main>
         <footer class="footer-admin mt-auto footer-light">
@@ -361,7 +342,7 @@
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="js/scripts.js"></script>
+<script src="/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/chart-area-demo.js"></script>
 <script src="assets/demo/chart-bar-demo.js"></script>
