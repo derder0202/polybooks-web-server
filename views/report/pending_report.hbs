@@ -240,7 +240,7 @@
                     </a>
                     <div class="collapse show" id="collapseReview" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link active" href="/PendingReport">Report chờ xử lý</a>
+                            <a class="nav-link active lift" href="/PendingReport">Report chờ xử lý</a>
                             <a class="nav-link" href="/ProcessedReport">Report đã xử lý </a>
                         </nav>
                     </div>
@@ -248,7 +248,7 @@
 
                     <a class="nav-link " href="/AdvertisingManagement">
                         <div class="nav-link-icon"><i data-feather="award"></i></div>
-                        Quản lý Banner
+                        Quản lý banner
                     </a>
 
 
@@ -262,54 +262,42 @@
 
     <!--          Start Content-->
     <div id="layoutSidenav_content">
-        <main>
+        <main><!-- Main page content-->
+
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-                <div class="container-fluid px-4">
+                <div class="container-xl px-4">
                     <div class="page-header-content">
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="users"></i></div>
-                                    Users List
+                                    <div class="page-header-icon"><i data-feather="flag"></i></div>
+                                    Báo cáo chờ xử lý
                                 </h1>
-                            </div>
-                            <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="user-management-groups-list.html">
-                                    <i class="me-1" data-feather="users"></i>
-                                    Manage Groups
-                                </a>
-                                <a class="btn btn-sm btn-light text-primary" href="addUser">
-                                    <i class="me-1" data-feather="user-plus"></i>
-                                    Add New User
-                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </header>
-            <!-- Main page content-->
             <div class="container-fluid px-4">
-                <div class="card">
+                <div class="card mt-4">
                     <div class="card-body">
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Giới tính</th>
-                                <th>Role</th>
-                                <th>Joined Date</th>
-                                <th>Actions</th>
+                                <th>Người báo cáo</th>
+                                <th>Bài đăng bị báo cáo</th>
+                                <th>Nội dung</th>
+                                <th>Thời gian</th>
+                                <th>Xem báo cáo</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Giới tính</th>
-                                <th>Role</th>
-                                <th>Joined Date</th>
-                                <th>Actions</th>
+                                <th>Người báo cáo</th>
+                                <th>Bài đăng bị báo cáo</th>
+                                <th>Nội dung</th>
+                                <th>Thời gian</th>
+                                <th>Xem báo cáo</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -317,365 +305,352 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Tiger Nixon
+                                        Phùng Hiển
                                     </div>
                                 </td>
-                                <td>tiger@email.com</td>
-                                <td>Nữ</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Garrett Winters
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
                                     </div>
                                 </td>
-                                <td>gwinterse@email.com</td>
-                                <td>Nam</td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
                                 <td>
-
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></div>
-                                        Ashton Cox
-                                    </div>
-                                </td>
-                                <td>ashtonc@email.com</td>
-                                <td>Nữ</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-4.png" /></div>
-                                        Cedric Kelly
-                                    </div>
-                                </td>
-                                <td>cedrickel@email.com</td>
-                                <td>Nam</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-5.png" /></div>
-                                        Airi Satou
-                                    </div>
-                                </td>
-                                <td>asatou@email.com</td>
-                                <td>Nam</td>
-                                <td>
-
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-6.png" /></div>
-                                        Brielle Williamson
-                                    </div>
-                                </td>
-                                <td>bwilliamson@email.com</td>
-                                <td>Nữ</td>
-                                <td>
-
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Herrod Chandler
+                                        Nguyễn Quang
                                     </div>
                                 </td>
-                                <td>harrodc@email.com</td>
-                                <td>Nữ</td>
-                                <td><span class="badge bg-green-soft text-green">Manual</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Rhona Davidson
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
                                     </div>
                                 </td>
-                                <td>rhonadavidson@email.com</td>
-                                <td>Nam</td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
                                 <td>
-                                    <span class="badge bg-green-soft text-green">Manual</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></div>
-                                        Colleen Hurst
-                                    </div>
-                                </td>
-                                <td>churst@email.com</td>
-                                <td>Nữ</td>
-                                <td>
-
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-4.png" /></div>
-                                        Sonya Frost
-                                    </div>
-                                </td>
-                                <td>sfrost@email.com</td>
-                                <td>Nam</td>
-                                <td>
-
-                                    <span class="badge bg-red-soft text-red">VIP</span>
-                                </td>                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-5.png" /></div>
-                                        Jena Gaines
-                                    </div>
-                                </td>
-                                <td>jenagaines@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-6.png" /></div>
-                                        Quinn Flynn
-                                    </div>
-                                </td>
-                                <td>qflynn@email.com</td>
-                                <td>Registered</td>
-                                <td>
-                                    <span class="badge bg-green-soft text-green">Sales</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Charde Marshall
+                                        Phùng Hiển
                                     </div>
                                 </td>
-                                <td>chardmarsh@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-green-soft text-green">Sales</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Haley Kennedy
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
                                     </div>
                                 </td>
-                                <td>hkennedy@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-3.png" /></div>
-                                        Tatyana Fitzpatrick
-                                    </div>
-                                </td>
-                                <td>tatfitz@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-4.png" /></div>
-                                        Michael Silva
-                                    </div>
-                                </td>
-                                <td>michaelsilva@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-blue-soft text-blue">Developers</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-5.png" /></div>
-                                        Paul Byrd
-                                    </div>
-                                </td>
-                                <td>pbyrd@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-6.png" /></div>
-                                        Gloria Little
-                                    </div>
-                                </td>
-                                <td>glorialittle@email.com</td>
-                                <td>Registered</td>
-                                <td>
-                                    <span class="badge bg-blue-soft text-blue">Developers</span>
-                                    <span class="badge bg-purple-soft text-purple">Managers</span>
-                                </td>
-                                <td>20 Jun 2021</td>
-                                <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                        Bradley Greer
+                                        Nguyễn Quang
                                     </div>
                                 </td>
-                                <td>bgreer@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-yellow-soft text-yellow">Customer</span></td>
-                                <td>20 Jun 2021</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                        Dai Rios
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Phùng Hiển
                                     </div>
                                 </td>
-                                <td>drios@email.com</td>
-                                <td>Registered</td>
-                                <td><span class="badge bg-blue-soft text-blue">Developers</span></td>
-                                <td>20 Jun 2021</td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
+                                    </div>
+                                </td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Nguyễn Quang
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Phùng Hiển
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
+                                    </div>
+                                </td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Nguyễn Quang
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Phùng Hiển
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
+                                    </div>
+                                </td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Nguyễn Quang
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Phùng Hiển
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
+                                    </div>
+                                </td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Nguyễn Quang
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Phùng Hiển
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
+                                    </div>
+                                </td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Nguyễn Quang
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Phùng Hiển
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
+                                    </div>
+                                </td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Nguyễn Quang
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Phùng Hiển
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" /></div>
+                                        Sách Đắc nhân tâm
+                                    </div>
+                                </td>
+                                <td>Sách không đúng như trên bài đăng</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                        Nguyễn Quang
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2"><img class="avatar-img img-fluid" src="https://dorahome.info/wp-content/uploads/2021/09/truyen-ngan-doremon-mau-vol-05.jpg" /></div>
+                                        Truyện Doraemon
+                                    </div>
+                                </td>
+                                <td>Sách quá rách</td>
+                                <td>24/06/2023</td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="post_report_detail"><i data-feather="eye"></i></a>
+                                </td>
+                            </tr>
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </main>
-        <footer class="footer-admin mt-auto footer-light">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
-                    <div class="col-md-6 text-md-end small">
-                        <a href="#!">Privacy Policy</a>
-                        &middot;
-                        <a href="#!">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+
     </div>
 
     <!--            End Content-->
