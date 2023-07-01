@@ -259,9 +259,12 @@ const userController = {
                         path:"category",
                         select:"name"
                     },
+                    {
+                        path: "shopId",
+                        select: "name"
+                    }
                 ]
             });
-            console.log(user)
             res.status(200).json(user.posts);
         } catch (err) {
             console.log(err);
@@ -278,10 +281,28 @@ const userController = {
                     options: { skip: parseInt(startIndex) || 0,
                         limit: parseInt(limit) || 20
                     },
-                    populate: {
-                        path: "shopId",
-                        select: "name"
-                    }
+                    populate:[
+                        {
+                            path:"seller",
+                            select:"fullName"
+                        },
+                        {
+                            path:"author",
+                            select:"name"
+                        },
+                        {
+                            path:"publisher",
+                            select:"name"
+                        },
+                        {
+                            path:"category",
+                            select:"name"
+                        },
+                        {
+                            path: "shopId",
+                            select: "name"
+                        }
+                    ]
                 }
             )
             res.status(200).json(user.favorite);
