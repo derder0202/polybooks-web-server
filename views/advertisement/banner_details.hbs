@@ -8,38 +8,24 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Poly Books</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/polyBooks.png" />
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-
-    <script src="../js/listposts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
-
+    <script src="/js/jscustom.js"></script>
+    <script src="/js/jscustomchange.js"></script>
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-    <!-- Navbar Brand-->
-    <!-- * * Tip * * You can use text or an image for your navbar brand.-->
-    <!-- * * * * * * When using an image, we recommend the SVG format.-->
-    <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-orange" href="listUsers">Poly Books</a>
-    <!-- Navbar Search Input-->
-    <!-- * * Note: * * Visible only on and above the lg breakpoint-->
-    <form class="form-inline me-auto d-none d-lg-block me-3">
-        <div class="input-group input-group-joined input-group-solid">
-            <input class="form-control pe-0" type="search" placeholder="Search" aria-label="Search" />
-            <div class="input-group-text"><i data-feather="search"></i></div>
-        </div>
-    </form>
+   
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-orange" href="#">Poly Books</a>
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
         <!-- Navbar Search Dropdown-->
@@ -145,10 +131,10 @@
         </li>
         <!-- User Dropdown-->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownUserImage" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-fluid" src="/assets/img/illustrations/profiles/profile-1.png" /></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
-                    <img class="dropdown-user-img" src="assets/img/illustrations/profiles/profile-1.png" />
+                    <img class="dropdown-user-img" src="/assets/img/illustrations/profiles/profile-1.png" />
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">Valerie Luna</div>
                         <div class="dropdown-user-details-email">vluna@aol.com</div>
@@ -178,7 +164,7 @@
                     <!-- Sidenav Menu Heading (Statistical)-->
                     <div class="sidenav-menu-heading">Statistical</div>
                     <!-- Sidenav Accordion (Thống kê)-->
-                    <a class="nav-link" href="/Statistical">
+                    <a class="nav-link " href="/Statistical">
                         <div class="nav-link-icon"><i data-feather="activity"></i></div>
                         Thống kê
                     </a>
@@ -186,12 +172,12 @@
                     <!-- Sidenav Heading (Posts)-->
                     <div class="sidenav-menu-heading">Account management</div>
                     <!-- Sidenav Accordion (Pages)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
+                    <a class="nav-link active" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
                         <div class="nav-link-icon"><i data-feather="grid"></i></div>
                         Quản lý tài khoản
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapsePosts" data-bs-parent="#accordionSidenav">
+                    <div class="collapse show" id="collapsePosts" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
 
                             <a class="nav-link" href="/RegularMembers">
@@ -199,7 +185,7 @@
                                 Thành viên thường
                             </a>
                             <!-- Nested Sidenav Accordion (Posts -> AutionPost)-->
-                            <a class="nav-link " href="/VipMembers">
+                            <a class="nav-link" href="/VipMembers">
                                 <!--                                <div class="nav-link-icon"><i data-feather="star"></i></div>-->
                                 Thành viên VIP
                             </a>
@@ -210,7 +196,7 @@
 
                     <!-- Sidenav Heading (Aution Post)-->
                     <div class="sidenav-menu-heading">Aution Post</div>
-                    <!-- Sidenav Accordion (Cửa     hàng)-->
+                    <!-- Sidenav Accordion (Cửa hàng)-->
                     <a class="nav-link" href="/AutionPost">
                         <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                         Danh sách đấu giá
@@ -219,14 +205,14 @@
                     <!-- Sidenav Heading (Author and Pulisher)-->
                     <div class="sidenav-menu-heading">Duyệt nội dung</div>
                     <!-- Sidenav Accordion (Author)-->
-                    <a class="nav-link active" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
+                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
                         <div class="nav-link-icon"><i data-feather="align-center"></i></div>
                         Duyệt nội dung
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse show" id="collapseAuthor" data-bs-parent="#accordionSidenav">
+                    <div class="collapse" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link active lift" href="/BookApproval">Duyệt bài đăng sách</a>
+                            <a class="nav-link" href="/BookApproval">Duyệt bài đăng sách</a>
                             <a class="nav-link" href="/NewApproval">Duyệt bài đăng tin </a>
                         </nav>
                     </div>
@@ -253,7 +239,7 @@
 
                     <a class="nav-link " href="/AdvertisingManagement">
                         <div class="nav-link-icon"><i data-feather="award"></i></div>
-                        Quản lý banner
+                        Quản lý Banner
                     </a>
 
 
@@ -262,21 +248,11 @@
 
         </nav>
     </div>
-
     <!--            End Sidebar-->
 
     <!--          Start Content-->
-    <div id="layoutSidenav_content">
-        {{!-- <ul class="nav nav-tabs mt-2 mx-2 mb-2">
-            <li class="nav-item">
-                <a class="nav-link active text-primary" aria-current="page" href="/BookApproval">Duyệt bài đăng bán</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/AutionApproval">Duyệt bài đấu giá</a>
-            </li>
-        </ul> --}}
+ <div id="layoutSidenav_content">
         <main>
-            <!-- Main page content-->
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
                 <div class="container-xl px-4">
                     <div class="page-header-content">
@@ -284,100 +260,89 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="user"></i></div>
-                                    Duyệt Nội Dung
+                                    Thông tin chi tiết
                                 </h1>
                             </div>
-                            
+                            <div class="col-12 col-xl-auto mb-3">
+                                <a onclick="confirmRedirectToRegularMembers()" class="btn btn-sm btn-light text-primary">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Quay lại
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </header>
-            <div class="container-fluid px-4 ">
-                <div  id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
-                    <nav class="nav nav-borders">
-                        <a class="nav-link active ms-0" href="/BookApproval">Duyệt bài đăng bán</a>
-                        <a style="margin-left: 4px;" class="nav-link" href="/AutionApproval">Duyệt bài đấu giá</a>
-                    </nav>
-                     <hr class="mt-0 mb-4" />
-                </div>     
-                <div class="col-sm-3">
-                    <!-- Dashboard info Tai khoan moi-->
-                    <div style="width: 230px;" class="card border-start-lg border-start-primary h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <div class="uppercase fw-bold text-primary mb-3">Bài đăng bán cần duyệt</div>
-                                    <div class="row">
-                                        <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
-                                        <div class="col-8 ml-1 h5 mt-1 text-red">{{listBook.length}}</div>
+            <!-- Main page content-->
+            <div class="container-fluid px-4">
+                <!-- Account page navigation-->
+               
+                <hr class="mt-0 mb-4" />
+                    <div class="container-fluid px-4">
+                        <!-- Account details card-->
+                        <div class="card mb-3" style="width: 104%; margin-left: -25px;">
+                            <div class="card-header">Chi tiết banner</div>
+                            <div class="card-body">
+                                <form onsubmit="return validateForm()">
+                                    <div class="row gx-3 mb-3">
+                                        <!-- Form Group (New pass)-->
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="newpass">Người dùng</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="newpass" type="text" placeholder="abcabc"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="confirmpass">ID người dùng</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="confirmpass" type="text" placeholder="1232132" />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="">Tình trạng</label>
+                                            <input class="form-control" type="text" placeholder="Đang sử dụng"/>
+                                        </div>
+                                         <div class="mb-3">
+                                            <label class="small mb-1" for="">Nội dung</label>
+                                            <input class="form-control" type="text" placeholder="Đây là nội dung"/>
+                                        </div>
+                                        <label class="small mb-1" for="">Các hình ảnh</label>
+                                        <div style="margin-bottom: 10px;" class=" me-2 ">
+                                            <img class="img-fluid" style="object-fit: fill" src="https://inquangcaopcm.com/upload/images/54.jpeg" />
+                                        </div>
+                                        
+                                        
                                     </div>
-
-                                </div>
-                                <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
+                                    <!-- Save changes button-->
+                                    {{!-- <div class="card-body text-center">
+                                        <button style="font-weight: bold; margin-right: 15px;" class="btn btn-primary" type="submit">Đổi mật khẩu</button>
+                                        <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
+                                    </div> --}}
+                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card mt-4">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Người đăng</th>
-                                <th>Tên sách</th>
-                                <th>Thể loại</th>
-                                
-                                <th>Bán/Miễn phí</th>
-                                <th>Thời gian đăng</th>
-                                <th>Xem tin</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            {{#each listBook}}
-                                <tr>
-                                    <td>
-                                        {{this.seller.fullName}}
-                                    </td>
-                                    <td>{{this.bookName}}</td>
-                                    <td>{{this.category.name}}</td>
-                                    
-                                    <td>
-                                        <span id="salesType" class="badge bg-green-soft text-green">{{this.salesType}}</span>
-                                    </td>
-                                    {{!-- <td class="createdAt">{{this.createdAt}}</td> --}}
-                                    <td>{{this.createdAt}}</td>
-        
-                           
-                                    <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/BookApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
-                                    </td>
-                                </tr>
-                            {{/each}}
-                            {{!-- <script>
-                                const createdAtCells = document.querySelectorAll('td.createdAt');//chọn tất cả các phần tử có thẻ <td> và class là "createdAt"
-
-                                for (let i = 0; i < createdAtCells.length; i++) {
-                                    const createdAt = createdAtCells[i].textContent;// Lấy giá trị textContent của phần tử <td> hiện tại và gán cho biến createdAt. Đây là giá trị nguyên thủy của thời gian đã được hiển thị trên trang.
-                                    const formattedDate = moment.utc(createdAt).tz('Asia/Ho_Chi_Minh').format("DD/MM/YYYY, HH:mm:ss");//moment.utc()để tạo một đối tượng Moment dựa trên giá trị thời gian đã lấy.phương thức tz('Asia/Ho_Chi_Minh') để chuyển đổi múi giờ sang múi giờ Việt Nam
-                                    createdAtCells[i].textContent = formattedDate;//Gán giá trị đã định dạng vào phần tử <td> hiện tại bằng cách cập nhật textContent của nó.
-                                }
-                            </script> --}}
-
-                            </tbody>
-                        </table>
+            </div>
+        </main>
+        <footer class="footer-admin mt-auto footer-light">
+            <div class="container-xl px-4">
+                <div class="row">
+                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
+                    <div class="col-md-6 text-md-end small">
+                        <a href="#!">Privacy Policy</a>
+                        &middot;
+                        <a href="#!">Terms &amp; Conditions</a>
                     </div>
                 </div>
             </div>
-        </main>
+        </footer>
     </div>
-
 
     <!--            End Content-->
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="js/scripts.js"></script>
+<script src="/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/chart-area-demo.js"></script>
 <script src="assets/demo/chart-bar-demo.js"></script>
