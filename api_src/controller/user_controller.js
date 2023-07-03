@@ -241,9 +241,30 @@ const userController = {
         try {
             const user = await User.findById(req.params.id).populate({
                 path: 'posts',
-                options: { skip: parseInt(startIndex) || 0, limit: parseInt(limit) ||20}
+                options: { skip: parseInt(startIndex) || 0, limit: parseInt(limit) ||20},
+                populate:[
+                    {
+                        path:"seller",
+                        select:"fullName"
+                    },
+                    {
+                        path:"author",
+                        select:"name"
+                    },
+                    {
+                        path:"publisher",
+                        select:"name"
+                    },
+                    {
+                        path:"category",
+                        select:"name"
+                    },
+                    {
+                        path: "shopId",
+                        select: "name"
+                    }
+                ]
             });
-            console.log(user)
             res.status(200).json(user.posts);
         } catch (err) {
             console.log(err);
@@ -254,12 +275,36 @@ const userController = {
         const { startIndex, limit } = req.query;
         //const { userId } = req.body;
         try {
-            const user = await User.findById(req.params.id).populate({
-                path: 'favorite',
-                options: { skip: parseInt(startIndex) || 0,
-                    limit: parseInt(limit) || 20
+            const user = await User.findById(req.params.id).populate(
+                {
+                    path: 'favorite',
+                    options: { skip: parseInt(startIndex) || 0,
+                        limit: parseInt(limit) || 20
+                    },
+                    populate:[
+                        {
+                            path:"seller",
+                            select:"fullName"
+                        },
+                        {
+                            path:"author",
+                            select:"name"
+                        },
+                        {
+                            path:"publisher",
+                            select:"name"
+                        },
+                        {
+                            path:"category",
+                            select:"name"
+                        },
+                        {
+                            path: "shopId",
+                            select: "name"
+                        }
+                    ]
                 }
-            });
+            )
             res.status(200).json(user.favorite);
         } catch (err) {
             console.log(err);
@@ -288,6 +333,54 @@ const userController = {
         } catch (error) {
             console.error(error);
             return res.status(500).send('Server error');
+        }
+    },
+    addAddress : async (req, res) => {
+        const { address } = req.body;
+        const userId = req.params.id;
+
+        try {
+            const user = await User.findById(userId);
+            if(!user){
+                return res.status(200).json("user not found")
+            }
+            user.address.push(address);
+            await user.save();
+            res.status(200).json({ message: 'Address added successfully' });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    },
+    removeAddress : async (req, res) => {
+        const { address } = req.body;
+        const userId = req.params.id;
+        try {
+            const user = await User.findById(userId);
+            if (user) {
+                console.log(user.address)
+                if(!user.address.includes(address)){
+                    return res.status(400).json({message: "địa chỉ không tồn tại trong user"})
+                }
+                user.address.pull(address);
+                await user.save();
+                res.status(200).json({message: 'Address removed successfully'});
+            } else {
+                return res.status(400).json("User not found")
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    },
+    getAddressByUser : async (req, res) => {
+        const { id } = req.params;
+        try {
+            const user = await User.findById(id);
+            res.status(200).json(user.address);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'Server Error' });
         }
     }
 }

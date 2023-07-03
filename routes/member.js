@@ -1,5 +1,6 @@
 var express = require('express');
 const memberController = require("../controllers/regular_member_controller");
+const checkAuth = require("../api_src/middleware/checkAuth");
 var router = express.Router();
 
 //hiển thị list user
@@ -7,7 +8,7 @@ router.get('/',memberController.listRegularMember)
 
 //Sửa thông tin user
 router.get('/edit_regular_member/:id',memberController.formEditRegularMember)
-router.post('/edit_regular_member/:id',memberController.postEditRegularMember)
+router.post('/edit_regular_member/:id',checkAuth,memberController.postEditRegularMember)
 
 
 

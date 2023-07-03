@@ -8,6 +8,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Poly Books</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
@@ -15,6 +17,9 @@
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+
+    <script src="../js/listposts.js"></script>
+
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -148,7 +153,7 @@
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="account-info">
+                <a class="dropdown-item" href="admin_account_info">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Tài khoản
                 </a>
@@ -171,7 +176,7 @@
                     <!-- Sidenav Menu Heading (Statistical)-->
                     <div class="sidenav-menu-heading">Statistical</div>
                     <!-- Sidenav Accordion (Thống kê)-->
-                    <a class="nav-link " href="account_statistics">
+                    <a class="nav-link" href="/Statistical">
                         <div class="nav-link-icon"><i data-feather="activity"></i></div>
                         Thống kê
                     </a>
@@ -187,12 +192,12 @@
                     <div class="collapse" id="collapsePosts" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
 
-                            <a class="nav-link" href="list_regular_member">
+                            <a class="nav-link" href="/RegularMembers">
                                 <!--                                <div class="nav-link-icon"><i data-feather="user"></i></div>-->
                                 Thành viên thường
                             </a>
                             <!-- Nested Sidenav Accordion (Posts -> AutionPost)-->
-                            <a class="nav-link " href="list_vip_member">
+                            <a class="nav-link " href="/VipMembers">
                                 <!--                                <div class="nav-link-icon"><i data-feather="star"></i></div>-->
                                 Thành viên VIP
                             </a>
@@ -203,8 +208,8 @@
 
                     <!-- Sidenav Heading (Aution Post)-->
                     <div class="sidenav-menu-heading">Aution Post</div>
-                    <!-- Sidenav Accordion (Cửa hàng)-->
-                    <a class="nav-link" href="list_aution_post">
+                    <!-- Sidenav Accordion (Cửa     hàng)-->
+                    <a class="nav-link" href="/AutionPost">
                         <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                         Danh sách đấu giá
                     </a>
@@ -212,15 +217,15 @@
                     <!-- Sidenav Heading (Author and Pulisher)-->
                     <div class="sidenav-menu-heading">Duyệt nội dung</div>
                     <!-- Sidenav Accordion (Author)-->
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
+                    <a class="nav-link active" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
                         <div class="nav-link-icon"><i data-feather="align-center"></i></div>
                         Duyệt nội dung
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseAuthor" data-bs-parent="#accordionSidenav">
+                    <div class="collapse show" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="book_approval">Duyệt bài đăng sách</a>
-                            <a class="nav-link" href="new_approval">Duyệt bài đăng tin </a>
+                            <a class="nav-link active lift" href="/BookApproval">Duyệt bài đăng sách</a>
+                            <a class="nav-link" href="/NewApproval">Duyệt bài đăng tin </a>
                         </nav>
                     </div>
 
@@ -238,13 +243,13 @@
                     </a>
                     <div class="collapse" id="collapseReview" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="pending_report">Report chờ xử lý</a>
-                            <a class="nav-link" href="processed_report">Report đã xử lý </a>
+                            <a class="nav-link" href="/PendingReport">Report chờ xử lý</a>
+                            <a class="nav-link" href="/ProcessedReport">Report đã xử lý </a>
                         </nav>
                     </div>
 
 
-                    <a class="nav-link " href="ad_management">
+                    <a class="nav-link " href="/AdvertisingManagement">
                         <div class="nav-link-icon"><i data-feather="award"></i></div>
                         Quản lý banner
                     </a>
@@ -259,9 +264,17 @@
     <!--            End Sidebar-->
 
     <!--          Start Content-->
-
     <div id="layoutSidenav_content">
+        {{!-- <ul class="nav nav-tabs mt-2 mx-2 mb-2">
+            <li class="nav-item">
+                <a class="nav-link active text-primary" aria-current="page" href="/BookApproval">Duyệt bài đăng bán</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/AutionApproval">Duyệt bài đấu giá</a>
+            </li>
+        </ul> --}}
         <main>
+            <!-- Main page content-->
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
                 <div class="container-xl px-4">
                     <div class="page-header-content">
@@ -269,115 +282,82 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="user"></i></div>
-                                    Account Settings - Profile
+                                    Duyệt Nội Dung
                                 </h1>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
             </header>
-            <!-- Main page content-->
-            <div class="container-xl px-4 mt-4">
-                <!-- Account page navigation-->
-                <nav class="nav nav-borders">
-                    <a class="nav-link active ms-0" href="account-profile.html">Profile</a>
-                    <a class="nav-link" href="account-billing.html">Billing</a>
-                    <a class="nav-link" href="account-security.html">Security</a>
-                    <a class="nav-link" href="account-notifications.html">Notifications</a>
-                </nav>
-                <hr class="mt-0 mb-4" />
-                <div class="row">
-                    <div class="col-xl-4">
-                        <!-- Profile picture card-->
-                        <div class="card mb-4 mb-xl-0">
-                            <div class="card-header">Profile Picture</div>
-                            <div class="card-body text-center">
-                                <!-- Profile picture image-->
-                                <img class="img-account-profile rounded-circle mb-2" src="assets/img/illustrations/profiles/profile-1.png" alt="" />
-                                <!-- Profile picture help block-->
-                                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                <!-- Profile picture upload button-->
-                                <button class="btn btn-primary" type="button">Upload new image</button>
+            <div class="container-fluid px-4 ">
+                <div  id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
+                    <nav class="nav nav-borders">
+                        <a style="margin-left: 0.1px;" class="nav-link" href="/BookApproval">Duyệt bài đăng bán</a>
+                        <a class="nav-link active ms-1" href="/AutionApproval">Duyệt bài đấu giá</a>
+                    </nav>
+                     <hr class="mt-0 mb-4" />
+                </div>     
+                <div class="col-sm-3">
+                    <!-- Dashboard info Tai khoan moi-->
+                    <div style="width: 230px;" class="card border-start-lg border-start-primary h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1">
+                                    <div class="uppercase fw-bold text-primary mb-3">Bài đăng bán cần duyệt</div>
+                                    <div class="row">
+                                        <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
+                                        <div class="col-8 ml-1 h5 mt-1 text-red">{{listAution.length}}</div>
+                                    </div>
+
+                                </div>
+                                <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-8">
-                        <!-- Account details card-->
-                        <div class="card mb-4">
-                            <div class="card-header">Account Details</div>
-                            <div class="card-body">
-                                <form>
-                                    <!-- Form Group (username)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
-                                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="username" />
-                                    </div>
-                                    <!-- Form Row-->
-                                    <div class="row gx-3 mb-3">
-                                        <!-- Form Group (first name)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputFirstName">First name</label>
-                                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="Valerie" />
-                                        </div>
-                                        <!-- Form Group (last name)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLastName">Last name</label>
-                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="Luna" />
-                                        </div>
-                                    </div>
-                                    <!-- Form Row        -->
-                                    <div class="row gx-3 mb-3">
-                                        <!-- Form Group (organization name)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputOrgName">Organization name</label>
-                                            <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="Start Bootstrap" />
-                                        </div>
-                                        <!-- Form Group (location)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLocation">Location</label>
-                                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="San Francisco, CA" />
-                                        </div>
-                                    </div>
-                                    <!-- Form Group (email address)-->
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                                        <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="name@example.com" />
-                                    </div>
-                                    <!-- Form Row-->
-                                    <div class="row gx-3 mb-3">
-                                        <!-- Form Group (phone number)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputPhone">Phone number</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="555-123-4567" />
-                                        </div>
-                                        <!-- Form Group (birthday)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputBirthday">Birthday</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="06/10/1988" />
-                                        </div>
-                                    </div>
-                                    <!-- Save changes button-->
-                                    <button class="btn btn-primary" type="button">Save changes</button>
-                                </form>
-                            </div>
-                        </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Người đăng</th>
+                                <th>Tên sách</th>
+                                <th>Thể loại</th>
+                                
+                                <th>Bán/Miễn phí</th>
+                                <th>Thời gian đăng</th>
+                                <th>Xem tin</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {{#each listAution}}
+                                <tr>
+                                    <td>
+                                        {{this.seller.fullName}}
+                                    </td>
+                                    <td>{{this.bookName}}</td>
+                                    <td>{{this.category.name}}</td>
+                                    
+                                    <td>
+                                        <span id="salesType" class="badge bg-green-soft text-green">{{this.salesType}}</span>
+                                    </td>
+                                    <td>{{this.endTime}}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/BookApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
+                                    </td>
+                                </tr>
+                            {{/each}}
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </main>
-        <footer class="footer-admin mt-auto footer-light">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
-                    <div class="col-md-6 text-md-end small">
-                        <a href="#!">Privacy Policy</a>
-                        &middot;
-                        <a href="#!">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
+
 
     <!--            End Content-->
 

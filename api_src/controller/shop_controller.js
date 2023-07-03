@@ -55,7 +55,10 @@ const shopController = {
                         blobStream.on('error', reject);
                     })
                 } else {
-                    res.status(404).json({ error: "file not found" });
+                    const newShop = new Shop(req.body);
+                    await newShop.save()
+                    res.status(200).json(newShop);
+                    //res.status(404).json({ error: "file not found" });
                 }
                 // Everything went fine.
             })
@@ -140,14 +143,13 @@ const shopController = {
     deleteShop : async (req, res) => {
         try {
             const shop = await Shop.findByIdAndDelete(req.params.id);
-            const bucket = admin.storage().bucket();
-            await bucket.file("shops/"+shop._id).delete()
+            // const bucket = admin.storage().bucket();
+            // await bucket.file("shops/"+shop._id).delete()
             if (!shop) {
                 res.status(404).json({ error: 'Shop not found.' });
             } else {
                 res.status(200).json({message: "Shop is deleted"});
             }
-
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

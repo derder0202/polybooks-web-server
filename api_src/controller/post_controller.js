@@ -18,10 +18,13 @@ const postController = {
         }
     },
     getPostsWithFilter: async (req, res) => {
-        const { bookName, authorName, publisherName, category, startIndex=0, limit=20} = req.body;
+        const { bookName, authorName, publisherName, category, startIndex=0, limit=20, postStatus,newest} = req.body;
         let filter = {}
         if(bookName){
             filter.bookName = { $regex: new RegExp(bookName, 'i') }
+        }
+        if(postStatus){
+            filter.postStatus = postStatus
         }
         if(authorName){
             const authors  = await Author.find({name: { $regex: new RegExp(authorName, 'i') }}).select("_id")
@@ -43,6 +46,7 @@ const postController = {
                 .select("-__v")
                 .skip(startIndex)
                 .limit(limit)
+                .sort({createdAt: newest?newest:1})
                 .exec();
             res.status(200).json(posts);
         } catch (err) {
