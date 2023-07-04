@@ -348,7 +348,39 @@
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/BookApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
                                     </td>
                                 </tr>
+
+                                </thead>
+                                <tbody>
+                                {{#each listAution}}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar me-2"><img class="avatar-img img-fluid"
+                                                                              src="/assets/img/illustrations/profiles/profile-1.png"/>
+                                                </div>
+                                                {{this.seller}}
+                                            </div>
+                                        </td>
+                                        <td>{{this.postTitle}}</td>
+                                        <td>
+
+                                            {{formatTime this.createdAt}}
+                                        </td>
+<!--                                        <td>-->
+<!--                                            <span class="badge bg-green-soft text-green">Manual</span>-->
+<!--                                        </td>-->
+<!--                                        <td>23/06/2023</td>-->
+                                        <td>
+                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2"
+                                               href="/AutionApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
+                                        </td>
+                                    </tr>
+
+                                {{/each}}
+
+
                             {{/each}}
+
 
                             </tbody>
                         </table>

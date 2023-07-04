@@ -11,6 +11,25 @@ const admin = require("firebase-admin");
 
 const serviceAccount = require("./credentials.json");
 
+// Đăng ký partials
+// const handlebars = require('handlebars');
+// const fs = require('fs');
+//
+// const partialsDir = __dirname + '/partials';
+//
+// const filenames = fs.readdirSync(partialsDir);
+//
+// filenames.forEach(filename => {
+//     const matches = /^([^.]+).hbs$/.exec(filename);
+//     if (!matches) {
+//         return;
+//     }
+//     const name = matches[1];
+//     const template = fs.readFileSync(partialsDir + '/' + filename, 'utf8');
+//     handlebars.registerPartial(name, template);
+// });
+// đăng ký partials
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: "gs://polybooks-52282.appspot.com",
@@ -57,10 +76,21 @@ const {User} = require("./api_src/model/model");
 
 
 const app = express();
+const hbs = require('hbs');
+const moment = require('moment');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+const partialsPath =path.join(__dirname,"views/partials");
+hbs.registerPartials(partialsPath);
+
+hbs.registerHelper('formatTime', function (date){
+    const formattedDate = moment(date).format('HH:mm:ss DD-MM-YYYY ');
+    return new hbs.SafeString(formattedDate);
+});
+
 
 
 app.use(bodyParser.urlencoded({extended: true}))

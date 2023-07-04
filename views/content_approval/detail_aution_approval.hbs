@@ -19,9 +19,17 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
             crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
     <script src="/js/jscustom.js"></script>
     
-    
+
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
@@ -346,6 +354,14 @@
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-header">Ảnh trong bài đăng</div>
                             <div class="card-body text-center">
+
+                                <div class="slick-slider">
+                                    {{#each detailAution.images}}
+                                        <div>
+                                            <img src="{{this}} " class="d-block h-100 w-100">
+                                        </div>
+                                    {{/each}}
+
                                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
@@ -361,7 +377,13 @@
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Next</span>
                                     </button>
+
                                 </div>
+                                <button type="button" class="slick-prev">Previous</button>
+                                <button type="button" class="slick-next">Next</button>
+
+                                <div class="slick-dots"></div>
+
                             </div>
                         </div>
                     </div>
@@ -485,14 +507,14 @@
 <script src="js/litepicker.js"></script>
 
 <script>
-    let checkbox = document.getElementById("checkBox");
-
-    checkbox.addEventListener("change",()=>{
-        if (checkbox.checked){
-            {{detailAution.postStatus}} == 1;
-            console.log({{detailAution.postStatus}});
-        }
-    })
+    $(document).ready(function(){
+        $('.slick-slider').slick({
+            dots: true,
+            arrows: true,
+            prevArrow: $('.slick-prev'),
+            nextArrow: $('.slick-next')
+        });
+    });
 </script>
 
 </body>
