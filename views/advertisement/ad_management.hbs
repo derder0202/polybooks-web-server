@@ -17,6 +17,7 @@
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+     <script src="../js/listbanner.js"></script>
 
     <style>
        .table-td {
@@ -164,7 +165,7 @@
                             <thead>
                             <tr>
                                 <th>Người dùng</th>
-                                <th>ID Người dùng</th>
+                                <th>Nội Dung</th>
                                 <th>Banner</th>
                                 <th>Trạng thái</th>
                                 <th>Hành động</th>
@@ -173,7 +174,7 @@
                             <tfoot>
                             <tr>
                                 <th>Người dùng</th>
-                                <th>ID Người dùng</th>
+                                <th>Nội Dung</th>
                                 <th>Banner</th>
                                 <th>Trạng thái</th>
                                 <th>Hành động</th>
@@ -184,18 +185,17 @@
                                    <tr>
                                        <td>
                                            <div class="d-flex align-items-center">
-                                               <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                               {{this.userId}}
+                                                {{ this.userId.fullName}}
                                            </div>
                                        </td>
-                                       <td> {{this.userId}}</td>
+                                       <td> {{this.content}}</td>
                                        <td>
                                            <div class=" me-2" style="width: 250px;height: 150px" >
                                                <img class="img-fluid" style="object-fit: fill" src=" {{this.image}}" /></div>
 
                                        </td>
                                        <td>
-                                           <span id="isActiveValue"  class="badge bg-green-soft text-green"> {{this.isActive}}</span>
+                                           <span id="isActiveValue" class="badge bg-green-soft text-green"> {{this.isActive}}</span>
                                        </td>
 
                                        <td>
