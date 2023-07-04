@@ -19,6 +19,12 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
             crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
@@ -337,33 +343,18 @@
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-header">Ảnh trong bài đăng</div>
                             <div class="card-body text-center">
-                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                    </div>
-                                    <div class="carousel-inner">
-
-                                        <div class="carousel-item active">
-                                            <img src="https://sachngoaingu.org/wp-content/uploads/2019/05/58570445_890012078005036_2784590884711170048_o.jpg" class="d-block w-100" alt="...">
+                                <div class="slick-slider">
+                                    {{#each detailAution.images}}
+                                        <div>
+                                            <img src="{{this}} " class="d-block h-100 w-100">
                                         </div>
-                                        <div class="carousel-item">
-                                            <img src="https://jonathanvankin.com/wp-content/uploads/2022/02/Tac-gia-Dac-nhan-tam-la-ai-va-noi-dung-tung-phan-cua-cuon-sach.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                    </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
+                                    {{/each}}
                                 </div>
+                                <button type="button" class="slick-prev">Previous</button>
+                                <button type="button" class="slick-next">Next</button>
+
+                                <div class="slick-dots"></div>
+
                             </div>
                         </div>
                     </div>
@@ -484,14 +475,14 @@
 <script src="js/litepicker.js"></script>
 
 <script>
-    let checkbox = document.getElementById("checkBox");
-
-    checkbox.addEventListener("change",()=>{
-        if (checkbox.checked){
-            {{detailAution.postStatus}} == 1;
-            console.log({{detailAution.postStatus}});
-        }
-    })
+    $(document).ready(function(){
+        $('.slick-slider').slick({
+            dots: true,
+            arrows: true,
+            prevArrow: $('.slick-prev'),
+            nextArrow: $('.slick-next')
+        });
+    });
 </script>
 
 </body>
