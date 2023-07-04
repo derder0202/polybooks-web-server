@@ -4,8 +4,9 @@ var router = express.Router();
 
 
 router.get('/',contentController.listContent);
-// router.get('/aution_approval',contentController.listAutionApproval); //duyệt bài đấu giá
-//
-// router.get('/aution_approval/detail_aution_approval/:id',contentController.detailAutionApproval); //chi tiết duyệt bài đấu giá
+
+router.get('/detail_aution_approval/:id',contentController.detailAutionApproval);
+router.post('/detail_aution_approval/:id', contentController.approveAution); 
+
 
 module.exports = router;

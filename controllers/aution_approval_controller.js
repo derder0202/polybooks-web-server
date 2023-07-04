@@ -4,7 +4,7 @@ const autionApprovalController ={
     //list duyệt bài đấu giá
     listAutionApproval: async (req,res) =>{
         try {
-            const listAution = await Post.find({postStatus : 0})
+            const listAution = await Post.find({postStatus : 0}).populate("seller","fullName");
             res.render('content_approval/aution_approval',{listAution})
 
         } catch (e) {
@@ -14,20 +14,6 @@ const autionApprovalController ={
         }
     },
 
-    detailAutionApproval: async (req,res) =>{
-        let detailAution = await Post.findById(req.params.id).populate("author","name")
-            .exec()
-            .catch(function (err) {
-                console.log(err)
-            });
-        console.log(detailAution)
-        if (detailAution == null){
-            res.send('Không tìm thấy bản ghi');
-        }
-        res.render('content_approval/detail_aution_approval',{detailAution})
-
-        // res.render('content_approval/detail_aution_approval')
-
-    }
+    
 }
 module.exports = autionApprovalController;

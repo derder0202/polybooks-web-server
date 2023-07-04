@@ -16,6 +16,7 @@ const adManagementController = {
         }
 
     },
+
     //sưa thong tin banner
     editBannerManagement: async (req,res) =>{
         let editBanner = await Banner.findById(req.params.id)
@@ -148,6 +149,11 @@ const adManagementController = {
         }
     },
 
+
+    detailManagement: async (req,res)=>{
+        // cần list đầy đủ của member thường
+        res.render('advertisement/banner_details');
+    },
 }
 
 module.exports = adManagementController
