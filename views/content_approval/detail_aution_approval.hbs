@@ -19,6 +19,17 @@
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"
             crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <script src="/js/jscustom.js"></script>
+    
+
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
@@ -324,6 +335,12 @@
                                     Chi tết bài đăng
                                 </h1>
                             </div>
+                            <div class="col-12 col-xl-auto mb-3">
+                                <a onclick="confirmRedirectBookApproval()" class="btn btn-sm btn-light text-primary">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Quay lại
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -337,24 +354,21 @@
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-header">Ảnh trong bài đăng</div>
                             <div class="card-body text-center">
-                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                    </div>
-                                    <div class="carousel-inner">
 
+                                <div class="slick-slider">
+                                    {{#each detailAution.images}}
+                                        <div>
+                                            <img src="{{this}} " class="d-block h-100 w-100">
+                                        </div>
+                                    {{/each}}
+
+                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
                                         <div class="carousel-item active">
-                                            <img src="https://sachngoaingu.org/wp-content/uploads/2019/05/58570445_890012078005036_2784590884711170048_o.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://jonathanvankin.com/wp-content/uploads/2022/02/Tac-gia-Dac-nhan-tam-la-ai-va-noi-dung-tung-phan-cua-cuon-sach.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" class="d-block w-100" alt="...">
+                                            <img src="{{detailAution.images}}" class="d-block w-100" alt="...">
                                         </div>
                                     </div>
+                                    
                                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Previous</span>
@@ -363,7 +377,13 @@
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Next</span>
                                     </button>
+
                                 </div>
+                                <button type="button" class="slick-prev">Previous</button>
+                                <button type="button" class="slick-next">Next</button>
+
+                                <div class="slick-dots"></div>
+
                             </div>
                         </div>
                     </div>
@@ -372,94 +392,94 @@
                         <div class="card mb-4">
                             <div class="card-header">Chi tiết bài đăng</div>
                             <div class="card-body">
-                                <form>
-                                    <!-- Form Group (username)-->
+                                <form method="post" action="/BookApproval/detail_aution_approval/{{detailAution._id}}">
+                                    <!-- Form Group (Tiêu đề)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Tiêu đề</label>
                                         <textarea class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="" disabled readonly>{{detailAution.postTitle}}</textarea>
                                     </div>
+                                    <!-- Form Group (Mô tả)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Mô tả</label>
                                         <textarea class="form-control" id="inputUsername" type="text" placeholder="Enter your username"  rows="3" disabled readonly>{{detailAution.description}}</textarea>
                                     </div>
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
-                                        <!-- Form Group (first name)-->
+                                        <!-- Form Group (Tên sách)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">Tên sách</label>
                                             <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{detailAution.bookName}}" disabled readonly/>
                                         </div>
-                                        <!-- Form Group (last name)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLastName">Tình trạng</label>
-                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="Cữ" disabled readonly/>
-                                        </div>
-                                    </div>
-                                    <!-- Form Row        -->
-                                    <div class="row gx-3 mb-3">
-                                        <!-- Form Group (organization name)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputOrgName">Chiều dài</label>
-                                            <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="35cm" disabled readonly/>
-                                        </div>
-                                        <!-- Form Group (location)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputLocation">Chiều rộng</label>
-                                            <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="20cm" disabled readonly/>
+                                        <!-- Form Group (Tác giả)-->
+                                         <div class="col-md-6">
+                                            <label class="small mb-1" for="inputPhone">Tác giả</label>
+                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{detailAution.author.name}}" disabled readonly/>
                                         </div>
                                     </div>
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
-                                        <!-- Form Group (phone number)-->
+                                        <!-- Form Group (Thể loại)-->
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="inputPhone">Thể loại</label>
+                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{detailAution.category.name}}" disabled readonly/>
+                                        </div>
+                                        <!-- Form Group (Ngôn ngữ )-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputPhone">Ngôn ngữ</label>
                                             <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{detailAution.language}}" disabled readonly/>
                                         </div>
-                                        <!-- Form Group (birthday)-->
+                                    
+                                    </div>
+                                    <!-- Form Row-->
+                                    <div class="row gx-3 mb-3">
+                                        <!-- Form Group (Kích thước)-->
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="inputOrgName">Kích thước</label>
+                                            <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="{{detailAution.bookSize}}" disabled readonly/>
+                                        </div>
+                                        <!-- Form Group (Số trang)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Số trang</label>
                                             <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.totalPage}}" disabled readonly/>
                                         </div>
                                     </div>
+                                    
                                     <div class="row gx-3 mb-3">
-                                        <!-- Form Group (phone number)-->
+                                        <!-- Form Group (Tình trạng)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputPhone">Thể loại</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{detailAution.category}}" disabled readonly/>
+                                            <label class="small mb-1" for="inputLastName">Tình trạng</label>
+                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="Cũ" disabled readonly/>
                                         </div>
-                                        <!-- Form Group (birthday)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputBirthday">Nhà xuất bản</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.publisher}}" disabled readonly/>
-                                        </div>
-                                    </div>
-                                    <div class="row gx-3 mb-3">
-                                        <!-- Form Group (phone number)-->
-                                        <div class="col-md-6">
-                                            <label class="small mb-1" for="inputPhone">Tác giả</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{detailAution.author.name}}" disabled readonly/>
-                                        </div>
-                                        <!-- Form Group (birthday)-->
+                                       
+                                        <!-- Form Group (Giá bán)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Giá bán</label>
                                             <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.price}} đ" disabled readonly/>
                                         </div>
                                     </div>
+                                    <!-- Form Group (Nhà xuất bản)-->
+                                    <div class="mb-3">
+                                            <label class="small mb-1" for="inputBirthday">Nhà xuất bản</label>
+                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.publisher.name}}" disabled readonly/>
+                                        </div>
+                                    <!-- Form Group (Địa chỉ bán)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Địa chỉ bán</label>
                                         <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="{{detailAution.address}}" disabled readonly/>
                                     </div>
-                                    <div class="form-check">
-                                        <input type="text" name="postStatus" value="1" hidden="hidden">
-
                                         <input class="form-check-input" name="postStatus" id="checkBox" type="checkbox" value="">
                                         <label class="form-check-label" for="flexCheckDefault" id="text">Đã kiểm tra thông tin</label>
-                                    </div>
+                                    </div> --}}
                                     <div class="mb-3">
                                     </div>
                                     <!-- Save changes button-->
-                                    <a class="btn btn-primary" type="button" href="/AutionApproval">Duyệt bài</a>
+                                    {{!-- <a style="margin-top: 30px;" class="btn btn-primary" type="button" href="/AutionApproval">Duyệt bài</a> --}}
+                                    <div class="card-body text-center">
+                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="approve">Duyệt bài</button>
+                                    <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="reject">Không duyệt</button>
+                                </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -486,14 +506,14 @@
 <script src="js/litepicker.js"></script>
 
 <script>
-    let checkbox = document.getElementById("checkBox");
-
-    checkbox.addEventListener("change",()=>{
-        if (checkbox.checked){
-            {{detailAution.postStatus}} == 1;
-            console.log({{detailAution.postStatus}});
-        }
-    })
+    $(document).ready(function(){
+        $('.slick-slider').slick({
+            dots: true,
+            arrows: true,
+            prevArrow: $('.slick-prev'),
+            nextArrow: $('.slick-next')
+        });
+    });
 </script>
 
 </body>

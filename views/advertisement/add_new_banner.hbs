@@ -8,29 +8,15 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Poly Books</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/polyBooks.png" />
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
-    <link href="css/styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-
-    <style>
-       .table-td {
-        width: 1%;
-        white-space: nowrap;
-    }
-
-    .table-img {
-        display: inline-block;
-        max-width: 100%;
-        height: auto;
-    }
-    </style>
-    <script src="/js/listbanner.js"></script>
 
 </head>
 <body class="nav-fixed">
@@ -143,13 +129,13 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="award"></i></div>
-                                    Quản lý banner
+                                    Thêm mới banner
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="/AdvertisingManagement/add_new_banner">
-                                    <i class="me-1" data-feather="file-plus"></i>
-                                    Thêm Mới Banner
+                                <a class="btn btn-sm btn-light text-primary" href="/AdvertisingManagement">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Trở lại trang banner
                                 </a>
                             </div>
                         </div>
@@ -157,58 +143,53 @@
                 </div>
             </header>
             <!-- Main page content-->
-            <div class="container-fluid px-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Người dùng</th>
-                                <th>ID Người dùng</th>
-                                <th>Banner</th>
-                                <th>Trạng thái</th>
-                                <th>Hành động</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Người dùng</th>
-                                <th>ID Người dùng</th>
-                                <th>Banner</th>
-                                <th>Trạng thái</th>
-                                <th>Hành động</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                               {{#each listBanner}}
-                                   <tr>
-                                       <td>
-                                           <div class="d-flex align-items-center">
-                                               <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                               {{this.userId}}
-                                           </div>
-                                       </td>
-                                       <td> {{this.userId}}</td>
-                                       <td>
-                                           <div class=" me-2" style="width: 250px;height: 150px" >
-                                               <img class="img-fluid" style="object-fit: fill" src=" {{this.image}}" /></div>
+            <div class="d-flex justify-content-center">
+                <div class="col-xl-8">
+                    <div class="card mb-4 ">
+                        <div class="card-header">Thêm mới Banner</div>
+                        <div class="card-body">
 
-                                       </td>
-                                       <td>
-                                           <span id="isActiveValue"  class="badge bg-green-soft text-green"> {{this.isActive}}</span>
-                                       </td>
+                            <form action="/AdvertisingManagement/add_new_banner" method="post" >
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (first name)-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="small mb-1" for="userId_banner">Người dùng</label>-->
+<!--                                        <input class="form-control" id="userId_banner" type="text" placeholder="Enter your first name" name="userId_banner" />-->
+<!--                                    </div>-->
+                                    <!-- Form Group (last name)-->
+<!--                                    <div class="col-md-6">-->
+<!--                                        <label class="small mb-1" for="userId_banner">ID người dùng</label>-->
+<!--                                        <input class="form-control" id="userId_banner" type="text" placeholder="Enter your last name" name="userId_banner" />-->
+<!--                                    </div>-->
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="role">Tình trạng</label>
+                                    <select name="isActive_banner" class="form-select" id="role">
+                                        <option disabled selected>Mời bạn chọn tình trạng</option>
+                                        <option value="true" data-display-value="Đang sử dụng">Đang sử dụng</option>
+                                        <option value="false" data-display-value="Chưa sử dụng">Chưa sử dụng</option>
+                                    </select>
+                                    <!--                                            <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>-->
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="content_banner">Nội dung</label>
+                                    <input class="form-control" id="content_banner" type="text" placeholder="Enter your username" name="content_banner" />
+                                </div>
+                                <label class="small mb-2" for="image_banner">Chọn banner tải lên</label>
+                                <div>
+                                        <input type="file" id="image_banner" name="image_banner" accept="image/*" onchange="previewImage(event)" class="mb-2">
+                                        <img id="preview" src="#"  class="d-block w-100 mb-2">
+                                </div>
 
-                                       <td>
-                                           <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/AdvertisingManagement/edit_banner/{{this._id}}"><i data-feather="edit"></i></a>
-                                           <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" ><i data-feather="trash-2"></i></a>
-                                       </td>
-                                   </tr>
-                               {{/each}}
+                                <button type="submit">Thêm mới</button>
 
-                            </tbody>
-                        </table>
+                            </form>
+
+                        </div>
                     </div>
                 </div>
+
+
             </div>
         </main>
 
@@ -218,7 +199,7 @@
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="js/scripts.js"></script>
+<script src="/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/chart-area-demo.js"></script>
 <script src="assets/demo/chart-bar-demo.js"></script>
@@ -226,5 +207,12 @@
 <script src="js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
 <script src="js/litepicker.js"></script>
+
+<script>
+    function previewImage(event) {
+        var preview = document.getElementById('preview');
+        preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
 </body>
 </html>

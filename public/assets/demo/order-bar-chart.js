@@ -37,7 +37,7 @@
 // //
 //
 //
-// var GroupedbarChartData = {
+// var GroupedbarOderChartData = {
 //     labels: [
 //         "Thứ 2",
 //         "Thứ 3",
@@ -63,13 +63,7 @@
 //             borderWidth: 1,
 //             data: [44, 27, 63, 96, 100, 57, 34]
 //         },
-//         {
-//             label: "Tổng",
-//             backgroundColor: "green",
-//             borderColor: "green",
-//             borderWidth: 1,
-//             data: [100, 47, 44, 76, 59, 77, 53]
-//         }
+//
 //     ]
 // };
 //
@@ -88,7 +82,7 @@
 // {
 //     var chartData= {
 //         type: "bar",
-//         data: GroupedbarChartData,
+//         data: GroupedbarOderChartData,
 //         // options: BarchartOptions
 //     }
 //     new Chart("OrderGroupedbarChartcanvas", chartData);

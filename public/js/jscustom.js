@@ -17,6 +17,13 @@ function confirmRedirectToVipMembers() {
         window.location.href = "/VipMembers"; // Nếu người dùng đồng ý, chuyển hướng tới "list_regular_member"
     }
 }
+function confirmRedirectBookApproval() {
+    var confirmLeave = confirm("Bạn có chắc chắn muốn rời khỏi trang này không?"); // Hiển thị hộp thoại xác nhận
+
+    if (confirmLeave) {
+        window.location.href = "/BookApproval"; // Nếu người dùng đồng ý, chuyển hướng tới "list_regular_member"
+    }
+}
 function clearInputs() {
     var inputs = document.querySelectorAll('input'); // Lấy tất cả các trường input
     var hasValue = false; // Biến để kiểm tra xem có trường input nào có giá trị không

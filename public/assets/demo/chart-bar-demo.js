@@ -37,11 +37,27 @@ var myBarChart = new Chart(ctx, {
         datasets: [{
             label: "Tổng đơn",
             backgroundColor: "rgba(0, 97, 242, 1)",
-            hoverBackgroundColor: "rgba(0, 97, 242, 0.9)",
+            hoverBackgroundColor: "rgba(0, 97, 242, 0.7)",
             borderColor: "#4e73df",
             data: [215, 312, 251, 741, 821, 184,342],
             maxBarThickness: 25
-        }]
+        },
+            {
+                label: "Đơn mua",
+                backgroundColor: "rgba(95, 204, 113, 1)",
+                hoverBackgroundColor: "rgba(95, 204, 113, 0.7)",
+                borderColor: "#4e73df",
+                data: [324, 333, 113, 115, 821, 184,342],
+                maxBarThickness: 25
+            },
+            {
+                label: "Đơn bán",
+                backgroundColor: "rgba(255, 113, 0, 1)",
+                hoverBackgroundColor: "rgba(255, 113, 0, 0.7)",
+                borderColor: "#4e73df",
+                data: [324, 333, 113, 115, 821, 184,342],
+                maxBarThickness: 25
+            }]
     },
     options: {
         maintainAspectRatio: false,
