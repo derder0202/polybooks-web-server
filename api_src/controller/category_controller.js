@@ -106,7 +106,37 @@ const categoryController = {
     getPostsByCategory: async (req, res) => {
         try {
             const categoryId = req.params.id;
-            const category = await Category.findById(categoryId).populate('posts');
+            const{startIndex,limit} = req.query
+            const category = await Category.findById(categoryId).populate(
+                {
+                    path: 'posts',
+                    options: { skip: parseInt(startIndex) || 0,
+                        limit: parseInt(limit) || 20
+                    },
+                    populate:[
+                        {
+                            path:"seller",
+                            select:"fullName"
+                        },
+                        {
+                            path:"author",
+                            select:"name"
+                        },
+                        {
+                            path:"publisher",
+                            select:"name"
+                        },
+                        {
+                            path:"category",
+                            select:"name"
+                        },
+                        {
+                            path: "shopId",
+                            select: "name"
+                        }
+                    ]
+                }
+            )
             if (!category) {
                 return res.status(404).send('Category not found');
             }

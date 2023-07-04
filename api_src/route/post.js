@@ -23,5 +23,7 @@ router.delete('/:id',  postController.deletePost);
 
 // POST /posts/filter
 router.post('/filter', postController.getPostsWithFilter);
+router.post('/nearestPosts', postController.getNearestPosts);
+
 
 module.exports = router;
