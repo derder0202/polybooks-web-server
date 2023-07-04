@@ -9,10 +9,15 @@ var router = express.Router();
 router.get('/',authenticationController.formLogin)
 router.post('/login',
     passport.authenticate('local', { successRedirect: '/Statistical',
-      failureRedirect: '/Login' }));
+      failureRedirect: '/Login' ,
+    }));
 
 
-
+router.post('/logout', (req, res)=> {
+    req.session.destroy(function (err) {
+        res.redirect('/Login'); //Inside a callback… bulletproof!
+    });
+});
 
 // router.get('/admin_account_info', function(req, res, next) {
 //   res.render('admin_account/admin_account_info');

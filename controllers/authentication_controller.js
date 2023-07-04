@@ -10,9 +10,6 @@ const authenticationController = {
         //res.render('authentication/login-page');
     },
 
-    logout: async (req,res)=>{
-        req.logout()
-    },
 
 }
 module.exports = authenticationController

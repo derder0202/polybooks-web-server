@@ -1,4 +1,4 @@
-const {User} = require("../model/model");
+const {User, Address} = require("../model/model");
 const multer = require("multer")
 const admin = require("firebase-admin");
 const upload = require("../upload_image").single("avatar");
@@ -336,7 +336,7 @@ const userController = {
         }
     },
     addAddress : async (req, res) => {
-        const { address } = req.body;
+        const { name,phone,address } = req.body;
         const userId = req.params.id;
 
         try {
@@ -344,9 +344,10 @@ const userController = {
             if(!user){
                 return res.status(200).json("user not found")
             }
-            user.address.push(address);
+            const saveAddress = await Address.create(req.body)
+            user.address.push(saveAddress._id)
             await user.save();
-            res.status(200).json({ message: 'Address added successfully' });
+            res.status(200).json({ message: 'Address added successfully' ,data:saveAddress});
         } catch (err) {
             console.log(err);
             res.status(500).json({ message: 'Server Error' });
@@ -364,6 +365,7 @@ const userController = {
                 }
                 user.address.pull(address);
                 await user.save();
+                await Address.findByIdAndDelete(address)
                 res.status(200).json({message: 'Address removed successfully'});
             } else {
                 return res.status(400).json("User not found")
@@ -376,10 +378,83 @@ const userController = {
     getAddressByUser : async (req, res) => {
         const { id } = req.params;
         try {
-            const user = await User.findById(id);
+            const user = await User.findById(id).populate('address');
+            console.log(user)
             res.status(200).json(user.address);
         } catch (err) {
             console.log(err);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    },
+    getBuyBillsByUser : async (req,res) => {
+        try {
+            const { startIndex, limit } = req.query;
+            const { id } = req.params;
+            const user = await User.findById(id).populate({
+                path: 'buyBills',
+                options: { skip: parseInt(startIndex) || 0,
+                    limit: parseInt(limit) || 20
+                },
+                populate:[
+                    {
+                        path:"buyer",
+                        select:"fullName"
+                    },
+                    {
+                        path:"seller",
+                        select:"fullName"
+                    },
+                    {
+                        path:"shopId",
+                        select:"name"
+                    },
+                    {
+                        path:"posts",
+                        select:"images bookName price"
+                    }
+                ]
+            })
+            if (!user) {
+                return res.status(400).json("User not found")
+            }
+            res.status(200).json(user.buyBills);
+        } catch (error) {
+            res.status(500).json({ message: 'Server Error' });
+        }
+    },
+    getSellBillsByUser : async (req,res) => {
+        try {
+            const { startIndex, limit } = req.query;
+            const { id } = req.params;
+            const user = await User.findById(id).populate({
+                path: 'sellBills',
+                options: { skip: parseInt(startIndex) || 0,
+                    limit: parseInt(limit) || 20
+                },
+                populate:[
+                    {
+                        path:"buyer",
+                        select:"fullName"
+                    },
+                    {
+                        path:"seller",
+                        select:"fullName"
+                    },
+                    {
+                        path:"shopId",
+                        select:"name"
+                    },
+                    {
+                        path:"posts",
+                        select:"images bookName price"
+                    }
+                ]
+            })
+            if (!user) {
+                return res.status(400).json("User not found")
+            }
+            res.status(200).json(user.sellBills);
+        } catch (error) {
             res.status(500).json({ message: 'Server Error' });
         }
     }

@@ -9,6 +9,10 @@ const authMiddleware = require("../middleware/authMiddleware");
 router.post('/filter', userController.getUsers);
 
 router.post('/login', userController.login);
+
+router.get('/test', (req,res)=>{
+    res.status(200).json("testtttt")
+});
 // GET /users/:id
 router.get('/:id', userController.getUserById);
 // POST /users
@@ -34,6 +38,8 @@ router.post('/:id/removeAddress', userController.removeAddress);
 router.get('/:id/posts', userController.getPostsByUser);
 router.get('/:id/reviews', userController.getReviewsByUser);
 router.get('/:id/notification', userController.getNotificationsByUser);
+router.get('/:id/buyBills', userController.getBuyBillsByUser);
+router.get('/:id/sellBills', userController.getSellBillsByUser);
 
 //const multer = require('multer')
 // const upload = multer({

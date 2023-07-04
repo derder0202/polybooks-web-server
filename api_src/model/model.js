@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     phone: { type: String ,immutable:true, unique: true, required: true },
     password: { type: String , required: true},
     email: { type: String , default:"" },
-    address: [{ type: String,}],
+    address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
     //bio: { type: String },
     avatar: { type: String },
     gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
@@ -14,10 +14,16 @@ const UserSchema = new mongoose.Schema({
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
     favorite: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    buyBills: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bill' }],
+    sellBills: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bill' }],
     role: { type: Number, default: 0 },
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
-    active: {type: Boolean, default:true}
+    active: {type: Boolean, default:true},
+    location: {
+        type: [Number],
+        default: [ 105.3230297,20.9739994]
+    }
 }, {timestamps: true});
 const CategorySchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -70,9 +76,10 @@ const ShopSchema = new mongoose.Schema({
             required: true,
             immutable: true
         },
+        sellBills: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bill' }],
         address: {
-            type: String,
-            default: ""
+                type: String,
+                default: ""
         },
         phone1: {
             type: String,
@@ -140,9 +147,15 @@ const PostSchema = new mongoose.Schema({
     endPrice: {type:String},
     salesType:{type:Number,default:0},
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    // longitude:{type:Number,default:20.9739994},
+    // latitude:{type:Number,default:105.3230297},
+    location: {
+        type: [Number],
+        default: [ 105.3230297,20.9739994]
+    }
    // createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
-
+PostSchema.index({location: '2dsphere'});
 // const cartSchema = new mongoose.Schema({
 //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 //     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
@@ -196,8 +209,10 @@ const BillSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    address: { type: String },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
+    buyer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
 },{timestamps:true});
 
 ShopSchema.pre('save',async function (next) {
@@ -321,8 +336,13 @@ const bannerSchema = new mongoose.Schema({
         default:true
     }
 });
+const AddressSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    address: { type: String, required: true },
+    phone: { type: String, required: true }
+});
 
-
+const Address = mongoose.model('Address', AddressSchema);
 const Banner = mongoose.model('Banner', bannerSchema);
 const User = mongoose.model('User', UserSchema);
 const Category = mongoose.model('Category', CategorySchema);
@@ -342,6 +362,7 @@ const DepositHistory = mongoose.model('DepositHistory', depositHistorySchema)
 //const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = {
+    Address,
     Banner,
     Report,
     Discount,

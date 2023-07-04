@@ -193,6 +193,43 @@ const shopController = {
             console.error(err);
             res.status(500).json({ message: 'Server Error' });
         }
+    },
+
+    getSellBillsByShop : async (req,res) => {
+        try {
+            const { startIndex, limit } = req.query;
+            const { id } = req.params;
+            const shop = await Shop.findById(id).populate({
+                path: 'sellBills',
+                options: { skip: parseInt(startIndex) || 0,
+                    limit: parseInt(limit) || 20
+                },
+                populate:[
+                    {
+                        path:"buyer",
+                        select:"fullName"
+                    },
+                    {
+                        path:"seller",
+                        select:"fullName"
+                    },
+                    {
+                        path:"shopId",
+                        select:"name"
+                    },
+                    {
+                        path:"posts",
+                        select:"images bookName price"
+                    }
+                ]
+            })
+            if (!shop) {
+                return res.status(400).json("User not found")
+            }
+            res.status(200).json(shop.sellBills);
+        } catch (error) {
+            res.status(500).json({ message: 'Server Error' });
+        }
     }
 
 

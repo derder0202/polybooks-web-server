@@ -11,7 +11,8 @@ const postController = {
                 .populate('category', 'name')
                 .populate('publisher', 'name')
                 .populate('author', 'name')
-                .populate('seller', 'fullName');
+                .populate('seller', 'fullName')
+                .populate('shopId', 'name');
             res.status(200).json(posts);
         } catch (err) {
             res.status(500).json({ message: err.message });
@@ -43,6 +44,7 @@ const postController = {
                 .populate('publisher', 'name')
                 .populate('author', 'name')
                 .populate('seller', 'fullName')
+                .populate('shopId', 'name')
                 .select("-__v")
                 .skip(startIndex)
                 .limit(limit)
@@ -58,7 +60,10 @@ const postController = {
             const post = await Post.findById(req.params.id)
                 .populate('category', 'name')
                 .populate('publisher', 'name')
-                .populate('seller', 'fullName');
+                .populate('author', 'name')
+                .populate('seller', 'fullName')
+                .populate('shopId', 'name')
+                .select("-__v")
             if (post) {
                 res.status(200).json(post);
             } else {
@@ -295,6 +300,28 @@ const postController = {
             res.status(500).json({ message: err.message });
         }
     },
+
+    getNearestPosts : async (req, res) => {
+        try {
+            const { location, startIndex = 0, limit = 10 } = req.body;
+            const posts = await Post.find({
+                location: {
+                    $near: {
+                        $geometry: {
+                            type: 'Point',
+                            coordinates: location,
+                            index: '2dsphere'
+                        }
+                    }
+                }
+            })
+                .skip(startIndex)
+                .limit(limit);
+            res.json(posts);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 
 }
 
