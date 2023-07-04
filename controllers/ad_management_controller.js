@@ -2,11 +2,12 @@ const {User} = require("../api_src/model/model");
 const multer = require("multer");
 const admin = require("firebase-admin");
 const Banner = require("../api_src/model/model").Banner;
+
 const adManagementController = {
     //lay ra list banner
     listBannerManagement: async (req,res)=>{
         try {
-            const listBanner = await Banner.find();
+            const listBanner = await Banner.find().populate("userId","fullName");
             res.render('advertisement/ad_management',{listBanner})
 
         } catch (e) {
@@ -14,7 +15,6 @@ const adManagementController = {
             res.status(500).send('Lỗi khi lấy danh sách banner');
 
         }
-
     },
 
     //sưa thong tin banner

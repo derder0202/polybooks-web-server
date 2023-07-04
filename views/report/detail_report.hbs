@@ -8,18 +8,15 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Poly Books</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/polyBooks.png" />
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
 
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-
-    <script src="../js/listposts.js"></script>
-
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -208,7 +205,7 @@
 
                     <!-- Sidenav Heading (Aution Post)-->
                     <div class="sidenav-menu-heading">Aution Post</div>
-                    <!-- Sidenav Accordion (Cửa     hàng)-->
+                    <!-- Sidenav Accordion (Cửa hàng)-->
                     <a class="nav-link" href="/AutionPost">
                         <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                         Danh sách đấu giá
@@ -224,7 +221,7 @@
                     </a>
                     <div class="collapse show" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link active lift" href="/BookApproval">Duyệt bài đăng sách</a>
+                            <a class="nav-link active" href="/BookApproval">Duyệt bài đăng sách</a>
                             <a class="nav-link" href="/NewApproval">Duyệt bài đăng tin </a>
                         </nav>
                     </div>
@@ -251,7 +248,7 @@
 
                     <a class="nav-link " href="/AdvertisingManagement">
                         <div class="nav-link-icon"><i data-feather="award"></i></div>
-                        Quản lý banner
+                        Quản lý quảng cáo
                     </a>
 
 
@@ -265,16 +262,7 @@
 
     <!--          Start Content-->
     <div id="layoutSidenav_content">
-        {{!-- <ul class="nav nav-tabs mt-2 mx-2 mb-2">
-            <li class="nav-item">
-                <a class="nav-link active text-primary" aria-current="page" href="/BookApproval">Duyệt bài đăng bán</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/AutionApproval">Duyệt bài đấu giá</a>
-            </li>
-        </ul> --}}
         <main>
-            <!-- Main page content-->
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
                 <div class="container-xl px-4">
                     <div class="page-header-content">
@@ -282,120 +270,126 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="user"></i></div>
-                                    Duyệt Nội Dung
+                                    Chi tết bài báo cáo
                                 </h1>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
             </header>
-            <div class="container-fluid px-4 ">
-                <div  id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
-                    <nav class="nav nav-borders">
-                        <a style="margin-left: 0.1px;" class="nav-link" href="/BookApproval">Duyệt bài đăng bán</a>
-                        <a class="nav-link active ms-1" href="/AutionApproval">Duyệt bài đấu giá</a>
-                    </nav>
-                     <hr class="mt-0 mb-4" />
-                </div>     
-                <div class="col-sm-3">
-                    <!-- Dashboard info Tai khoan moi-->
-                    <div style="width: 230px;" class="card border-start-lg border-start-primary h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <div class="uppercase fw-bold text-primary mb-3">Bài đăng bán cần duyệt</div>
-                                    <div class="row">
-                                        <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
-                                        <div class="col-8 ml-1 h5 mt-1 text-red">{{listAution.length}}</div>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-4">
+                <!-- Account page navigation-->
+                <div class="row">
+                    <div class="col-xl-7">
+                        <!-- Account details card-->
+                        <div class="card mb-4">
+                            <div class="card-header">Chi tiết báo cáo</div>
+                            <div class="card-body">
+                                <form>
+                                    <!-- Form Group (username)-->
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Hình ảnh người báo cáo cung cấp</label>
+                                        <div class="card-body text-center">
+                                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-indicators">
+                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                </div>
+                                                <div class="carousel-inner">
+                                                    <div class="carousel-item active">
+                                                        <img src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" class="d-block w-100" alt="...">
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <img src="https://jonathanvankin.com/wp-content/uploads/2022/02/Tac-gia-Dac-nhan-tam-la-ai-va-noi-dung-tung-phan-cua-cuon-sach.jpg" class="d-block w-100" alt="...">
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <img src="https://sachngoaingu.org/wp-content/uploads/2019/05/58570445_890012078005036_2784590884711170048_o.jpg" class="d-block w-100" alt="...">
+                                                    </div>
+                                                </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Người báo cáo</label>
+                                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="Phùng Hiển" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Nội dung báo cáo</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"> Sách gửi đến khác với trên bài đăng</textarea>
                                     </div>
 
-                                </div>
-                                <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
+                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card mt-4">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                            <tr>
-                                <th>Người đăng</th>
-                                <th>Tên sách</th>
-                                <th>Thể loại</th>
-                                
-                                <th>Bán/Miễn phí</th>
-                                <th>Thời gian đăng</th>
-                                <th>Xem tin</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            {{#each listAution}}
-                                <tr>
-                                    <td>
-                                        {{this.seller.fullName}}
-                                    </td>
-                                    <td>{{this.bookName}}</td>
-                                    <td>{{this.category.name}}</td>
-                                    
-                                    <td>
-                                        <span id="salesType" class="badge bg-green-soft text-green">{{this.salesType}}</span>
-                                    </td>
-                                    <td>{{formatTime this.endTime}}</td>
-                                    <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/BookApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
-                                    </td>
-                                </tr>
-
-                                </thead>
-                                <tbody>
-                                {{#each listAution}}
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2"><img class="avatar-img img-fluid"
-                                                                              src="/assets/img/illustrations/profiles/profile-1.png"/>
-                                                </div>
-                                                {{this.seller}}
-                                            </div>
-                                        </td>
-                                        <td>{{this.postTitle}}</td>
-                                        <td>
-
-                                            {{formatTime this.createdAt}}
-                                        </td>
-<!--                                        <td>-->
-<!--                                            <span class="badge bg-green-soft text-green">Manual</span>-->
-<!--                                        </td>-->
-<!--                                        <td>23/06/2023</td>-->
-                                        <td>
-                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2"
-                                               href="/AutionApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
-                                        </td>
-                                    </tr>
-
-                                {{/each}}
+                    <div class="col-xl-5 ">
+                        <!-- Profile picture card-->
+                        <div class="card mb-4 mb-xl-0">
+                            <div class="card-header">Ảnh trong bài đăng</div>
+                            <div class="card-body text-center">
+                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="https://sachngoaingu.org/wp-content/uploads/2019/05/58570445_890012078005036_2784590884711170048_o.jpg" class="d-block w-100" alt="...">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://jonathanvankin.com/wp-content/uploads/2022/02/Tac-gia-Dac-nhan-tam-la-ai-va-noi-dung-tung-phan-cua-cuon-sach.jpg" class="d-block w-100" alt="...">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" class="d-block w-100" alt="...">
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-4 mb-xl-0">
+                            <div class="card-header">Phản hồi</div>
+                            <div class="card-body text-center">
+                                <textarea class="form-control mb-4" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <a class="btn btn-primary" type="button" href="pending_report">Gửi phản hồi</a>
+                            </div>
 
 
-                            {{/each}}
-
-
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
+
+
                 </div>
+
+
             </div>
         </main>
-    </div>
 
+    </div>
 
     <!--            End Content-->
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="js/scripts.js"></script>
+<script src="/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
 <script src="assets/demo/chart-area-demo.js"></script>
 <script src="assets/demo/chart-bar-demo.js"></script>
