@@ -307,7 +307,7 @@
                                     <div class="uppercase fw-bold text-primary mb-3">Bài đăng bán cần duyệt</div>
                                     <div class="row">
                                         <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
-                                        <div class="col-8 ml-1 h5 mt-1 text-red">{{listAution.length}}</div>
+                                        <div class="col-8 ml-1 h5 mt-1 text-red">{{documentList.length}}</div>
                                     </div>
 
                                 </div>
@@ -324,7 +324,6 @@
                                 <th>Người đăng</th>
                                 <th>Tên sách</th>
                                 <th>Thể loại</th>
-                                
                                 <th>Bán/Miễn phí</th>
                                 <th>Thời gian đăng</th>
                                 <th>Xem tin</th>
@@ -332,7 +331,7 @@
                             </thead>
                             <tbody>
 
-                            {{#each listAution}}
+                            {{#each documentList}}
                                 <tr>
                                     <td>
                                         {{this.seller.fullName}}
@@ -343,45 +342,12 @@
                                     <td>
                                         <span id="salesType" class="badge bg-green-soft text-green">{{this.salesType}}</span>
                                     </td>
-                                    <td>{{formatTime this.endTime}}</td>
+                                    <td>{{this.createdAt}}</td>
                                     <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/BookApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/AutionApproval/detail_aution/{{this._id}}"><i data-feather="eye"></i></a>
                                     </td>
                                 </tr>
-
-                                </thead>
-                                <tbody>
-                                {{#each listAution}}
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2"><img class="avatar-img img-fluid"
-                                                                              src="/assets/img/illustrations/profiles/profile-1.png"/>
-                                                </div>
-                                                {{this.seller}}
-                                            </div>
-                                        </td>
-                                        <td>{{this.postTitle}}</td>
-                                        <td>
-
-                                            {{formatTime this.createdAt}}
-                                        </td>
-<!--                                        <td>-->
-<!--                                            <span class="badge bg-green-soft text-green">Manual</span>-->
-<!--                                        </td>-->
-<!--                                        <td>23/06/2023</td>-->
-                                        <td>
-                                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2"
-                                               href="/AutionApproval/detail_aution_approval/{{this._id}}"><i data-feather="eye"></i></a>
-                                        </td>
-                                    </tr>
-
-                                {{/each}}
-
-
-                            {{/each}}
-
-
+                            {{/each}}   
                             </tbody>
                         </table>
                     </div>

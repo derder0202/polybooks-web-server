@@ -11,7 +11,7 @@ router.post('/edit_banner/:id',adManagementController.postEditBanner);
 router.get('/add_new_banner',adManagementController.formAddNewBanner);
 router.post('/add_new_banner',adManagementController.postAddNewBanner);
 
-// router.get('/',adManagementController.listManagement)
+
 router.get('/banner_details',adManagementController.detailManagement)
 
 
