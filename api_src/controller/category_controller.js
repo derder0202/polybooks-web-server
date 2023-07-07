@@ -116,7 +116,7 @@ const categoryController = {
                     populate:[
                         {
                             path:"seller",
-                            select:"fullName"
+                            select:"fullName phone"
                         },
                         {
                             path:"author",

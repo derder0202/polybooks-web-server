@@ -245,7 +245,7 @@ const userController = {
                 populate:[
                     {
                         path:"seller",
-                        select:"fullName"
+                        select:"fullName phone"
                     },
                     {
                         path:"author",
@@ -284,7 +284,7 @@ const userController = {
                     populate:[
                         {
                             path:"seller",
-                            select:"fullName"
+                            select:"fullName phone"
                         },
                         {
                             path:"author",

@@ -318,10 +318,9 @@ const depositHistorySchema = new mongoose.Schema({
     },
 });
 const bannerSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
+    name: {
+        type:String,
         required: true,
-        ref: 'User'
     },
     content: {
         type: String,

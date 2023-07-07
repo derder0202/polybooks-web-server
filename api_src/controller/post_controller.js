@@ -11,7 +11,7 @@ const postController = {
                 .populate('category', 'name')
                 .populate('publisher', 'name')
                 .populate('author', 'name')
-                .populate('seller', 'fullName')
+                .populate('seller', 'fullName phone')
                 .populate('shopId', 'name');
             res.status(200).json(posts);
         } catch (err) {
@@ -43,7 +43,7 @@ const postController = {
                 .populate('category', 'name')
                 .populate('publisher', 'name')
                 .populate('author', 'name')
-                .populate('seller', 'fullName')
+                .populate('seller', 'fullName phone')
                 .populate('shopId', 'name')
                 .select("-__v")
                 .skip(startIndex)
@@ -61,7 +61,7 @@ const postController = {
                 .populate('category', 'name')
                 .populate('publisher', 'name')
                 .populate('author', 'name')
-                .populate('seller', 'fullName')
+                .populate('seller', 'fullName phone')
                 .populate('shopId', 'name')
                 .select("-__v")
             if (post) {
@@ -313,12 +313,20 @@ const postController = {
                             index: '2dsphere'
                         }
                     }
-                }
+                },
+                postStatus: "1"
             })
+                .populate('category', 'name')
+                .populate('publisher', 'name')
+                .populate('author', 'name')
+                .populate('seller', 'fullName phone')
+                .populate('shopId', 'name')
+                .select("-__v")
                 .skip(startIndex)
                 .limit(limit);
             res.json(posts);
         } catch (error) {
+            console.log(error)
             res.status(500).json({ error: error.message });
         }
     }
