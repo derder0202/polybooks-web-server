@@ -354,15 +354,7 @@
                                     </td>
                                 </tr>
                             {{/each}}
-                            {{!-- <script>
-                                const createdAtCells = document.querySelectorAll('td.createdAt');//chọn tất cả các phần tử có thẻ <td> và class là "createdAt"
-
-                                for (let i = 0; i < createdAtCells.length; i++) {
-                                    const createdAt = createdAtCells[i].textContent;// Lấy giá trị textContent của phần tử <td> hiện tại và gán cho biến createdAt. Đây là giá trị nguyên thủy của thời gian đã được hiển thị trên trang.
-                                    const formattedDate = moment.utc(createdAt).tz('Asia/Ho_Chi_Minh').format("DD/MM/YYYY, HH:mm:ss");//moment.utc()để tạo một đối tượng Moment dựa trên giá trị thời gian đã lấy.phương thức tz('Asia/Ho_Chi_Minh') để chuyển đổi múi giờ sang múi giờ Việt Nam
-                                    createdAtCells[i].textContent = formattedDate;//Gán giá trị đã định dạng vào phần tử <td> hiện tại bằng cách cập nhật textContent của nó.
-                                }
-                            </script> --}}
+                            
 
                             </tbody>
                         </table>

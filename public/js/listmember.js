@@ -22,6 +22,18 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     });
 });
+//gán dữ liệu cho status
+document.addEventListener("DOMContentLoaded", function() {
+    const statusElements = document.querySelectorAll("#statussValue"); //querySelectorAll để lấy tất cả các phần tử trong bảng có id là "genderValue" và lưu chúng vào biến genderElements
+    statusElements.forEach(function(statusElement) {
+    const bookStatus = statusElement.textContent.trim(); // Lấy nội dung của phần tử hiện tại bằng textContent,trim để loại bỏ khoảng trắng thừa từ đầu và cuối chuỗi.
+    if (bookStatus === "0") {
+        statusElement.textContent = "Mới";
+    } else {
+        statusElement.textContent = "Cũ";
+    }
+    });
+});
 //logic phân chia gender
 document.addEventListener("DOMContentLoaded", function() {
     const genderSelect = document.getElementById('gender'); // Lấy phần tử select

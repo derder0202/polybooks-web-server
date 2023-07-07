@@ -55,7 +55,7 @@ const processedreportRouter = require('./routes/processedreport');
 const admanagementRouter = require('./routes/admanagement');
 const statisticalRouter = require('./routes/statistical');
 const authenticationRouter = require('./routes/authentication');
-const autionApprovalRouter = require('./routes/aution_approval');
+const autionApprovalRouter = require('./routes/autionapproval');
 
 
 const apiUserRouter = require('./api_src/route/user')
