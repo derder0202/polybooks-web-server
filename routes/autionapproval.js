@@ -4,6 +4,6 @@ var router = express.Router();
 
 router.get('/',autionApprovalController.listAutionApproval); //duyệt bài đấu giá
 
-// router.get('/detail_aution_approval/:id',autionApprovalController.detailAutionApproval); //chi tiết duyệt bài đấu giá
+router.get('/detail_aution/:id',autionApprovalController.detailAution); //chi tiết duyệt bài đấu giá
 
 module.exports = router;
