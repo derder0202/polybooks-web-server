@@ -7,10 +7,8 @@ const autionApprovalController ={
 
             const snapshot = await db.collection("PostAuction").get();
             snapshot.forEach((doc) => {
-            documentList.push(doc.data());
+            documentList.push({_id:doc.id,...doc.data()});
         });
-        
-
         res.render('content_approval/aution_approval', { documentList });
         } catch (e) {
             console.error(error);
@@ -23,12 +21,13 @@ const autionApprovalController ={
             const docRef = db.collection("PostAuction").doc(req.params.id);
             const doc = await docRef.get();
             
-      
+
             if (!doc.exists) {
               res.status(404).send("Danh sách duyệt đấu giá không tồn tại");
               return;
             }
             const auctionData = doc.data();
+           // console.log(auctionData)
             console.log(auctionData);
       
             res.render('content_approval/detail_aution', {auctionData});
