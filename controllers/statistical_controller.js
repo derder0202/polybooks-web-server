@@ -14,10 +14,13 @@ const statisticalController = {
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
         const sevenDaysCountUser = await User.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        statisticalWeek.userWeek = sevenDaysCountUser
         // Count new users for the past 30 days
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         const thirtyDaysCountUser = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
+        statisticalMonth.userMonth = thirtyDaysCountUser
+        
         console.log(`New users for today: ${todayCountUser}`);
         console.log(`New users for the past 7 days: ${sevenDaysCountUser}`);
         console.log(`New users for the past 30 days: ${thirtyDaysCountUser}`);
@@ -41,11 +44,11 @@ const statisticalController = {
             // Save the count in the map
             dataThisWeek[`${dayName}`] = postsCount
         }
-        // Print the map
+        // Print the maps
         console.log(dataThisWeek);
 
 
-        res.render('statistical/account_statistics');
+        res.render('statistical/account_statistics',{statisticalToday,statisticalWeek,statisticalMonth });
 
     },
 }

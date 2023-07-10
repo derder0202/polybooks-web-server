@@ -7,7 +7,7 @@ const adManagementController = {
     //lay ra list banner
     listBannerManagement: async (req,res)=>{
         try {
-            const listBanner = await Banner.find().populate("userId","fullName");
+            const listBanner = await Banner.find();
             res.render('advertisement/ad_management',{listBanner})
 
         } catch (e) {
