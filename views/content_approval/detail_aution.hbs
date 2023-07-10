@@ -354,18 +354,16 @@
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-header">Ảnh trong bài đăng</div>
                             <div class="card-body text-center">
-
-                                <div class="slick-slider">
-                                   
+                                <div class="slick-slider">                                
+                                        {{#each auctionData.images}}
                                         <div>
-                                            <img src="" class="d-block h-100 w-100">
+                                            <img src="{{this}} " class="d-block h-100 w-100">
                                         </div>
-                                 
+                                        {{/each}}                                 
                                 </div>
                                 <button type="button" class="slick-prev">Previous</button>
                                 <button type="button" class="slick-next">Next</button>
                                 <div class="slick-dots"></div>
-
                             </div>
                         </div>
                     </div>
@@ -374,28 +372,28 @@
                         <div class="card mb-4">
                             <div class="card-header">Chi tiết bài đăng</div>
                             <div class="card-body">
-                                <form method="post" action="">
+                                <form method="post" action="/AutionApproval/detail_aution/{{auctionData._id}}">
                                     <!-- Form Group (Tiêu đề)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Tiêu đề</label>
-                                        <textarea class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="" disabled readonly></textarea>
+                                        <textarea class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="" disabled readonly>{{auctionData.postTitle}}</textarea>
                                     </div>
                                     <!-- Form Group (Mô tả)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Mô tả</label>
-                                        <textarea class="form-control" id="inputUsername" type="text" placeholder="Enter your username"  rows="3" disabled readonly></textarea>
+                                        <textarea class="form-control" id="inputUsername" type="text" placeholder="Enter your username"  rows="3" disabled readonly>{{auctionData.description}}</textarea>
                                     </div>
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (Tên sách)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputFirstName">Tên sách</label>
-                                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="" disabled readonly/>
+                                            <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{auctionData.bookName}}" disabled readonly/>
                                         </div>
                                         <!-- Form Group (Tác giả)-->
                                          <div class="col-md-6">
                                             <label class="small mb-1" for="inputPhone">Tác giả</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="" disabled readonly/>
+                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{auctionData.author.name}}" disabled readonly/>
                                         </div>
                                     </div>
                                     <!-- Form Row-->
@@ -403,12 +401,12 @@
                                         <!-- Form Group (Thể loại)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputPhone">Thể loại</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="" disabled readonly/>
+                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{auctionData.category.name}}" disabled readonly/>
                                         </div>
                                         <!-- Form Group (Ngôn ngữ )-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputPhone">Ngôn ngữ</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="" disabled readonly/>
+                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{auctionData.language}}" disabled readonly/>
                                         </div>
                                     
                                     </div>
@@ -417,12 +415,12 @@
                                         <!-- Form Group (Kích thước)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputOrgName">Kích thước</label>
-                                            <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="" disabled readonly/>
+                                            <input class="form-control" id="inputOrgName" type="text" placeholder="Enter your organization name" value="{{auctionData.bookSize}}" disabled readonly/>
                                         </div>
                                         <!-- Form Group (Số trang)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Số trang</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="" disabled readonly/>
+                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{auctionData.totalPage}}" disabled readonly/>
                                         </div>
                                     </div>
                                     
@@ -430,24 +428,24 @@
                                         <!-- Form Group (Tình trạng)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLastName">Tình trạng</label>
-                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="" disabled readonly/>
+                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{auctionData.bookStatus}}" disabled readonly/>
                                         </div>
                                        
                                         <!-- Form Group (Giá bán)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Giá bán</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="" disabled readonly/>
+                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{auctionData.startPrice}}" disabled readonly/>
                                         </div>
                                     </div>
                                     <!-- Form Group (Nhà xuất bản)-->
                                     <div class="mb-3">
                                             <label class="small mb-1" for="inputBirthday">Nhà xuất bản</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="" disabled readonly/>
+                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{auctionData.publisher.name}}" disabled readonly/>
                                         </div>
                                     <!-- Form Group (Địa chỉ bán)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Địa chỉ bán</label>
-                                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="" disabled readonly/>
+                                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="{{auctionData.address}}" disabled readonly/>
                                     </div>
                                     
                                     <div class="mb-3">
@@ -455,8 +453,8 @@
                                     <!-- Save changes button-->
                                     {{!-- <a style="margin-top: 30px;" class="btn btn-primary" type="button" href="/AutionApproval">Duyệt bài</a> --}}
                                     <div class="card-body text-center">
-                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="approve">Duyệt bài</button>
-                                    <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="reject">Không duyệt</button>
+                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="duyet">Duyệt bài</button>
+                                    <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="khongduyet">Không duyệt</button>
                                 </div>
                                 </form>
 
