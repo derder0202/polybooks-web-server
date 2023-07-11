@@ -9,8 +9,6 @@ const bodyParser = require('body-parser')
 const LocalStrategy = require('passport-local').Strategy;
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./credentials.json");
-
 // Đăng ký partials
 // const handlebars = require('handlebars');
 // const fs = require('fs');
@@ -30,14 +28,14 @@ const serviceAccount = require("./credentials.json");
 // });
 // đăng ký partials
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: "gs://polybooks-52282.appspot.com",
-});
+
 
 
 require('dotenv').config()
-
+admin.initializeApp({
+    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SECRET)),
+    storageBucket: process.env.STORAGE_BUCKET,
+});
 //connect mongoose
 mongoose.connect(process.env.MONGODBURL).then(()=>{
   console.log("mongodb connected")
@@ -118,13 +116,13 @@ passport.use(new LocalStrategy(
       const user = await User.findOne({ phone: username })
 
       if (!user) {
-        console.log("no user")
+        //console.log("no user")
         return done(null, false, { message: 'Incorrect username.' });
       }
-      console.log(user.password)
-      console.log(password)
-      if (user.password !== password) {
-        console.log("???")
+      //console.log(user.password)
+      //console.log(password)
+      if (user.password !== btoa(password)) {
+        //console.log("???")
         return done(null, false, { message: 'Incorrect password.' });
       }
 
