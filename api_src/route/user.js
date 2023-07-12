@@ -5,13 +5,24 @@ const router = express.Router();
 const userController = require('../controller/user_controller');
 
 const authMiddleware = require("../middleware/authMiddleware");
+const {Bill, User} = require("../model/model");
 // GET /users
 router.post('/filter', userController.getUsers);
 
 router.post('/login', userController.login);
 
-router.get('/test', (req,res)=>{
-    res.status(200).json("testtttt")
+router.get('/test',async (req,res)=>{
+    User.calculateRolePercentage().then((result,err)=>{
+        if (err) {
+            console.log(err);
+        } else {
+            const totalUsers = result.reduce((total, item) => total + item.count, 0);
+            result.forEach(item => {
+                const percentage = (item.count / totalUsers) * 100;
+                console.log(`Phần trăm người dùng có vai trò ${item.role}: ${percentage}%`);
+            });
+        }
+    })
 });
 // GET /users/:id
 router.get('/:id', userController.getUserById);

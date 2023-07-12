@@ -25,6 +25,25 @@ const UserSchema = new mongoose.Schema({
         default: [ 105.3230297,20.9739994]
     }
 }, {timestamps: true});
+
+UserSchema.statics.calculateRolePercentage = function(callback) {
+    return User.aggregate([
+        {
+            $group: {
+                _id: '$role',
+                count: {$sum: 1}
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                role: '$_id',
+                count: 1
+            }
+        }
+    ],);
+}
+
 const CategorySchema = new mongoose.Schema({
     name: { type: String, required: true },
     image:{type:String,require:true},
@@ -204,6 +223,54 @@ const BillSchema = new mongoose.Schema({
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
 },{timestamps:true});
+
+BillSchema.statics.countByCategory = function() {
+    return this.aggregate([
+        {
+            $lookup: {
+                from: 'posts',
+                localField: 'posts',
+                foreignField: '_id',
+                as: 'postDetails'
+            }
+        },
+        {
+            $unwind: '$postDetails'
+        },
+        {
+            $lookup: {
+                from: 'categories',
+                localField: 'postDetails.category',
+                foreignField: '_id',
+                as: 'category'
+            }
+        },
+        {
+            $unwind: '$category'
+        },
+        {
+            $group: {
+                _id: {
+                    id: '$category._id',
+                    name: '$category.name'
+                },
+                count: { $sum: 1 }
+            }
+        },
+        {
+            $project: {
+                _id: '$_id.id',
+                name: '$_id.name',
+                count: 1
+            }
+        },
+        {
+            $sort: {
+                count: -1
+            }
+        }
+    ],);
+};
 
 ShopSchema.pre('save',async function (next) {
     try {
