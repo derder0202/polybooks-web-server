@@ -33,7 +33,7 @@ const admin = require("firebase-admin");
 
 require('dotenv').config()
 admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SECRET)),
+    credential: admin.credential.cert(require("./credentials.json")),
     storageBucket: process.env.STORAGE_BUCKET,
 });
 //connect mongoose

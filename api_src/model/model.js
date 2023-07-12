@@ -307,7 +307,7 @@ const depositHistorySchema = new mongoose.Schema({
         required: true
     },
 });
-const bannerSchema = new mongoose.Schema({
+const   bannerSchema = new mongoose.Schema({
     name: {
         type:String,
         required: true,
