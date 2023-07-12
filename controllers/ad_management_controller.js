@@ -11,7 +11,7 @@ const adManagementController = {
             res.render('advertisement/ad_management',{listBanner})
 
         } catch (e) {
-            console.error(error);
+            console.error(e);
             res.status(500).send('Lỗi khi lấy danh sách banner');
 
         }
