@@ -1,4 +1,4 @@
-const {User, Post} = require("../api_src/model/model");
+const {User, Post, Bill} = require("../api_src/model/model");
 const statisticalController = {
     liststatistical: async (req,res)=>{
         let statisticalToday = {}
@@ -46,6 +46,27 @@ const statisticalController = {
         }
         // Print the maps
         console.log(dataThisWeek);
+
+        // thong ke category.
+        // đếm sách trong các bill (chưa tính status bill đã hoàn thành hay chưa)
+        await Bill.countByCategory().then((value,err)=>{
+            console.log(value)
+        })
+
+        //thống kê số lượng người dùng vip và thường
+        //các bạn tự giới hạn số thập phân hoặc làm tròn nhé
+        // hoặc làm tròn 1 cái rồi lấy 100% trừ cho cái đó là ra cái còn lại
+        await User.calculateRolePercentage().then((result,err)=>{
+            if (err) {
+                console.log(err);
+            } else {
+                const totalUsers = result.reduce((total, item) => total + item.count, 0);
+                result.forEach(item => {
+                    const percentage = (item.count / totalUsers) * 100;
+                    console.log(`Phần trăm người dùng có vai trò ${item.role}: ${percentage}%`);
+                });
+            }
+        })
 
 
         res.render('statistical/account_statistics',{statisticalToday,statisticalWeek,statisticalMonth });
