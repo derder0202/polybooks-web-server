@@ -55,20 +55,6 @@ const AuthorSchema = new mongoose.Schema({
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
-// //change
-// const ShopSchema = new mongoose.Schema({
-//     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' , immutable: true},
-//     name: { type: String, required: true },
-//     rating: { type: Number, default: 0},
-//     description: { type: String, default:"" },
-//     image: { type: String,},
-//     address: { type: String, default:"" },
-//     phone: { type: String, default:"" },
-//    // createAt: { type: Date, default: Date.now },
-//     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-//     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-//    // taxCode: { type: String }
-// }, {timestamps: true});
 const ShopSchema = new mongoose.Schema({
         user: {
             type: mongoose.Schema.Types.ObjectId,
@@ -118,7 +104,11 @@ const ShopSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Review'
             }
-        ]
+        ],
+        location: {
+            type: [Number],
+            default: [ 105.3230297,20.9739994]
+        }
     },{ timestamps: true }
 )
 
