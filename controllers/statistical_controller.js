@@ -29,10 +29,11 @@ const statisticalController = {
 
         // cai nay danh cho ben sách thống kê. chưa hiểu lắm cách viết data
         //const today = new Date();
+        console.log("day la 7 ngay cua sach thuong")
         const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
         const endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 6);
         // Create an empty map to store the counts
-        const dataThisWeek = {};
+        const dataThisWeekRegular = {};
         // Iterate over each day of the week
         for (let i = 0; i < 7; i++) {
             const currentDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
@@ -40,12 +41,32 @@ const statisticalController = {
             // Count posts for the current day
             const postsCount = await Post.countDocuments({ createdAt: { $gte: currentDate, $lt: nextDate } });
             // Get the day name
-            const dayName = currentDate.toLocaleDateString('vi-VN', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('vi-VN', )
             // Save the count in the map
-            dataThisWeek[`${dayName}`] = postsCount
+            dataThisWeekRegular[`${dayName}`] = postsCount
         }
         // Print the maps
-        console.log(dataThisWeek);
+        console.log(dataThisWeekRegular);
+
+        console.log("day la 7 ngay cua sach dau gia")
+        const dataThisWeekAuction = {};
+        const admin = require('firebase-admin')
+        for (let i = 0; i < 7; i++) {
+            const currentDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
+            const nextDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i + 1);
+            // Count posts for the current day
+            const postsRef = admin.firestore().collection('PostAuction');
+            const query = postsRef
+                .where('createdAt', '>=', currentDate.toISOString())
+                .where('createdAt', '<', nextDate.toISOString());
+            const snapshot = await query.get();
+            const postsCount = snapshot.size;
+            // Get the day name
+            const dayName = currentDate.toLocaleDateString('vi-VN', )
+            // Save the count in the map
+            dataThisWeekAuction[`${dayName}`] = postsCount
+        }
+        console.log(dataThisWeekAuction)
 
         // thong ke category.
         // đếm sách trong các bill (chưa tính status bill đã hoàn thành hay chưa)

@@ -45,6 +45,7 @@ router.get('/:id/favorite', userController.getFavoriteByUser);
 router.get('/:id/address', userController.getAddressByUser);
 router.post('/:id/addAddress', userController.addAddress);
 router.post('/:id/removeAddress', userController.removeAddress);
+router.put('/editAddress/:id',userController.editAddress)
 
 router.get('/:id/posts', userController.getPostsByUser);
 router.get('/:id/reviews', userController.getReviewsByUser);
