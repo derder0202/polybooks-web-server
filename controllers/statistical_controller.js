@@ -1,4 +1,4 @@
-const {User, Post, Bill} = require("../api_src/model/model");
+const {User, Post, Bill, Shop} = require("../api_src/model/model");
 const statisticalController = {
     liststatistical: async (req,res)=>{
         let statisticalToday = {}
@@ -25,6 +25,35 @@ const statisticalController = {
         console.log(`New users for the past 7 days: ${sevenDaysCountUser}`);
         console.log(`New users for the past 30 days: ${thirtyDaysCountUser}`);
         //làm tương tự với các model còn lại bao gồm Shop, Post, Bill(gửi đi và hoàn thành check status(
+
+        //POST
+        const todayCountPost = await Post.countDocuments({createAt: { $gte: today } });
+        statisticalToday.postToday = todayCountPost;
+
+        const sevenDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        statisticalWeek.postWeek = sevenDaysCountPost;
+
+        const thirtyDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        statisticalMonth.postMonth = thirtyDaysCountPost;
+
+        console.log(`New posts for today: ${todayCountPost}`);
+        console.log(`New posts for the past 7 days: ${sevenDaysCountPost}`);
+        console.log(`New posts for the past 30 days: ${thirtyDaysCountPost}`);
+
+        //Shop
+        const todayCountShop = await Shop.countDocuments({createAt: { $gte: today } });
+        statisticalToday.shopToday = todayCountShop;
+
+        const sevenDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        statisticalWeek.shopWeek = sevenDaysCountShop;
+
+        const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        statisticalMonth.shopMonth = thirtyDaysCountShop;
+
+        console.log(`New shops for today: ${todayCountShop}`);
+        console.log(`New shops for the past 7 days: ${sevenDaysCountShop}`);
+        console.log(`New shops for the past 30 days: ${thirtyDaysCountShop}`);
+
 
 
         // cai nay danh cho ben sách thống kê. chưa hiểu lắm cách viết data
