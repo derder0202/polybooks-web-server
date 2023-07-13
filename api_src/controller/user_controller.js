@@ -386,6 +386,19 @@ const userController = {
             res.status(500).json({ message: 'Server Error' });
         }
     },
+    editAddress: async(req,res)=>{
+        const { id } = req.params;
+        try {
+            const updateAddress = await Address.findByIdAndUpdate(id,req.body,{new: true})
+            if(!updateAddress){
+                res.status(400).json({message:"khong tim thay dia chi"})
+            }
+            res.status(200).json({message: "thanh cong", address: updateAddress});
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ message: 'Server Error' });
+        }
+    },
     getBuyBillsByUser : async (req,res) => {
         try {
             const { startIndex, limit } = req.query;
