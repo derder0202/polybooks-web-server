@@ -48,29 +48,47 @@ const statisticalController = {
         console.log(dataThisWeek);
 
         // thong ke category.
-        // đếm sách trong các bill (chưa tính status bill đã hoàn thành hay chưa)
-        await Bill.countByCategory().then((value,err)=>{
-            console.log(value)
-        })
-
+        
+        // await Bill.countByCategory().then((value,err)=>{
+        //     console.log(value)
+        // })
+    // đếm sách trong các bill (chưa tính status bill đã hoàn thành hay chưa) tối hỏi
+        const categoryCounts = await Bill.countByCategory();
+        console.log(categoryCounts);
         //thống kê số lượng người dùng vip và thường
         //các bạn tự giới hạn số thập phân hoặc làm tròn nhé
         // hoặc làm tròn 1 cái rồi lấy 100% trừ cho cái đó là ra cái còn lại
-        await User.calculateRolePercentage().then((result,err)=>{
-            if (err) {
-                console.log(err);
-            } else {
-                const totalUsers = result.reduce((total, item) => total + item.count, 0);
-                result.forEach(item => {
-                    const percentage = (item.count / totalUsers) * 100;
-                    console.log(`Phần trăm người dùng có vai trò ${item.role}: ${percentage}%`);
-                });
-            }
-        })
+        // await User.calculateRolePercentage().then((result,err)=>{
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         const totalUsers = result.reduce((total, item) => total + item.count, 0);
+        //         result.forEach(item => {
+        //             const percentage = (item.count / totalUsers) * 100;
+        //             console.log(`Phần trăm người dùng có vai trò ${item.role}: ${percentage}%`);
+        //             console.log("----------")
+        //         });
+        //     }
+        // })
+        const totalUsers = await User.countDocuments();
+        const regularUsers = await User.countDocuments({ role: '0' });
+        const vipUsers = await User.countDocuments({ role: '1' });
+        const regularUserPercentage = Math.round((regularUsers / totalUsers) * 100);
+        const vipUserPercentage = Math.round((vipUsers / totalUsers) * 100);
+        console.log(`Total users: ${totalUsers}`);
+        console.log(`Regular users: ${regularUsers}`);
+        console.log(`VIP users: ${vipUsers}`);
+        console.log(`Regular user percentage: ${regularUserPercentage}%`);
+        console.log(`VIP user percentage: ${vipUserPercentage}%`);
 
 
-        res.render('statistical/account_statistics',{statisticalToday,statisticalWeek,statisticalMonth });
-
-    },
+        res.render('statistical/account_statistics',{
+            statisticalToday,
+            statisticalWeek,
+            statisticalMonth, 
+            categoryCounts,
+            regularUserPercentage,
+            vipUserPercentage});
+        },
 }
 module.exports = statisticalController
