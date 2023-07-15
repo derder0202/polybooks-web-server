@@ -13,7 +13,7 @@ router.post('/edit_regular_member/:id',checkAuth,memberController.postEditRegula
 
 
 router.get('/add_regular_member',memberController.formAddRegularMember)
-router.put('/:id',memberController.addRegularMember) // nho sua lai
+router.post('/add_regular_member',memberController.addRegularMember)
 
 router.delete('/:id',memberController.addRegularMember)
 

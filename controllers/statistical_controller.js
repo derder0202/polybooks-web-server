@@ -59,8 +59,8 @@ const statisticalController = {
         // cai nay danh cho ben sách thống kê. chưa hiểu lắm cách viết data
         //const today = new Date();
         console.log("day la 7 ngay cua sach thuong")
-        const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
-        const endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() + 6);
+        const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() - 6);
+        const endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
         // Create an empty map to store the counts
         const dataThisWeekRegular = {};
         // Iterate over each day of the week
@@ -76,6 +76,8 @@ const statisticalController = {
         }
         // Print the maps
         console.log(dataThisWeekRegular);
+      
+
 
         console.log("day la 7 ngay cua sach dau gia")
         const dataThisWeekAuction = {};
