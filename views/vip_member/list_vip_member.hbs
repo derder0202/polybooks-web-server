@@ -180,12 +180,12 @@
                                 <td>{{this.fullName}}</td>
                                 <td>{{this.email}}</td>
                                 <td>{{this.phone}}</td>
-                                <td>{{this.address}}</td>
+                                <td>{{this.address.[0].address}}</td>
                                 <td>
                                     <span id="genderValue">{{this.gender}}</span>
                                 </td>
 
-                                <td>{{this.birthday}}</td>
+                                <td>{{formatDateOfBirth this.birthday}}</td>
                                 <td>
                                     <span id="roleValue" class="badge bg-red-soft text-red">{{this.role}}</span>
                                 </td>
