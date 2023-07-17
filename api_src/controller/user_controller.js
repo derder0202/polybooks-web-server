@@ -41,38 +41,6 @@ const userController = {
     },
     createUser : async (req, res) => {
         try {
-            // upload(req, res, async function (err) {
-            //     if (err instanceof multer.MulterError) {
-            //         // A Multer error occurred when uploading.
-            //     } else if (err) {
-            //         // An unknown error occurred when uploading.
-            //     }
-            //     const newUser = new User(req.body);
-            //
-            //     const file = req.file;
-            //     const bucket = admin.storage().bucket()
-            //     const options = {
-            //         destination: `users/${newUser._id}`, // set the destination path in the bucket
-            //         metadata: {
-            //             contentType: 'image/jpeg', // set the MIME type of the file
-            //         },
-            //     };
-            //     const blob = bucket.file(options.destination); // create a reference to the file in the bucket
-            //     const blobStream = blob.createWriteStream(options); // create a write stream to upload the file
-            //     blobStream.end(file.buffer); // write the buffer to the stream
-            //     return new Promise( (resolve, reject) => {
-            //         blobStream.on('finish', async() => {
-            //             await blob.makePublic();
-            //                 const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`; // get the public URL of the uploaded file
-            //             resolve(publicUrl);
-            //             newUser.avatar = publicUrl
-            //             await newUser.save()
-            //             res.status(201).json(newUser);
-            //         });
-            //         blobStream.on('error', reject);
-            //     });
-            //     // Everything went fine.
-            // })
             const newUser = new User(req.body);
             const saveUser = await newUser.save()
             res.status(200).json(saveUser)
@@ -327,8 +295,9 @@ const userController = {
     },
     getNotificationsByUser : async (req, res) => {
         try {
-            const { userId } = req.params;
+            const userId = req.params.id;
             const user = await User.findById(userId).populate('notifications');
+            console.log(user)
             return res.status(200).json(user.notifications);
         } catch (error) {
             console.error(error);
