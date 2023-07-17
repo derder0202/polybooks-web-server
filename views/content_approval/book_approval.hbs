@@ -48,7 +48,7 @@
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="user"></i></div>
+                                    <div class="page-header-icon"><img style="width: 17px;height: 17px;" src="assets/img/illustrations/profiles/noidungg.png"></img></div>
                                     Duyệt Nội Dung
                                 </h1>
                             </div>
@@ -58,13 +58,13 @@
                 </div>
             </header>
             <div class="container-fluid px-4 ">
-                <div  id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
+                {{!-- <div  id="pagesCollapseAccount" data-bs-parent="#accordionSidenavPagesMenu">
                     <nav class="nav nav-borders">
-                        <a class="nav-link active ms-0" href="/BookApproval">Duyệt bài đăng bán</a>
+                        <a style="background: rgb(251, 245, 245);" class="nav-link active ms-0" href="/BookApproval">Duyệt bài đăng bán</a>
                         <a style="margin-left: 4px;" class="nav-link" href="/AutionApproval">Duyệt bài đấu giá</a>
                     </nav>
                      <hr class="mt-0 mb-4" />
-                </div>     
+                </div>      --}}
                 <div class="col-sm-3">
                     <!-- Dashboard info Tai khoan moi-->
                     <div style="width: 230px;" class="card border-start-lg border-start-primary h-100">
@@ -73,7 +73,7 @@
                                 <div class="flex-grow-1">
                                     <div class="uppercase fw-bold text-primary mb-3">Bài đăng bán cần duyệt</div>
                                     <div class="row">
-                                        <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
+                                        <div class="col-3"><img style="width: 20px;height: 20px;" src="assets/img/illustrations/profiles/clipboard.png"></img></div>
                                         <div class="col-8 ml-1 h5 mt-1 text-red">{{listBook.length}}</div>
                                     </div>
 

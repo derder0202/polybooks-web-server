@@ -1,3 +1,4 @@
+
 <div id="layoutSidenav_nav">
     <nav class="sidenav shadow-right sidenav-light">
         <div class="sidenav-menu">
@@ -8,7 +9,7 @@
                 <div class="sidenav-menu-heading">Statistical</div>
                 <!-- Sidenav Accordion (Thống kê)-->
                 <a class="nav-link" href="/Statistical">
-                    <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                    <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/thongke.png"></img></div>
                     Thống kê
                 </a>
 
@@ -16,7 +17,7 @@
                 <div class="sidenav-menu-heading">Account management</div>
                 <!-- Sidenav Accordion (Pages)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePosts" aria-expanded="false" aria-controls="collapsePosts">
-                    <div class="nav-link-icon"><i data-feather="grid"></i></div>
+                    <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/user.png"></img></div>
                     Quản lý tài khoản
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -41,7 +42,7 @@
                 <div class="sidenav-menu-heading">Aution Post</div>
                 <!-- Sidenav Accordion (Cửa hàng)-->
                 <a class="nav-link" href="/autionPost">
-                    <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
+                    <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/clipboard.png"></img></div>
                     Danh sách đấu giá
                 </a>
 
@@ -49,13 +50,14 @@
                 <div class="sidenav-menu-heading">Duyệt nội dung</div>
                 <!-- Sidenav Accordion (Author)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
-                    <div class="nav-link-icon"><i data-feather="align-center"></i></div>
+                    <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/noidungg.png"></img></div>
                     Duyệt nội dung
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseAuthor" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                         <a class="nav-link" href="/BookApproval">Duyệt bài đăng sách</a>
+                        <a class="nav-link" href="/AutionApproval">Duyệt bài đấu giá</a>
                         <a class="nav-link" href="/NewApproval">Duyệt bài đăng tin </a>
                     </nav>
                 </div>
@@ -68,7 +70,7 @@
 
                 <!-- Sidenav Accordion (Review)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseReview" aria-expanded="false" aria-controls="collapseReview">
-                    <div class="nav-link-icon"><i data-feather="flag"></i></div>
+                    <div class="nav-link-icon"><img style="width: 23px;height: 23px;" src="/assets/img/illustrations/profiles/report.png"></img></div>
                     Quản lý report
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -81,7 +83,7 @@
 
 
                 <a class="nav-link " href="/AdvertisingManagement">
-                    <div class="nav-link-icon"><i data-feather="award"></i></div>
+                    <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/banner.png"></img></div>
                     Quản lý banner
                 </a>
 
@@ -91,3 +93,47 @@
 
     </nav>
 </div>
+<style>
+        .nav-link.active {
+            background-color: rgb(234, 228, 228);
+            color: green;
+        }
+    </style>
+    <script>
+        // Get all the navigation links
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Check if a link is currently active
+        function checkActiveLink() {
+            const currentPath = window.location.pathname;
+
+            // Add the 'active' class to the link with a matching href
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                    
+                    // Find the parent collapse element
+                    const parentCollapse = link.closest('.collapse');
+                    
+                    // If the parent collapse exists, add the 'show' class
+                    if (parentCollapse) {
+                        parentCollapse.classList.add('show');
+                    }
+                }
+            });
+        }
+
+        // Add event listener to each navigation link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Remove the 'active' class from all links
+                navLinks.forEach(link => link.classList.remove('active'));
+
+                // Add the 'active' class to the clicked link
+                this.classList.add('active');
+            });
+        });
+
+        // Check the active link on page load
+        checkActiveLink();
+    </script>
