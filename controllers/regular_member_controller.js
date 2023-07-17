@@ -1,4 +1,5 @@
 const User = require("../api_src/model/model").User;
+const bcrypt = require('bcrypt');
 
 const memberController = {
     //Hiển thị toàn bộ list user
@@ -54,13 +55,30 @@ const memberController = {
         res.render('regular_member/change_password');
     },
     addRegularMember: async (req,res)=>{
-       //xu ly add member
-        //add xong
-        // cần xử lý ... sau khi thêm xong về địa chỉ /members
-        res.redirect('/members')
-    },
-    
-    //them sua xoa
+        try {
+        const fullName = req.body.inputUsername;
+        const phone = req.body.phoneNumber;
+        const plainPassword = req.body.password;
+        const email = req.body.email;
+        const gender = req.body.gender;
+        const role = req.body.role;
+        // Mã hóa mật khẩu
+        const base64Password = Buffer.from(plainPassword).toString('base64');
+
+        const newUser = new User({
+            fullName,
+            phone,
+            password: base64Password,
+            email,
+            gender,
+            role
+        });
+        await newUser.save();
+        res.redirect('/RegularMembers');
+    } catch (error) {
+        res.send("Lỗi khi thêm người dùng: " + error.message);
+        }
+    }
 }
 
 module.exports = memberController

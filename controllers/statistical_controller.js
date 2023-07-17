@@ -70,8 +70,9 @@ const statisticalController = {
         // cai nay danh cho ben sách thống kê. chưa hiểu lắm cách viết data
         //const today = new Date();
         console.log("day la 7 ngay cua sach thuong")
-        const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()-6);
-        const endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() );
+
+        const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() - 6);
+        const endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
         // Create an empty map to store the counts
         const dataThisWeekRegularTemplate = {};
         // Iterate over each day of the week
@@ -93,6 +94,8 @@ console.log(Object.keys(dataThisWeekRegularTemplate))
         // Print the maps
         console.log(dataThisWeekRegularTemplate);
 
+        console.log(dataThisWeekRegular);
+      
         console.log("day la 7 ngay cua sach dau gia")
         const dataThisWeekAuction = {};
         const admin = require('firebase-admin')

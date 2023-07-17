@@ -52,6 +52,8 @@ function validateForm() {
     var gender = document.getElementById('gender').value;
     // var birthday = document.getElementById('inputBirthday').value;
     var role = document.getElementById('role').value;
+    var phone = document.getElementById('phoneNumber').value;
+
     
 
     // Xóa thông báo lỗi trước đó
@@ -81,6 +83,10 @@ function validateForm() {
     // }
     if (role === 'Mời bạn chọn vai trò') {
         displayErrorMessage('roleError', 'Vui lòng chọn vai trò');
+        isValid = false;
+    }
+    if (phone === '') {
+        displayErrorMessage('phoneError', 'Vui lòng nhập số điện thoại');
         isValid = false;
     }
     return isValid;
