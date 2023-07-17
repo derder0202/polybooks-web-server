@@ -23,7 +23,10 @@ const UserSchema = new mongoose.Schema({
     location: {
         type: [Number],
         default: [ 105.3230297,20.9739994]
-    }
+    },
+    token:{type:String},
+    rating:{type: Number,default: 0},
+    coin:{type:Number,default: 0}
 }, {timestamps: true});
 
 UserSchema.statics.calculateRolePercentage = function(callback) {
@@ -155,7 +158,7 @@ const PostSchema = new mongoose.Schema({
     startPrice: {type:String},
     endPrice: {type:String},
     salesType:{type:Number,default:0},
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    //reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     // longitude:{type:Number,default:20.9739994},
     // latitude:{type:Number,default:105.3230297},
     location: {
@@ -168,15 +171,34 @@ PostSchema.index({location: '2dsphere'});
 // const cartSchema = new mongoose.Schema({
 //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 //     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-//    // createdAt: { type: Date, default: Date.now },
+//    // createShopSchema.pre('save',async function (next) {
+//     try {
+//         if(this.isModified("reviews")){
+//             await this.populate('reviews','rating')
+//             const reviews = this.reviews
+//             console.log(reviews)
+//             if (reviews.length === 0) {
+//                 this.rating = 0;
+//             } else {
+//                 const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+//                 this.rating = totalRating / reviews.length;
+//             }
+//             next();
+//         }
+//     } catch (err) {
+//         next(err);
+//     }
+// })dAt: { type: Date, default: Date.now },
 // }, {timestamps: true});
 
 const ReviewSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
+    bill: { type: mongoose.Schema.Types.ObjectId, ref: 'Bill', required: true },
+    //post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
     rating: { type: Number, required: true },
     message: { type: String ,required: true},
-    image: { type: String },
+    images: [{ type: String }],
+    status:{type: Number}// review ban hoac mua 1 la ban 2 la mua
+    //1
     //createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
 
@@ -274,10 +296,9 @@ BillSchema.statics.countByCategory = function() {
 
 ShopSchema.pre('save',async function (next) {
     try {
-        if(this.isModified("reviews")){
+        //if(this.isModified("reviews")){
             await this.populate('reviews','rating')
             const reviews = this.reviews
-            console.log(reviews)
             if (reviews.length === 0) {
                 this.rating = 0;
             } else {
@@ -285,7 +306,27 @@ ShopSchema.pre('save',async function (next) {
                 this.rating = totalRating / reviews.length;
             }
             next();
-        }
+       // }
+    } catch (err) {
+        next(err);
+    }
+})
+
+
+UserSchema.pre('save',async function (next) {
+    try {
+        //if(this.isModified("reviews")){
+            await this.populate('reviews','rating')
+            const reviews = this.reviews
+            if (reviews.length === 0) {
+                this.rating = 0;
+            } else {
+                const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+                console.log( totalRating / reviews.length)
+                this.rating = totalRating / reviews.length;
+            }
+            next();
+        //}
     } catch (err) {
         next(err);
     }

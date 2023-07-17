@@ -3,7 +3,7 @@ const notificationController = {
     create: async (req, res) => {
         try {
             const { user, message } = req.body;
-            const notification = await Notification.create({ user, message })
+            const notification = await Notification.create(req.body)
             await User.findByIdAndUpdate(
                 user,
                 { $push: { notifications: notification._id } },

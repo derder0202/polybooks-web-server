@@ -56,6 +56,7 @@ const authenticationRouter = require('./routes/authentication');
 const autionApprovalRouter = require('./routes/autionapproval');
 
 
+const apiNotificationRouter =  require('./api_src/route/notification')
 const apiUserRouter = require('./api_src/route/user')
 const apiPostRouter = require('./api_src/route/post')
 const apiAuthorRouter = require('./api_src/route/author')
@@ -160,6 +161,7 @@ app.use('/api/discounts',apiDiscountRouter)
 app.use('/api/banners',apiBannerRouter)
 app.use('/api/publishers',apiPublisherRouter)
 app.use('/api/bills',apiBillRouter)
+app.use('/api/notifications',apiNotificationRouter)
 
 
 

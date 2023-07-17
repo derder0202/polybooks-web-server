@@ -1,4 +1,4 @@
-const {Review, User, Post, Shop, } = require("../model/model");
+const {Review, User, Post, Shop, Bill, } = require("../model/model");
 const multer = require("multer");
 const admin = require('firebase-admin')
 const upload = require('../upload_image').array("images",4)
@@ -20,91 +20,77 @@ const reviewController = {
   },
   createReview: async (req, res) => {
     try {
-      const { user, post, rating, message } = req.body;
-      upload(req, res, async function (err) {
-        if (err instanceof multer.MulterError) {
-          // A Multer error occurred when uploading.
-        } else if (err) {
-          // An unknown error occurred when uploading.
-        }
+      const review = new Review(req.body)
+      if(req.body.bill){
+        const billTemp = await Bill.findById(req.body.bill)
 
-        const files = req.files;
-        if(files){
-          const review = new Review({ user, post, rating, message });
-          const bucket = admin.storage().bucket()
-          const uploadPromises = files.map((file,index) => {
-            const options = {
-              destination: `reviews/${review._id}/${index}`,
-              metadata: {
-                contentType: 'image/jpeg',
-              },
-            };
-            const blob = bucket.file(options.destination);
-            const blobStream = blob.createWriteStream(options);
-            blobStream.end(file.buffer);
-            return new Promise( (resolve, reject) => {
-              blobStream.on('finish', async() => {
-                await blob.makePublic();
-                const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
-                resolve(publicUrl);
-              });
-              blobStream.on('error', reject);
-            });
-          });
-          review.images = await Promise.all(uploadPromises)
-          if(user){
-            await User.findByIdAndUpdate(user,{$push:{reviews: review._id}})
-          }
-          if(post){
-            const postTemp = await Post.findById(postTemp)
-            await postTemp.updateOne({$push:{reviews: review._id}})
-            //await Post.findByIdAndUpdate(post,)
-            if(postTemp.shopId){
-              const shop = await Shop.findById(postTemp.shopId)
-              //shop.updateOne({$push:{reviews: review._id}})
-              shop.reviews.push(review._id)
-              await shop.save()
+        if(review.status === 0){
+          if(billTemp.buyer){
+            const user = await User.findById(billTemp.buyer)
+            if(user){
+              user.reviews.push(review._id)
+              await user.save()
             }
           }
-
-          const savedReview = await review.save();
-          res.status(200).json(savedReview);
         } else {
-          const review = new Review(req.body)
-          if(user){
-            await User.findByIdAndUpdate(user,{$push:{reviews: review._id}})
-          }
-          if(post){
-            const postTemp = await Post.findById(post)
-            //console.log(postTemp.shopId.toString())
-            await postTemp.updateOne({$push:{reviews: review._id}})
-            //await Post.findByIdAndUpdate(post,)
-            if(postTemp.shopId){
-              const shop = await Shop.findById(postTemp.shopId)
-              //shop.updateOne({$push:{reviews: review._id}})
+          if(billTemp.shopId){
+            const shop = await Shop.findById(billTemp.shopId)
+            if(shop){
               shop.reviews.push(review._id)
               await shop.save()
             }
+          } else {
+            if(billTemp.seller){
+              const user = await User.findById(billTemp.seller)
+              if(user){
+                user.reviews.push(review._id)
+                await user.save()
+              }
+            }
           }
-          const saveReview = await review.save()
-          res.status(200).json(saveReview);
         }
-      })
+      }
+      const saveReview = await review.save()
+      res.status(200).json(saveReview);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   },
   update: async (req, res) => {
   try {
-    const { rating, message } = req.body;
+    const { rating, message, images } = req.body;
     const updatedReview = await Review.findByIdAndUpdate(
       req.params.id,
-      { rating, message },
+      { rating, message, images},
       { new: true }
     );
     if (!updatedReview) {
       return res.status(404).json({ success: false, message: 'Review not found' });
     }
+    const billTemp = await Bill.findById(updatedReview.bill)
+    if(updatedReview.status === 0){
+      if(billTemp.buyer){
+        const user = await User.findById(billTemp.buyer)
+        if(user){
+          user.reviews.push(review._id)
+          await user.save()
+        }
+      }
+    } else {
+      if(billTemp.seller){
+        const user = await User.findById(billTemp.seller)
+        if(user){
+          await user.save()
+        }
+      }
+      if(billTemp.shopId){
+        const shop = await Shop.findById(billTemp.shopId)
+        if(shop){
+          await shop.save()
+        }
+      }
+    }
+   // const billTemp = await Bill.findById(updatedReview.bill)
     res.status(200).json({ success: true, review: updatedReview });
   } catch (error) {
     console.error(error);

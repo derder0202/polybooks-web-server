@@ -49,6 +49,9 @@ const shopController = {
                             const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`; // get the public URL of the uploaded file
                             resolve(publicUrl);
                             newShop.image = publicUrl
+                            if(newShop.user){
+                                await User.findByIdAndUpdate(newShop.user,{shopId: newShop._id})
+                            }
                             await newShop.save()
                             res.status(200).json(newShop);
                         });
