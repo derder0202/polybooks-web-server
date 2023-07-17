@@ -27,13 +27,13 @@ const statisticalController = {
         //làm tương tự với các model còn lại bao gồm Shop, Post, Bill(gửi đi và hoàn thành check status(
 
         //POST
-        const todayCountPost = await Post.countDocuments({createAt: { $gte: today } });
+        const todayCountPost = await Post.countDocuments({createAt: { $gte: today },postStatus:{$gte: 1}});
         statisticalToday.postToday = todayCountPost;
 
-        const sevenDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        const sevenDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo },postStatus:{$gte: 1} }); //so user duoc tao 7 ngay
         statisticalWeek.postWeek = sevenDaysCountPost;
 
-        const thirtyDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        const thirtyDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo },postStatus:{$gte: 1} }); //so user duoc tao 7 ngay
         statisticalMonth.postMonth = thirtyDaysCountPost;
 
         console.log(`New posts for today: ${todayCountPost}`);
@@ -54,15 +54,27 @@ const statisticalController = {
         console.log(`New shops for the past 7 days: ${sevenDaysCountShop}`);
         console.log(`New shops for the past 30 days: ${thirtyDaysCountShop}`);
 
+        //Bill
+        const todayCountBill = await Bill.countDocuments({createAt: { $gte: today }, status:{$gte: 0} });
+        statisticalToday.billToday = todayCountBill;
+        const sevenDaysCountBill = await Bill.countDocuments({createAt: { $gte: today }, status:{$gte: 0} });
+        statisticalWeek.billWeek = sevenDaysCountBill;
+        const thirtyDaysCountBill = await Bill.countDocuments({createAt: { $gte: today }, status:{$gte: 0} });
+        statisticalMonth.billMonth = thirtyDaysCountBill;
+
+        console.log(`New bill for today: ${todayCountBill}`);
+        console.log(`New bill for the past 7 days: ${sevenDaysCountBill}`);
+        console.log(`New bill for the past 30 days: ${thirtyDaysCountBill}`);
 
 
         // cai nay danh cho ben sách thống kê. chưa hiểu lắm cách viết data
         //const today = new Date();
         console.log("day la 7 ngay cua sach thuong")
+
         const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay() - 6);
         const endOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
         // Create an empty map to store the counts
-        const dataThisWeekRegular = {};
+        const dataThisWeekRegularTemplate = {};
         // Iterate over each day of the week
         for (let i = 0; i < 7; i++) {
             const currentDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
@@ -72,13 +84,18 @@ const statisticalController = {
             // Get the day name
             const dayName = currentDate.toLocaleDateString('vi-VN', )
             // Save the count in the map
-            dataThisWeekRegular[`${dayName}`] = postsCount
+            dataThisWeekRegularTemplate[`${dayName}`] = postsCount
         }
+        let dataThisWeekRegular ={};
+        dataThisWeekRegular.label= Object.keys(dataThisWeekRegularTemplate)
+        dataThisWeekRegular.data = Object.values(dataThisWeekRegularTemplate)
+
+console.log(Object.keys(dataThisWeekRegularTemplate))
         // Print the maps
+        console.log(dataThisWeekRegularTemplate);
+
         console.log(dataThisWeekRegular);
       
-
-
         console.log("day la 7 ngay cua sach dau gia")
         const dataThisWeekAuction = {};
         const admin = require('firebase-admin')
@@ -139,6 +156,7 @@ const statisticalController = {
             statisticalWeek,
             statisticalMonth, 
             categoryCounts,
+            dataThisWeekRegular,
             regularUserPercentage,
             vipUserPercentage});
         },
