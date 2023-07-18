@@ -1,5 +1,6 @@
  // GET all discounts
-const {Discount} = require("../model/model");
+const {Discount, Shop, Post} = require("../model/model");
+ const mongoose = require("mongoose");
  const discountController = {
     getAllDiscounts : async (req, res) => {
         const startIndex = parseInt(req.query.startIndex) || 0;
@@ -29,14 +30,28 @@ const {Discount} = require("../model/model");
     createDiscount : async (req, res) => {
         const discount = new Discount(req.body)
         try {
-            const discountTemp = await Discount.findOne({shopId:req.body.shopId,discountCode:req.body.discountCode})
-            if(discountTemp){
-
-                return res.status(400).json({message: "Mã giảm giá đã tồn tại"})
+            const shop = await Shop.findById(discount.shopId)
+            if(req.body.forAll){
+                for (let post of shop.posts){
+                   await Post.findByIdAndUpdate(post,{discount: req.body.discountValue})
+                }
+            } else {
+                if(req.body.postId){
+                    await Post.findByIdAndUpdate(req.body.postId,{discount: req.body.discountValue})
+                } else {
+                    if(req.body.categoryId){
+                        await Post.updateMany({category:req.body.categoryId},{discount: req.body.discountValue})
+                    }
+                }
             }
-            await discount.save()
-
-            res.status(200).json(discount)
+            res.json(req.body)
+            // const discountTemp = await Discount.findOne({shopId:req.body.shopId,discountCode:req.body.discountCode})
+            // if(discountTemp){
+            //
+            //     return res.status(400).json({message: "Mã giảm giá đã tồn tại"})
+            // }
+           // await discount.save()
+            //res.status(200).json(discount)
         } catch (error) {
             res.status(400).json({ error: error.message })
         }
@@ -44,7 +59,7 @@ const {Discount} = require("../model/model");
     // UPDATE discount by ID
     updateDiscountById : async (req, res) => {
         try {
-            const discount = await Discount.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            const discount = await Discount.findByIdAndUpdate(req.params.id, {isActive: req.body.isActive}, { new: true })
             if (!discount) {
                 return res.status(404).json({ message: 'Discount not found' })
             }

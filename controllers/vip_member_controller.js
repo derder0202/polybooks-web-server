@@ -3,6 +3,7 @@ const User = require("../api_src/model/model").User;
 const vipMembersController = {
     listVipMembers: async (req,res)=>{
         try {
+
             const listUsersVip = await User.find({role : 1}).populate({path:'address',populate:{path:'name'}});
             res.render('vip_member/list_vip_member',{ listUsersVip});
         } catch (error) {

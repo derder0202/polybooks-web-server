@@ -308,68 +308,86 @@
     });
 </script>
 <script>
-    const regularUserPercentage = {{regularUserPercentage}};
-    const vipUserPercentage = {{vipUserPercentage}};
-    // Lấy canvas element và khởi tạo biểu đồ pie chart
-    const Userctx = document.getElementById("myPieChart").getContext("2d");
-    const myPieChart = new Chart(Userctx, {
-        type: "pie",
-        data: {
-            labels: ["Người dùng thường", "Người dùng VIP"],
-            datasets: [{
-                data: [regularUserPercentage, vipUserPercentage],
-                backgroundColor: ["#007bff", "#28a745"],
-            }],
-        },
-    });
+    let regularUserPercentage
+    let vipUserPercentage
+    async function getUserData() {
+        const response = await fetch("http://localhost:3000/Statistical/getVipUser");
+        const data = await response.json();
+        regularUserPercentage = data.regularUserPercentage
+        vipUserPercentage = data.vipUserPercentage
+        // Lấy canvas element và khởi tạo biểu đồ pie chart
+
+    }
+    getUserData().then((value)=>{
+        const Userctx = document.getElementById("myPieChart").getContext("2d");
+        new Chart(Userctx, {
+            type: "pie",
+            data: {
+                labels: ["Người dùng thường", "Người dùng VIP"],
+                datasets: [{
+                    data: [regularUserPercentage, vipUserPercentage],
+                    backgroundColor: ["#007bff", "#28a745"],
+                }],
+            },
+        });
+    })
+
 </script>
 
 <script>
-    let labels = []
-        {{#each this.dataThisWeekRegular.label}}
-        labels.push("{{ this }}")
-        {{/each}}
-    let data = [] //hãy đặt tên là dataRegularBook chẳng hạn vì còn nhiều data kahsc bên dưới nữa.
-    // tự tính data get từ firebase. mẫu data tôi comment bên router
-        {{#each this.dataThisWeekRegular.data}}
-        data.push({{ this }})
-        {{/each}}
-
-    var GroupedbarChartData = {
-    labels: labels,
-    datasets: [
-        {
-            label: "Sách bán",
-            backgroundColor: "pink",
-            borderColor: "pink",
-            borderWidth: 1,
-            data: data
-        },
-        {
-            label: "Sách đấu giá",
-            backgroundColor: "blue",
-            borderColor: "blue",
-            borderWidth: 1,
-            data: [44, 27, 63, 96, 100, 57, 34]
-        },
-        {
-            label: "Tổng",
-            backgroundColor: "green",
-            borderColor: "green",
-            borderWidth: 1,
-            data: [100, 47, 44, 76, 59, 77, 53]
-        }
-    ]
-}
-window.onload = function ()
-{
-    var chartData= {
-        type: "bar",
-        data: GroupedbarChartData,
-        // options: BarchartOptions
+    let labels
+    let dataRegularBook
+    var GroupedbarChartData
+    async function getRegularCharBookData() {
+        const response = await fetch("http://localhost:3000/Statistical/getRegularBookDataChart");
+        const data = await response.json();
+        labels = data.label
+        dataRegularBook = data.data
+        return {labels,dataRegularBook}
+        // Lấy canvas element và khởi tạo biểu đồ pie chart
     }
-    new Chart("BookGroupedbarChartcanvas", chartData);
-}; 
+
+    window.onload = function ()
+    {
+        getRegularCharBookData().then((value)=>{
+            console.log(labels)
+            GroupedbarChartData = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Sách bán",
+                        backgroundColor: "pink",
+                        borderColor: "pink",
+                        borderWidth: 1,
+                        data: dataRegularBook
+                    },
+                    {
+                        label: "Sách đấu giá",
+                        backgroundColor: "blue",
+                        borderColor: "blue",
+                        borderWidth: 1,
+                        data: [44, 27, 63, 96, 100, 57, 34]
+                    },
+                    {
+                        label: "Tổng",
+                        backgroundColor: "green",
+                        borderColor: "green",
+                        borderWidth: 1,
+                        data: [100, 47, 44, 76, 59, 77, 53]
+                    }
+                ]
+            }
+            var chartData= {
+                type: "bar",
+                data: GroupedbarChartData,
+                // options: BarchartOptions
+            }
+            new Chart("BookGroupedbarChartcanvas", chartData);
+        })
+
+    };
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
