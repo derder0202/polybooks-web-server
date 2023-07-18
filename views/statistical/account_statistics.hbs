@@ -232,14 +232,14 @@
                                         <i class="fas fa-circle fa-sm me-1 text-blue"></i>
                                         Người dùng thường
                                     </div>
-                                    <div class="fw-500 text-dark">{{regularUserPercentage}}%</div>
+                                    <div id="count-regularUser" class="fw-500 text-dark" ></div>
                                 </div>
                                 <div class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
                                     <div class="me-3">
                                         <i class="fas fa-circle fa-sm me-1 text-green"></i>
                                         Người dùng VIP
                                     </div>
-                                    <div class="fw-500 text-dark">{{vipUserPercentage}}%</div>
+                                    <div id="count-vipUser" class="fw-500 text-dark"></div>
                                 </div>
 
                             </div>
@@ -250,7 +250,6 @@
         </main>
     </div>
 </div>
-                    <-- End Content -->
 <script>
     const todayOption = document.getElementById('today-option');
     const weekOption = document.getElementById('week-option');
@@ -310,18 +309,22 @@
 <script>
     let regularUserPercentage
     let vipUserPercentage
+    let regularUsers
+    let vipUsers
     async function getUserData() {
         const response = await fetch("http://localhost:3000/Statistical/getVipUser");
         const data = await response.json();
         regularUserPercentage = data.regularUserPercentage
         vipUserPercentage = data.vipUserPercentage
+        regularUsers = data.regularUsers
+        vipUsers = data.vipUsers
         // Lấy canvas element và khởi tạo biểu đồ pie chart
 
     }
     getUserData().then((value)=>{
         const Userctx = document.getElementById("myPieChart").getContext("2d");
         new Chart(Userctx, {
-            type: "pie",
+            type: "doughnut",
             data: {
                 labels: ["Người dùng thường", "Người dùng VIP"],
                 datasets: [{
@@ -329,7 +332,28 @@
                     backgroundColor: ["#007bff", "#28a745"],
                 }],
             },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: "#dddfeb",
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10
+                },
+                cutoutPercentage: 75
+            }
         });
+
+        const regularUsersCount = document.getElementById('count-regularUser');
+        const vipUsersCount = document.getElementById('count-vipUser');
+
+        regularUsersCount.textContent = regularUsers;
+        vipUsersCount.textContent = vipUsers;
+
     })
 
 </script>
