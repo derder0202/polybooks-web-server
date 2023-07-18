@@ -252,7 +252,7 @@ const userController = {
                     populate:[
                         {
                             path:"seller",
-                            select:"fullName phone"
+                            select:"fullName phone token"
                         },
                         {
                             path:"author",

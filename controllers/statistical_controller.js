@@ -86,6 +86,8 @@ const statisticalController = {
             // Save the count in the map
             dataThisWeekRegularTemplate[`${dayName}`] = postsCount
         }
+        // đây là mẫu lấy data cột regular. đổi lại tên biến thành dataThisWeekRegularTemplate.
+        // bên dưới khai báo mới lại và lấy keys values từ Object
         let dataThisWeekRegular ={};
         dataThisWeekRegular.label= Object.keys(dataThisWeekRegularTemplate)
         dataThisWeekRegular.data = Object.values(dataThisWeekRegularTemplate)

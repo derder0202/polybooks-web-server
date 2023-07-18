@@ -325,24 +325,25 @@
 </script>
 
 <script>
-    var GroupedbarChartData = {
-    labels: [
-        "Thứ 2",
-        "Thứ 3",
-        "Thứ 4",
-        "Thứ 5",
-        "Thứ 6",
-        "Thứ 7",
-        "Chủ nhật",
+    let labels = []
+        {{#each this.dataThisWeekRegular.label}}
+        labels.push("{{ this }}")
+        {{/each}}
+    let data = [] //hãy đặt tên là dataRegularBook chẳng hạn vì còn nhiều data kahsc bên dưới nữa.
+    // tự tính data get từ firebase. mẫu data tôi comment bên router
+        {{#each this.dataThisWeekRegular.data}}
+        data.push({{ this }})
+        {{/each}}
 
-    ],
+    var GroupedbarChartData = {
+    labels: labels,
     datasets: [
         {
             label: "Sách bán",
             backgroundColor: "pink",
             borderColor: "pink",
             borderWidth: 1,
-            data: [50, 55, 66, 87, 83, 75, 96]
+            data: data
         },
         {
             label: "Sách đấu giá",
