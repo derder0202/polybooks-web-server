@@ -13,7 +13,7 @@ router.get('/getVipUser',async(req,res)=>{
     const vipUsers = await User.countDocuments({ role: '1' });
     const regularUserPercentage = Math.round((regularUsers / (regularUsers+vipUsers)) * 100);
     const vipUserPercentage = Math.round((vipUsers / (regularUsers+vipUsers)) * 100);
-    res.json({regularUserPercentage, vipUserPercentage})
+    res.json({regularUserPercentage, vipUserPercentage,regularUsers,vipUsers})
 
 })
 
