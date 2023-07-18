@@ -165,9 +165,29 @@ const PostSchema = new mongoose.Schema({
         type: [Number],
         default: [ 105.3230297,20.9739994]
     },
-    discount: {type:Number, default:0}
+    discount: {type:Number, default:0},
+    allDiscounts:  { type: mongoose.Schema.Types.ObjectId, ref: 'Discount' },
    // createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
+PostSchema.pre('save',async function (next) {
+    try {
+        //if(this.isModified("reviews")){
+        await this.populate('allDiscounts')
+        if(this.isModified("allDiscounts")){
+            for(let discount of this.allDiscounts){
+                if(discount.isActive === true){
+
+                }
+            }
+        }
+
+        next();
+        // }
+    } catch (err) {
+        next(err);
+    }
+})
+
 PostSchema.index({location: '2dsphere'});
 // const cartSchema = new mongoose.Schema({
 //     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -367,22 +387,25 @@ const discountSchema = new mongoose.Schema({
         ref: 'Shop',
         required: true
     },
+    categoryId: { //neu co cai nay thi tat ca sach trong category giam gia
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+    },
+    postId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+    },//neu co cai nay thi sach giam gia
     discountCode: {
         type: String,
-        required: true,
+    },
+    forAll: {
+        type: Boolean,
+        default: false
     },
     discountValue: {
         type: Number,
         required: true
-    },
-    startTime: {
-        type: Date,
-        required: true
-    },
-    endTime: {
-        type: Date,
-        required: true
-    },
+    }, // theo %
     isActive: {
         type: Boolean,
         default: true
