@@ -164,7 +164,8 @@ const PostSchema = new mongoose.Schema({
     location: {
         type: [Number],
         default: [ 105.3230297,20.9739994]
-    }
+    },
+    discount: {type:Number, default:0}
    // createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
 PostSchema.index({location: '2dsphere'});
