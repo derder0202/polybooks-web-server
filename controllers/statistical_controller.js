@@ -21,38 +21,38 @@ const statisticalController = {
         const thirtyDaysCountUser = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
         statisticalMonth.userMonth = thirtyDaysCountUser
         
-//         console.log(`New users for today: ${todayCountUser}`);
-//         console.log(`New users for the past 7 days: ${sevenDaysCountUser}`);
-//         console.log(`New users for the past 30 days: ${thirtyDaysCountUser}`);
-//         //làm tương tự với các model còn lại bao gồm Shop, Post, Bill(gửi đi và hoàn thành check status(
-//
-//         //POST
-//         const todayCountPost = await Post.countDocuments({createAt: { $gte: today },postStatus:{$gte: 1}});
-//         statisticalToday.postToday = todayCountPost;
-//
-//         const sevenDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo },postStatus:{$gte: 1} }); //so user duoc tao 7 ngay
-//         statisticalWeek.postWeek = sevenDaysCountPost;
-//
-//         const thirtyDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo },postStatus:{$gte: 1} }); //so user duoc tao 7 ngay
-//         statisticalMonth.postMonth = thirtyDaysCountPost;
-//
-//         console.log(`New posts for today: ${todayCountPost}`);
-//         console.log(`New posts for the past 7 days: ${sevenDaysCountPost}`);
-//         console.log(`New posts for the past 30 days: ${thirtyDaysCountPost}`);
-//
-//         //Shop
-//         const todayCountShop = await Shop.countDocuments({createAt: { $gte: today } });
-//         statisticalToday.shopToday = todayCountShop;
-//
-//         const sevenDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
-//         statisticalWeek.shopWeek = sevenDaysCountShop;
-//
-//         const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
-//         statisticalMonth.shopMonth = thirtyDaysCountShop;
-//
-//         console.log(`New shops for today: ${todayCountShop}`);
-//         console.log(`New shops for the past 7 days: ${sevenDaysCountShop}`);
-//         console.log(`New shops for the past 30 days: ${thirtyDaysCountShop}`);
+        console.log(`New users for today: ${todayCountUser}`);
+        console.log(`New users for the past 7 days: ${sevenDaysCountUser}`);
+        console.log(`New users for the past 30 days: ${thirtyDaysCountUser}`);
+        //làm tương tự với các model còn lại bao gồm Shop, Post, Bill(gửi đi và hoàn thành check status(
+
+        //POST
+        const todayCountPost = await Post.countDocuments({createAt: { $gte: today },postStatus:{$gte: 1}});
+        statisticalToday.postToday = todayCountPost;
+
+        const sevenDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo },postStatus:{$gte: 1} }); //so user duoc tao 7 ngay
+        statisticalWeek.postWeek = sevenDaysCountPost;
+
+        const thirtyDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo },postStatus:{$gte: 1} }); //so user duoc tao 7 ngay
+        statisticalMonth.postMonth = thirtyDaysCountPost;
+
+        console.log(`New posts for today: ${todayCountPost}`);
+        console.log(`New posts for the past 7 days: ${sevenDaysCountPost}`);
+        console.log(`New posts for the past 30 days: ${thirtyDaysCountPost}`);
+
+        //Shop
+        const todayCountShop = await Shop.countDocuments({createAt: { $gte: today } });
+        statisticalToday.shopToday = todayCountShop;
+
+        const sevenDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        statisticalWeek.shopWeek = sevenDaysCountShop;
+
+        const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+        statisticalMonth.shopMonth = thirtyDaysCountShop;
+
+        console.log(`New shops for today: ${todayCountShop}`);
+        console.log(`New shops for the past 7 days: ${sevenDaysCountShop}`);
+        console.log(`New shops for the past 30 days: ${thirtyDaysCountShop}`);
 //
 //         //Bill
 //         const todayCountBill = await Bill.countDocuments({createAt: { $gte: today }, status:{$gte: 0} });
@@ -119,35 +119,35 @@ const statisticalController = {
 //
 //         // thong ke category.
 //
-//         // await Bill.countByCategory().then((value,err)=>{
-//         //     console.log(value)
-//         // })
+        // await Bill.countByCategory().then((value,err)=>{
+        //     console.log(value)
+        // })
 //     // đếm sách trong các bill (chưa tính status bill đã hoàn thành hay chưa) tối hỏi
-//         const categoryCounts = await Bill.countByCategory();
-//         console.log(categoryCounts);
-//         //thống kê số lượng người dùng vip và thường
-//         //các bạn tự giới hạn số thập phân hoặc làm tròn nhé
-//         // hoặc làm tròn 1 cái rồi lấy 100% trừ cho cái đó là ra cái còn lại
-//         // await User.calculateRolePercentage().then((result,err)=>{
-//         //     if (err) {
-//         //         console.log(err);
-//         //     } else {
-//         //         const totalUsers = result.reduce((total, item) => total + item.count, 0);
-//         //         result.forEach(item => {
-//         //             const percentage = (item.count / totalUsers) * 100;
-//         //             console.log(`Phần trăm người dùng có vai trò ${item.role}: ${percentage}%`);
-//         //             console.log("----------")
-//         //         });
-//         //     }
-//         // })
+        const categoryCounts = await Bill.countByCategory();
+        console.log(categoryCounts);
+        // thống kê số lượng người dùng vip và thường
+        // các bạn tự giới hạn số thập phân hoặc làm tròn nhé
+        // hoặc làm tròn 1 cái rồi lấy 100% trừ cho cái đó là ra cái còn lại
+        // await User.calculateRolePercentage().then((result,err)=>{
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         const totalUsers = result.reduce((total, item) => total + item.count, 0);
+        //         result.forEach(item => {
+        //             const percentage = (item.count / totalUsers) * 100;
+        //             console.log(`Phần trăm người dùng có vai trò ${item.role}: ${percentage}%`);
+        //             console.log("----------")
+        //         });
+        //     }
+        // })
 
 
 
         res.render('statistical/account_statistics',{
             statisticalToday,
-            // statisticalWeek,
-            // statisticalMonth,
-            // categoryCounts,
+            statisticalWeek,
+            statisticalMonth,
+            categoryCounts,
             // dataThisWeekRegular,
             // regularUserPercentage,
             // vipUserPercentage
