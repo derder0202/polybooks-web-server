@@ -1,5 +1,5 @@
 const User = require("../api_src/model/model").User;
-const bcrypt = require('bcrypt');
+
 
 const memberController = {
     //Hiển thị toàn bộ list user
@@ -62,6 +62,9 @@ const memberController = {
         const email = req.body.email;
         const gender = req.body.gender;
         const role = req.body.role;
+
+        
+
         // Mã hóa mật khẩu
         const base64Password = Buffer.from(plainPassword).toString('base64');
 

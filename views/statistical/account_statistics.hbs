@@ -144,14 +144,6 @@
                     <div class="card card-header-actions h-100">
                         <div class="card-header">
                             Sách
-                            <div class="dropdown no-caret">
-                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-gray-500" data-feather="more-vertical"></i></button>
-                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="areaChartDropdownExample">
-                                    <a class="dropdown-item" href="#!">Tuần này</a>
-                                    <a class="dropdown-item" href="#!">Tháng này</a>
-
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body">
                             <canvas id="BookGroupedbarChartcanvas" width="100%" height="50%"></canvas>
@@ -162,18 +154,10 @@
                     <div class="card card-header-actions h-100">
                         <div class="card-header">
                             Đơn hàng
-                            <div class="dropdown no-caret">
-                                <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-gray-500" data-feather="more-vertical"></i></button>
-                                <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="areaChartDropdownExample">
-                                    <a class="dropdown-item" href="#!">Hôm nay</a>
-                                    <a class="dropdown-item" href="#!">Tuần này</a>
-                                    <a class="dropdown-item" href="#!">Tháng này</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body">
                             <div class="chart-bar">
-                                <canvas id="myBarChart" width="100%" height="50%"></canvas>
+                                <canvas id="DonHang" width="100%" height="50%"></canvas>
                             </div>
                         </div>
                     </div>
@@ -239,7 +223,7 @@
                                         <i class="fas fa-circle fa-sm me-1 text-green"></i>
                                         Người dùng VIP
                                     </div>
-                                    <div class="fw-500 text-dark">{{vipUserPercentage}}%</div>
+                                    <div class="fw-500 text-dark" >{{vipUserPercentage}}%</div>
                                 </div>
 
                             </div>
@@ -315,7 +299,6 @@
         const data = await response.json();
         regularUserPercentage = data.regularUserPercentage
         vipUserPercentage = data.vipUserPercentage
-        // Lấy canvas element và khởi tạo biểu đồ pie chart
 
     }
     getUserData().then((value)=>{
@@ -335,60 +318,118 @@
 </script>
 
 <script>
-    let labels
-    let dataRegularBook
-    var GroupedbarChartData
-    async function getRegularCharBookData() {
-        const response = await fetch("http://localhost:3000/Statistical/getRegularBookDataChart");
-        const data = await response.json();
-        labels = data.label
-        dataRegularBook = data.data
-        return {labels,dataRegularBook}
-        // Lấy canvas element và khởi tạo biểu đồ pie chart
+    function formatDate(dateStr) {
+        const [day, month, year] = dateStr.split('/');
+        return `${day}/${month}`;
     }
 
-    window.onload = function ()
-    {
-        getRegularCharBookData().then((value)=>{
-            console.log(labels)
+    let labels;
+    let dataRegularBook;
+    let dataAuctionBook;
+    let dataBill;
+    let dataThreeBill; // Biến để lưu trữ dữ liệu đơn hoàn thành
+    var GroupedbarChartData;
+
+    async function getRegularAndAuctionBookData() {
+        const responseRegular = await fetch("http://localhost:3000/Statistical/getRegularBookDataChart");
+        const dataRegular = await responseRegular.json();
+        labels = dataRegular.label;
+        dataRegularBook = dataRegular.data;
+
+        const responseAuction = await fetch("http://localhost:3000/Statistical/getAuctionBookDataChart");
+        const dataAuction = await responseAuction.json();
+        dataAuctionBook = dataAuction.data;
+
+        return { labels, dataRegularBook, dataAuctionBook };
+    }
+
+    async function getBillData() {
+        const responseBill = await fetch("http://localhost:3000/Statistical/getBillDataChart");
+        dataBill = await responseBill.json();
+    }
+
+    async function getThreeBillData() {
+        const responseThreeBill = await fetch("http://localhost:3000/Statistical/getBillThreeDataChart");
+        dataThreeBill = await responseThreeBill.json(); // Lưu dữ liệu đơn hoàn thành vào biến dataThreeBill
+    }
+
+    window.onload = function () {
+        Promise.all([getRegularAndAuctionBookData(), getBillData(), getThreeBillData()]).then(([value]) => {
+            const formattedLabels = value.labels.map(formatDate);
             GroupedbarChartData = {
-                labels: labels,
+                labels: formattedLabels,
                 datasets: [
                     {
                         label: "Sách bán",
                         backgroundColor: "pink",
                         borderColor: "pink",
                         borderWidth: 1,
-                        data: dataRegularBook
+                        data: value.dataRegularBook,
                     },
                     {
                         label: "Sách đấu giá",
                         backgroundColor: "blue",
                         borderColor: "blue",
                         borderWidth: 1,
-                        data: [44, 27, 63, 96, 100, 57, 34]
+                        data: value.dataAuctionBook,
                     },
                     {
                         label: "Tổng",
                         backgroundColor: "green",
                         borderColor: "green",
                         borderWidth: 1,
-                        data: [100, 47, 44, 76, 59, 77, 53]
-                    }
-                ]
-            }
-            var chartData= {
+                        data: value.dataRegularBook.map((count, index) => count + value.dataAuctionBook[index]),
+                    },
+                ],
+            };
+
+            var chartData = {
                 type: "bar",
                 data: GroupedbarChartData,
+            };
+
+            new Chart("BookGroupedbarChartcanvas", chartData);
+
+            // Tạo biểu đồ DonHang
+            var DonHang = {
+                labels: formattedLabels,
+                datasets: [
+                    {
+                        label: "Đơn gửi đi",
+                        backgroundColor: "blue",
+                        borderColor: "blue",
+                        borderWidth: 1,
+                        data: dataBill.data,
+                    },
+                    {
+                        label: "Đơn hoàn thành",
+                        backgroundColor: "orange",
+                        borderColor: "orange",
+                        borderWidth: 1,
+                        data: dataThreeBill.data, // Sử dụng dữ liệu đơn hoàn thành ở đây cho cột "Đơn hoàn thành"
+                    },
+                    {
+                        label: "Tổng",
+                        backgroundColor: "grey",
+                        borderColor: "grey",
+                        borderWidth: 1,
+                        data: dataBill.data.map((count, index) => count + dataThreeBill.data[index]),
+                    },
+                ],
+            };
+
+            var chartDatas = {
+                type: "bar",
+                data: DonHang,
                 // options: BarchartOptions
             }
-            new Chart("BookGroupedbarChartcanvas", chartData);
-        })
-
+            new Chart("DonHang", chartDatas);
+        });
     };
-
-
 </script>
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
