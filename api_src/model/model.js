@@ -207,6 +207,8 @@ const NotificationSchema = new mongoose.Schema({
     message: { type: String, required: true },
     title: { type: String, required: true },
     read: { type: Boolean, default: false },
+    imageUrl:{type:String},
+    bill:{type: mongoose.Schema.Types.ObjectId, ref: 'Bill'}
     //createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
 const PublisherSchema = new mongoose.Schema({

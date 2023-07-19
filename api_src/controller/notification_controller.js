@@ -2,10 +2,9 @@ const {Notification, User} = require("../model/model")
 const notificationController = {
     create: async (req, res) => {
         try {
-            const { user, message } = req.body;
             const notification = await Notification.create(req.body)
             await User.findByIdAndUpdate(
-                user,
+                notification.user,
                 { $push: { notifications: notification._id } },
                 { new: true }
             )
