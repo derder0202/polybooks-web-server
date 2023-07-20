@@ -28,9 +28,6 @@ const admin = require("firebase-admin");
 // });
 // đăng ký partials
 
-
-
-
 require('dotenv').config()
 admin.initializeApp({
     credential: admin.credential.cert(require("./credentials.json")),
@@ -71,7 +68,6 @@ const apiPublisherRouter = require('./api_src/route/publisher')
 const apiBillRouter = require('./api_src/route/bill')
 const passport = require("passport");
 const {User} = require("./api_src/model/model");
-
 
 
 const app = express();

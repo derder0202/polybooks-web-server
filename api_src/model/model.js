@@ -199,28 +199,6 @@ PostSchema.pre('save'||'updateMany'||'updateOne',async function (next) {
 })
 
 PostSchema.index({location: '2dsphere'});
-// const cartSchema = new mongoose.Schema({
-//     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-//     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-//    // createShopSchema.pre('save',async function (next) {
-//     try {
-//         if(this.isModified("reviews")){
-//             await this.populate('reviews','rating')
-//             const reviews = this.reviews
-//             console.log(reviews)
-//             if (reviews.length === 0) {
-//                 this.rating = 0;
-//             } else {
-//                 const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-//                 this.rating = totalRating / reviews.length;
-//             }
-//             next();
-//         }
-//     } catch (err) {
-//         next(err);
-//     }
-// })dAt: { type: Date, default: Date.now },
-// }, {timestamps: true});
 
 const ReviewSchema = new mongoose.Schema({
     bill: { type: mongoose.Schema.Types.ObjectId, ref: 'Bill', required: true },
