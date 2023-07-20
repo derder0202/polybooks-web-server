@@ -279,6 +279,9 @@ const postController = {
                 if(post.seller){
                     await User.findByIdAndUpdate(post.seller,{$pull:{posts: post._id}})
                 }
+                if(post.shopId){
+                    await Shop.findByIdAndUpdate(post.seller,{$pull:{posts: post._id}})
+                }
                 if(post.category){
                     await Category.findByIdAndUpdate(post.category,{$pull:{posts: post._id}})
                 }
