@@ -187,6 +187,28 @@ const shopController = {
                     skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 20,
                 },
+                populate:[
+                    {
+                        path:"seller",
+                        select:"fullName phone"
+                    },
+                    {
+                        path:"author",
+                        select:"name"
+                    },
+                    {
+                        path:"publisher",
+                        select:"name"
+                    },
+                    {
+                        path:"category",
+                        select:"name"
+                    },
+                    {
+                        path: "shopId",
+                        select: "name"
+                    }
+                ]
             });
             if (!shop) {
                 return res.status(404).json({ message: 'Shop not found' });
@@ -207,24 +229,6 @@ const shopController = {
                 options: { skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 20
                 },
-                populate:[
-                    {
-                        path:"buyer",
-                        select:"fullName"
-                    },
-                    {
-                        path:"seller",
-                        select:"fullName"
-                    },
-                    {
-                        path:"shopId",
-                        select:"name"
-                    },
-                    {
-                        path:"posts",
-                        select:"images bookName price"
-                    }
-                ]
             })
             if (!shop) {
                 return res.status(400).json("User not found")
