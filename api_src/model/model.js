@@ -130,7 +130,8 @@ const ShopSchema = new mongoose.Schema({
         location: {
             type: [Number],
             default: [ 105.3230297,20.9739994]
-        }
+        },
+        allDiscounts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discount' }],
     },{ timestamps: true }
 )
 
@@ -166,21 +167,30 @@ const PostSchema = new mongoose.Schema({
         default: [ 105.3230297,20.9739994]
     },
     discount: {type:Number, default:0},
-    allDiscounts:  { type: mongoose.Schema.Types.ObjectId, ref: 'Discount' },
+    allDiscounts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discount' }],
    // createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
-PostSchema.pre('save',async function (next) {
+PostSchema.pre('save'||'updateMany'||'updateOne',async function (next) {
     try {
         //if(this.isModified("reviews")){
         await this.populate('allDiscounts')
-        if(this.isModified("allDiscounts")){
-            for(let discount of this.allDiscounts){
-                if(discount.isActive === true){
+        //console.log(this.get('allDiscounts'))
+        let latestUpdatedAt = null;
+        let latestDiscount = null;
 
+        if((this.get('allDiscounts') && this.get('allDiscounts').length > 0)){
+            for(let discount of this.get('allDiscounts')){
+                if(discount.isActive === true){
+                    if (!latestUpdatedAt || discount.updatedAt > latestUpdatedAt) {
+                        latestUpdatedAt = discount.updatedAt;
+                        latestDiscount = discount.discountValue;
+                    }
                 }
             }
         }
+        console.log(latestDiscount)
 
+        this.discount = latestDiscount
         next();
         // }
     } catch (err) {
@@ -189,28 +199,6 @@ PostSchema.pre('save',async function (next) {
 })
 
 PostSchema.index({location: '2dsphere'});
-// const cartSchema = new mongoose.Schema({
-//     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-//     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-//    // createShopSchema.pre('save',async function (next) {
-//     try {
-//         if(this.isModified("reviews")){
-//             await this.populate('reviews','rating')
-//             const reviews = this.reviews
-//             console.log(reviews)
-//             if (reviews.length === 0) {
-//                 this.rating = 0;
-//             } else {
-//                 const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-//                 this.rating = totalRating / reviews.length;
-//             }
-//             next();
-//         }
-//     } catch (err) {
-//         next(err);
-//     }
-// })dAt: { type: Date, default: Date.now },
-// }, {timestamps: true});
 
 const ReviewSchema = new mongoose.Schema({
     bill: { type: mongoose.Schema.Types.ObjectId, ref: 'Bill', required: true },
@@ -345,7 +333,6 @@ UserSchema.pre('save',async function (next) {
                 this.rating = 0;
             } else {
                 const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                console.log( totalRating / reviews.length)
                 this.rating = totalRating / reviews.length;
             }
             next();
@@ -397,7 +384,7 @@ const discountSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post',
     },//neu co cai nay thi sach giam gia
-    discountCode: {
+    title: {
         type: String,
     },
     forAll: {
@@ -412,7 +399,7 @@ const discountSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     }
-});
+},{timestamps:true});
 // Schema cho lịch sử đặt cọc
 const depositHistorySchema = new mongoose.Schema({
     userId: {
