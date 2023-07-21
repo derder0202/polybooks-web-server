@@ -2,7 +2,6 @@ const {User, Post, Bill, Shop} = require("../api_src/model/model");
 const statisticalController = {
     liststatistical: async (req,res)=>{
         let statisticalToday = {}
-        console.log("?")
         let statisticalWeek = {}
         let statisticalMonth = {}
         // Count new users for today
