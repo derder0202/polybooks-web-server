@@ -1,6 +1,8 @@
-const {Shop, Category, User} = require("../model/model");
+const {Shop, Category, User, Bill} = require("../model/model");
 const multer = require("multer")
 const admin = require("firebase-admin");
+const mongoose = require("mongoose");
+const {Mongoose} = require("mongoose");
 const upload = require("../upload_image").single("image");
 
 const shopController = {
@@ -237,8 +239,45 @@ const shopController = {
         } catch (error) {
             res.status(500).json({ message: 'Server Error' });
         }
-    }
+    },
 
+    get7DaysStatistical: async (req,res)=>{
+
+        try{
+            let id = new mongoose.Types.ObjectId(req.params.id)
+            const today = new Date();
+            console.log(today)
+            const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6);
+            const pipeline = [
+                {
+                    $match: {
+                        createdAt: {
+                            $gte: startOfWeek,
+                            $lte: today
+                        },
+                        shopId: id
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            $dateToString: { format: "%d/%m", date: "$createdAt" }
+                        },
+                        totalPrice: { $sum: "$totalPrice" }
+                    }
+                },
+                {
+                    $sort: {
+                        _id: 1
+                    }
+                }
+            ];
+            const data = await Bill.aggregate(pipeline);
+            res.json(data)
+        } catch (e) {
+          console.log(e)
+        }
+    }
 
 }
 

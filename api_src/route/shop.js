@@ -11,6 +11,7 @@ router.delete('/:id', shopController.deleteShop);
 router.get('/:id/posts', shopController.getPostsByShop);
 router.get('/:id/reviews', shopController.getReviewsByShop);
 router.get('/:id/sellBills', shopController.getSellBillsByShop);
+router.get('/:id/statistical', shopController.get7DaysStatistical);
 
 
 module.exports = router;

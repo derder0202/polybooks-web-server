@@ -206,8 +206,7 @@ const ReviewSchema = new mongoose.Schema({
     rating: { type: Number, required: true },
     message: { type: String ,required: true},
     images: [{ type: String }],
-    status:{type: Number}// review ban hoac mua 1 la ban 2 la mua
-    //1
+    status:{type: Number},// review ban hoac mua 1 la ban 2 la mua
     //createAt: { type: Date, default: Date.now },
 }, {timestamps: true});
 
@@ -251,11 +250,29 @@ const BillSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    totalPrice: {type:Number, default: 0},
     address: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' },
     buyer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
 },{timestamps:true});
+
+BillSchema.pre('save',async function (next) {
+    try {
+        await this.populate('posts','price')
+        let totalMoney = 0;
+        this.posts.forEach((post) => {
+            totalMoney += post.price;
+        });
+        this.totalPrice = totalMoney
+        next();
+        // }
+    } catch (err) {
+        next(err);
+    }
+})
+
+
 
 BillSchema.statics.countByCategory = function() {
     return this.aggregate([

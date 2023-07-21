@@ -380,11 +380,11 @@ const userController = {
                 populate:[
                     {
                         path:"buyer",
-                        select:"fullName"
+                        select:"fullName phone"
                     },
                     {
                         path:"seller",
-                        select:"fullName"
+                        select:"fullName phone"
                     },
                     {
                         path:"shopId",
@@ -416,11 +416,11 @@ const userController = {
                 populate:[
                     {
                         path:"buyer",
-                        select:"fullName"
+                        select:"fullName phone"
                     },
                     {
                         path:"seller",
-                        select:"fullName"
+                        select:"fullName phone"
                     },
                     {
                         path:"shopId",
