@@ -2,7 +2,7 @@ const {User, Post, Bill, Shop} = require("../api_src/model/model");
 const statisticalController = {
     liststatistical: async (req,res)=>{
         let statisticalToday = {}
-        console.log("?")
+       
         let statisticalWeek = {}
         let statisticalMonth = {}
         // Count new users for today
@@ -21,9 +21,9 @@ const statisticalController = {
         const thirtyDaysCountUser = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
         statisticalMonth.userMonth = thirtyDaysCountUser
         
-        console.log(`New users for today: ${todayCountUser}`);
-        console.log(`New users for the past 7 days: ${sevenDaysCountUser}`);
-        console.log(`New users for the past 30 days: ${thirtyDaysCountUser}`);
+        // console.log(`New users for today: ${todayCountUser}`);
+        // console.log(`New users for the past 7 days: ${sevenDaysCountUser}`);
+        // console.log(`New users for the past 30 days: ${thirtyDaysCountUser}`);
         //làm tương tự với các model còn lại bao gồm Shop, Post, Bill(gửi đi và hoàn thành check status(
 
         //POST
@@ -36,9 +36,9 @@ const statisticalController = {
         const thirtyDaysCountPost = await Post.countDocuments({ createdAt: { $gte: thirtyDaysAgo },postStatus:{$gte: 1} }); //so user duoc tao 7 ngay
         statisticalMonth.postMonth = thirtyDaysCountPost;
 
-        console.log(`New posts for today: ${todayCountPost}`);
-        console.log(`New posts for the past 7 days: ${sevenDaysCountPost}`);
-        console.log(`New posts for the past 30 days: ${thirtyDaysCountPost}`);
+        // console.log(`New posts for today: ${todayCountPost}`);
+        // console.log(`New posts for the past 7 days: ${sevenDaysCountPost}`);
+        // console.log(`New posts for the past 30 days: ${thirtyDaysCountPost}`);
 
         //Shop
         const todayCountShop = await Shop.countDocuments({createAt: { $gte: today } });
@@ -50,9 +50,9 @@ const statisticalController = {
         const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }); //so user duoc tao 7 ngay
         statisticalMonth.shopMonth = thirtyDaysCountShop;
 
-        console.log(`New shops for today: ${todayCountShop}`);
-        console.log(`New shops for the past 7 days: ${sevenDaysCountShop}`);
-        console.log(`New shops for the past 30 days: ${thirtyDaysCountShop}`);
+        // console.log(`New shops for today: ${todayCountShop}`);
+        // console.log(`New shops for the past 7 days: ${sevenDaysCountShop}`);
+        // console.log(`New shops for the past 30 days: ${thirtyDaysCountShop}`);
 //
         //Send Bill
         const todaySendBills = await Bill.countDocuments({ createdAt: { $gte: today }, status:{ $in: [0, 1, 2 ] } });
@@ -61,9 +61,9 @@ const statisticalController = {
         statisticalWeek.sendBillsWeek = sevenDaysAgoSendBills;
         const thirtyDaysAgoSendBills = await Bill.countDocuments({ createdAt: { $gte: thirtyDaysAgo },status:{ $in: [0, 1, 2] } });
         statisticalMonth.sendBillsMonth = thirtyDaysAgoSendBills;
-        console.log(`New send bills for today: ${todaySendBills}`);
-        console.log(`New send bills for the past 7 days: ${sevenDaysAgoSendBills}`);
-        console.log(`New send bills for the past 30 days: ${thirtyDaysAgoSendBills}`);
+        // console.log(`New send bills for today: ${todaySendBills}`);
+        // console.log(`New send bills for the past 7 days: ${sevenDaysAgoSendBills}`);
+        // console.log(`New send bills for the past 30 days: ${thirtyDaysAgoSendBills}`);
 
         //Complete Bill
         const todayCompleteBills = await Bill.countDocuments({ createdAt: { $gte: today }, status:{ $in: [3 ] } });
@@ -72,9 +72,9 @@ const statisticalController = {
         statisticalWeek.completeBillsWeek = sevenDaysAgoCompleteBills;
         const thirtyDaysAgoCompleteBills = await Bill.countDocuments({ createdAt: { $gte: thirtyDaysAgo },status:{ $in: [3] } });
         statisticalMonth.completeBillsMonth = thirtyDaysAgoCompleteBills;
-        console.log(`New complete bills for today: ${todayCompleteBills}`);
-        console.log(`New complete bills for the past 7 days: ${sevenDaysAgoCompleteBills}`);
-        console.log(`New complete bills for the past 30 days: ${thirtyDaysAgoCompleteBills}`);
+        // console.log(`New complete bills for today: ${todayCompleteBills}`);
+        // console.log(`New complete bills for the past 7 days: ${sevenDaysAgoCompleteBills}`);
+        // console.log(`New complete bills for the past 30 days: ${thirtyDaysAgoCompleteBills}`);
 
 
 
@@ -137,7 +137,7 @@ const statisticalController = {
         // })
 //     // đếm sách trong các bill (chưa tính status bill đã hoàn thành hay chưa) tối hỏi
         const categoryCounts = await Bill.countByCategory();
-        console.log(categoryCounts);
+        // console.log(categoryCounts);
         // thống kê số lượng người dùng vip và thường
         // các bạn tự giới hạn số thập phân hoặc làm tròn nhé
         // hoặc làm tròn 1 cái rồi lấy 100% trừ cho cái đó là ra cái còn lại

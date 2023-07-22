@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +27,7 @@
     <!--            End Sidebar-->
 
     <!--          Start Content-->
- <div id="layoutSidenav_content">
+    <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
                 <div class="container-fluid px-4">
@@ -34,16 +35,12 @@
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><img style="width: 20px;height: 20px;" src="assets/img/illustrations/profiles/usersss.png"></img></div>
-                                    Danh Sách Người Dùng
+                                    
+                                    <div class="page-header-icon"><img style="width: 17px;height: 17px;" src="assets/img/illustrations/profiles/clipboard.png"></img></div>
+                                    Đấu giá
                                 </h1>
                             </div>
-                            <div class="col-12 col-xl-auto mb-3">
-                                <a class="btn btn-sm btn-light text-primary" href="/RegularMembers/add_regular_member">
-                                   <img style="width: 15px;height: 15px;margin-right: 3px;" src="assets/img/illustrations/profiles/blueuser.png"></img>
-                                    Thêm Mới Người Dùng
-                                </a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -52,65 +49,45 @@
             <div class="container-fluid px-4">
                 <div class="card">
                     <div class="card-body">
-                        <label style="font-weight: bold;margin-bottom: 10px;">Bộ Lọc Tìm Kiếm</label><br>
-                        <div class="row gx-3 mb-3">
-                                <!-- Form Group (Ngày Sinh)-->
-                            <div class="col-md-6">
-                                <select  style="width: 200px;" class="form-select" id="gender">
-                                        <option disabled selected value="" style="font-size: 15px; font-family: Arial, sans-serif;">Chọn giới tính</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Tất cả</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nam</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nữ</option>
-                                </select>
-                            </div>
-                        </div>
-                                <hr style="border-top: 1px solid #828080; height: 0.5px;margin-top: 20px;">
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Ảnh</th>
-                                <th>Họ tên</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                
-                                <th>Giới tính</th>
-                                <th>Ngày sinh</th>
-                                <th>Vài trò</th>
-                                <th>Hành động</th>
+                                <th>Người bán</th>
+                                <th>Tên sách</th>
+                                <th>Trạng thái</th>
+                                <th>Giá khởi điểm</th>
+                                <th>Giá hiện tại</th>
+                                <th>Kết thúc</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
-                            
-                            
                             <tbody>
-                                {{#each listUsers}} 
+                            {{#each documentList}}
                             <tr>
-                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div></td>
-                                <td>{{this.fullName}}</td>
-                                <td>{{this.email}}</td>
-                                <td>{{this.phone}}</td>
-                                
+                                <td>{{this.seller.fullName}}</td>
                                 <td>
-                                    <span id="genderValue">{{this.gender}}</span>
-                                </td>
-
-                                <td>{{formatDateOfBirth this.birthday}}</td>
-                                <td>
-                                    <span id="roleValue" class="badge bg-green-soft text-green">{{this.role}}</span>
+                                    {{this.bookName}}
                                 </td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member/{{this._id}}"><i data-feather="edit"></i></a>
+                                    <span id="statussValue">
+                                        {{this.bookStatus}}
+                                    </span>
+                                </td>
+                                <td><h4 class="text-danger">{{this.startPrice}}đ</h4></td>
+                                <td><h4 class="text-danger">{{this.endPrice}}đ</h4></td>
+                                <td><h4 class="text-primary">02:20:48</h4></td>
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                                 </td>
                             </tr>
                             {{/each}}
-                            
-                            
                             </tbody>
-                            
                         </table>
                     </div>
                 </div>
             </div>
+
         </main>
         <footer class="footer-admin mt-auto footer-light">
             <div class="container-xl px-4">

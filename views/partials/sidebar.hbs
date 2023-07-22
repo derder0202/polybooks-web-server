@@ -41,10 +41,23 @@
                 <!-- Sidenav Heading (Aution Post)-->
                 <div class="sidenav-menu-heading">Aution Post</div>
                 <!-- Sidenav Accordion (Cửa hàng)-->
-                <a class="nav-link" href="/autionPost">
+                {{!-- <a class="nav-link" href="/AutionPost">
                     <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/clipboard.png"></img></div>
                     Danh sách đấu giá
+                </a> --}}
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAuthor" aria-expanded="false" aria-controls="collapseAuthor">
+                    <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/clipboard.png"></img></div>
+                    Danh sách đấu giá
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
+                <div class="collapse" id="collapseAuthor" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/AutionPost">Chuẩn bị đấu giá</a>
+                        <a class="nav-link" href="/Prepare">Đang đấu giá</a>
+                        <a class="nav-link" href="/EndAuction">Kết thúc đấu giá</a>
+                    </nav>
+                </div>
+
 
                 <!-- Sidenav Heading (Author and Pulisher)-->
                 <div class="sidenav-menu-heading">Duyệt nội dung</div>

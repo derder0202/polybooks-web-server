@@ -313,7 +313,7 @@
     let regularUsers
     let vipUsers
     async function getUserData() {
-        const response = await fetch("http://localhost:3000/Statistical/getVipUser");
+        const response = await fetch("http://polybooks.store/Statistical/getVipUser");
         const data = await response.json();
         regularUserPercentage = data.regularUserPercentage
         vipUserPercentage = data.vipUserPercentage
@@ -373,12 +373,12 @@
     var GroupedbarChartData;
 
     async function getRegularAndAuctionBookData() {
-        const responseRegular = await fetch("http://localhost:3000/Statistical/getRegularBookDataChart");
+                const responseRegular = await fetch("http://polybooks.store/Statistical/getRegularBookDataChart");
         const dataRegular = await responseRegular.json();
         labels = dataRegular.label;
         dataRegularBook = dataRegular.data;
 
-        const responseAuction = await fetch("http://localhost:3000/Statistical/getAuctionBookDataChart");
+        const responseAuction = await fetch("http://polybooks.store/Statistical/getAuctionBookDataChart");
         const dataAuction = await responseAuction.json();
         dataAuctionBook = dataAuction.data;
 
@@ -386,12 +386,12 @@
     }
 
     async function getBillData() {
-        const responseBill = await fetch("http://localhost:3000/Statistical/getBillDataChart");
+        const responseBill = await fetch("http://polybooks.store/Statistical/getBillDataChart");
         dataBill = await responseBill.json();
     }
 
     async function getThreeBillData() {
-        const responseThreeBill = await fetch("http://localhost:3000/Statistical/getBillThreeDataChart");
+        const responseThreeBill = await fetch("http://polybooks.store/Statistical/getBillThreeDataChart");
         dataThreeBill = await responseThreeBill.json(); // Lưu dữ liệu đơn hoàn thành vào biến dataThreeBill
     }
 
