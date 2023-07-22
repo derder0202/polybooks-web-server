@@ -84,7 +84,7 @@ const postController = {
                 const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller,shopId,location} = req.body;
                 const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller,shopId });
                 if(seller){
-                    await User.findByIdAndUpdate(seller,{$push:{posts: post._id},$inc:{totalPost: 1}})
+                    await User.findByIdAndUpdate(seller,{$push:{posts: post._id},$inc:{totalPost: 1},updateTotalPost:new Date()})
                 }
                 if(shopId){
                     await Shop.findByIdAndUpdate(shopId,{$push:{posts: post._id}})

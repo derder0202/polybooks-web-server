@@ -231,6 +231,24 @@ const shopController = {
                 options: { skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 20
                 },
+                populate:[
+                    {
+                        path:"buyer",
+                        select:"fullName phone"
+                    },
+                    {
+                        path:"seller",
+                        select:"fullName phone"
+                    },
+                    {
+                        path:"shopId",
+                        select:"name"
+                    },
+                    {
+                        path:"posts",
+                        select:"images bookName price"
+                    }
+                ]
             })
             if (!shop) {
                 return res.status(400).json("User not found")
@@ -267,7 +285,7 @@ const shopController = {
                 const dayName = currentDate.toLocaleDateString('vi-VN')
 
                 // Save the count in the map
-                dataThisWeekRegularTemplate[`${dayName}`] = {count,totalPrice};
+                dataThisWeekRegularTemplate[`${dayName.substring(0, dayName.lastIndexOf('/'))}`] = {count,totalPrice};
             }
 
             res.json(dataThisWeekRegularTemplate)
