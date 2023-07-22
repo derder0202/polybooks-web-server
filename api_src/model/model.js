@@ -7,7 +7,6 @@ const UserSchema = new mongoose.Schema({
     password: { type: String , required: true},
     email: { type: String , default:"" },
     address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
-    //bio: { type: String },
     avatar: { type: String },
     gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
     birthday: { type: Date , default:"" },
@@ -24,6 +23,8 @@ const UserSchema = new mongoose.Schema({
         type: [Number],
         default: [ 105.3230297,20.9739994]
     },
+    totalPost:{type:Number, default:0},
+    updateTotalPost:{type:Date},
     token:{type:String},
     rating:{type: Number,default: 0},
     coin:{type:Number,default: 0}
@@ -54,26 +55,9 @@ const CategorySchema = new mongoose.Schema({
    // createAt: { type: Date, default: Date.now },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
-// const BookSchema = new mongoose.Schema({
-//     title: { type: String, required: true },
-//     bookType: { type: mongoose.Schema.Types.ObjectId, ref: 'BookType',},
-//     author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
-//     publisher: { type: mongoose.Schema.Types.ObjectId, ref: 'Publisher' },
-//     year: { type: Number },
-//     description: { type: String },
-//     price: { type: Number, required: true },
-//     images: [{ type: String }],
-//     condition: { type: String, enum: ['new', 'like new', 'good', 'fair', 'poor'] },
-//     size: { type: String },
-//     totalPage: { type: Number },
-//     language: { type: String },
-//     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-//     createAt: { type: Date, default: Date.now },
-// });
+
 const AuthorSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    //birthday: { type: Date },
-    //description: { type: String },
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
@@ -159,9 +143,6 @@ const PostSchema = new mongoose.Schema({
     startPrice: {type:String},
     endPrice: {type:String},
     salesType:{type:Number,default:0},
-    //reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-    // longitude:{type:Number,default:20.9739994},
-    // latitude:{type:Number,default:105.3230297},
     location: {
         type: [Number],
         default: [ 105.3230297,20.9739994]
@@ -174,7 +155,6 @@ PostSchema.pre('save'||'updateMany'||'updateOne',async function (next) {
     try {
         //if(this.isModified("reviews")){
         await this.populate('allDiscounts')
-        //console.log(this.get('allDiscounts'))
         let latestUpdatedAt = null;
         let latestDiscount = null;
 
@@ -188,8 +168,6 @@ PostSchema.pre('save'||'updateMany'||'updateOne',async function (next) {
                 }
             }
         }
-        console.log(latestDiscount)
-
         this.discount = latestDiscount
         next();
         // }
