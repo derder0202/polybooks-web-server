@@ -61,6 +61,9 @@ const shopController = {
                     })
                 } else {
                     const newShop = new Shop(req.body);
+                    if(newShop.user){
+                        await User.findByIdAndUpdate(newShop.user,{shopId: newShop._id})
+                    }
                     await newShop.save()
                     res.status(200).json(newShop);
                     //res.status(404).json({ error: "file not found" });

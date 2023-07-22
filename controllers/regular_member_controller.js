@@ -5,7 +5,7 @@ const memberController = {
     //Hiển thị toàn bộ list user
     listRegularMember: async (req,res)=>{
         try {
-            const listUsers = await User.find({role : 0});
+            const listUsers = await User.find({role : 0}).populate('address');
             res.render('regular_member/list_regular_member', { listUsers});
         } catch (error) {
             console.error(error);

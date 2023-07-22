@@ -108,7 +108,7 @@
                                                     <div class="uppercase fw-bold text-info mb-3">Đơn gửi đi</div>
                                                     <div class="row">
                                                         <div class="col-3"><i class="fas fa-solid fa-truck-fast fa-lg text-gray-200"></i></div>
-                                                        <div class="col-6 h5 mt-1">223</div>
+                                                        <div id="send-bill-count" class="col-6 h5 mt-1"></div>
                                                     </div>
 
                                                 </div>
@@ -126,7 +126,7 @@
                                                     <div class="uppercase fw-bold text-warning mb-3">Đơn hoàn thành</div>
                                                     <div class="row">
                                                         <div class="col-3"><i class="fas fa-solid fa-check fa-lg text-gray-200"></i></div>
-                                                        <div class="col-6 h5 mt-1">223</div>
+                                                        <div id="complete-bill-count" class="col-6 h5 mt-1"></div>
                                                     </div>
                                                 </div>
                                                 <!--                                                <div class="ms-2"><i class="fas fa-solid fa-check fa-2x text-gray-200"></i></div>-->
@@ -241,6 +241,8 @@
     const userCountElement = document.getElementById('user-count');
     const bookCountElement = document.getElementById('book-count');
     const shopCountElement = document.getElementById('shop-count');
+    const sendBillsCountElement = document.getElementById('send-bill-count');
+    const completeBillCountElement = document.getElementById('complete-bill-count');
     const dropdownButton = document.getElementById('dropdownButton');
 
     // Hàm cập nhật số lượng người dùng
@@ -255,12 +257,21 @@
         shopCountElement.textContent = count;
 
     }
+    function updateSendBillCount(count) {
+        sendBillsCountElement.textContent = count;
+    }
+    function updateCompleteBillCount(count) {
+        completeBillCountElement.textContent = count;
+
+    }
 
     // Bắt sự kiện cho các lựa chọn trong dropdown
     todayOption.addEventListener('click', () => {
         updateUserCount('{{statisticalToday.userToday}}');
         updateBookCount('{{statisticalToday.postToday}}');
         updateShopCount('{{statisticalToday.shopToday}}');
+        updateSendBillCount('{{statisticalToday.sendBillsToday}}');
+        updateCompleteBillCount('{{statisticalToday.completeBillsToday}}');
         dropdownButton.innerHTML = 'Hôm nay';
     });
 
@@ -268,6 +279,8 @@
         updateUserCount('{{statisticalWeek.userWeek}}');
         updateBookCount('{{statisticalWeek.postWeek}}')
         updateShopCount('{{statisticalWeek.shopWeek}}');
+        updateSendBillCount('{{statisticalWeek.sendBillsWeek}}');
+        updateCompleteBillCount('{{statisticalWeek.completeBillsWeek}}');
 
         dropdownButton.innerHTML = 'Tuần trước';
     });
@@ -276,6 +289,8 @@
         updateUserCount('{{statisticalMonth.userMonth}}');
         updateBookCount('{{statisticalMonth.postMonth}}')
         updateShopCount('{{statisticalMonth.shopMonth}}');
+        updateSendBillCount('{{statisticalMonth.sendBillsMonth}}');
+        updateCompleteBillCount('{{statisticalMonth.completeBillsMonth}}');
 
         dropdownButton.innerHTML = 'Tháng trước';
     });
@@ -286,6 +301,8 @@
         updateUserCount('{{statisticalToday.userToday}}');
         updateBookCount('{{statisticalToday.postToday}}');
         updateShopCount('{{statisticalToday.shopToday}}');
+        updateSendBillCount('{{statisticalToday.sendBillsToday}}');
+        updateCompleteBillCount('{{statisticalToday.completeBillsToday}}')
 
 
     });
@@ -296,7 +313,7 @@
     let regularUsers
     let vipUsers
     async function getUserData() {
-        const response = await fetch("http://localhost:3000/Statistical/getVipUser");
+        const response = await fetch("http://polybooks.store/Statistical/getVipUser");
         const data = await response.json();
         regularUserPercentage = data.regularUserPercentage
         vipUserPercentage = data.vipUserPercentage
@@ -310,7 +327,7 @@
         new Chart(Userctx, {
             type: "doughnut",
             data: {
-                labels: ["Người dùng thường", "Người dùng VIP"],
+                labels: ["Người dùng thường(%)", "Người dùng VIP(%)"],
                 datasets: [{
                     data: [regularUserPercentage, vipUserPercentage],
                     backgroundColor: ["#007bff", "#28a745"],
@@ -356,12 +373,12 @@
     var GroupedbarChartData;
 
     async function getRegularAndAuctionBookData() {
-        const responseRegular = await fetch("http://localhost:3000/Statistical/getRegularBookDataChart");
+                const responseRegular = await fetch("http://polybooks.store/Statistical/getRegularBookDataChart");
         const dataRegular = await responseRegular.json();
         labels = dataRegular.label;
         dataRegularBook = dataRegular.data;
 
-        const responseAuction = await fetch("http://localhost:3000/Statistical/getAuctionBookDataChart");
+        const responseAuction = await fetch("http://polybooks.store/Statistical/getAuctionBookDataChart");
         const dataAuction = await responseAuction.json();
         dataAuctionBook = dataAuction.data;
 
@@ -369,12 +386,12 @@
     }
 
     async function getBillData() {
-        const responseBill = await fetch("http://localhost:3000/Statistical/getBillDataChart");
+        const responseBill = await fetch("http://polybooks.store/Statistical/getBillDataChart");
         dataBill = await responseBill.json();
     }
 
     async function getThreeBillData() {
-        const responseThreeBill = await fetch("http://localhost:3000/Statistical/getBillThreeDataChart");
+        const responseThreeBill = await fetch("http://polybooks.store/Statistical/getBillThreeDataChart");
         dataThreeBill = await responseThreeBill.json(); // Lưu dữ liệu đơn hoàn thành vào biến dataThreeBill
     }
 
