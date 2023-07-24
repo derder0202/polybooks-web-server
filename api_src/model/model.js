@@ -376,7 +376,7 @@ const discountSchema = new mongoose.Schema({
         ref: 'Category',
     },
     postId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: 'Post',
     },//neu co cai nay thi sach giam gia
     title: {
