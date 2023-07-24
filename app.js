@@ -43,6 +43,8 @@ const usersRouter = require('./routes/users');
 const memberRouter = require('./routes/member');
 const vipmemberRouter = require('./routes/vipmember');
 const autionPostRouter = require('./routes/autionpost');
+const prepareAuctionRouter = require('./routes/prepareauction');
+const endAuctionRouter = require('./routes/endauction');
 const contentRouter = require('./routes/content');
 const newContentRouter = require('./routes/newcontent');
 const pendingReportRouter = require('./routes/pendingreport');
@@ -139,6 +141,8 @@ app.use('/RegularMembers',memberRouter)
 app.use('/VipMembers',vipmemberRouter)
 app.use('/AutionPost',autionPostRouter)
 app.use('/BookApproval',contentRouter)
+app.use('/Prepare',prepareAuctionRouter)
+app.use('/EndAuction',endAuctionRouter)
 app.use('/AutionApproval',autionApprovalRouter);
 app.use('/NewApproval',newContentRouter)
 app.use('/PendingReport',pendingReportRouter)
