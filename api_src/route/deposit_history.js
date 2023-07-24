@@ -5,6 +5,10 @@ const depositHistoryController = require("../controller/deposit_history_controll
 
  router.get('/', depositHistoryController.getAllDepositHistories);
 
+router.get('/VNPayReturn', depositHistoryController.VNPayReturn);
+
+router.post('/createPaymentLink', depositHistoryController.createPaymentLink);
+
 router.get('/:id', depositHistoryController.getDepositHistoryById);
 
 router.post('/', depositHistoryController.createDepositHistory);

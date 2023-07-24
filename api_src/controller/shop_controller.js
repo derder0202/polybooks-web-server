@@ -172,6 +172,7 @@ const shopController = {
                     skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 10,
                 },
+                populate: 'bill'
             });
             if (!shop) {
                 return res.status(404).json({ message: 'Shop not found' });
