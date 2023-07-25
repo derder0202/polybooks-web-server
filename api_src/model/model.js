@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     sellBills: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bill' }],
     role: { type: Number, default: 0 },
     buyerReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-    sellerReview: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    sellerReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
     active: {type: Boolean, default:true},
     location: {
@@ -323,16 +323,17 @@ ShopSchema.pre('save',async function (next) {
 UserSchema.pre('save',async function (next) {
     try {
         //if(this.isModified("reviews")){
-            await this.populate({path:'reviews',select:'rating',strictPopulate:false})
-            const reviews = this.reviews
-            if(reviews){
+        await this.populate('sellerReviews','rating')
+        await this.populate('buyerReviews','rating')
+            //await this.populate({path:'reviews',select:'rating',strictPopulate:false})
+            const reviews = [...this.sellerReviews,...this.buyerReviews]
                 if (reviews.length === 0) {
                     this.rating = 0;
                 } else {
                     const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
                     this.rating = totalRating / reviews.length;
                 }
-            }
+
             next();
         //}
     } catch (err) {
@@ -405,10 +406,6 @@ const depositHistorySchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    createAt: {
-        type: Date,
-        default: Date.now
-    },
     depositAmount: {
         type: Number,
         required: true
@@ -423,9 +420,9 @@ const depositHistorySchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        required: true
+        //required: true
     },
-});
+},{timestamps: true});
 const   bannerSchema = new mongoose.Schema({
     name: {
         type:String,

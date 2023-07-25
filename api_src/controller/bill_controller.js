@@ -18,9 +18,10 @@ const billController = {
             //req.body.postId
             //req.body.userId buyer
             const bill = await Bill.find({buyer:req.body.userId, "posts.0":req.body.postId})
-            if (!bill) {
+            if (bill.length === 0) {
                 return res.status(400).json({ result: false });
             }
+            console.log(bill)
             res.status(200).json({result: true});
         } catch (error) {
             console.error(error.message);

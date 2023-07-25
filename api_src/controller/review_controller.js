@@ -26,21 +26,21 @@ const reviewController = {
           if(billTemp.buyer){
             const user = await User.findById(billTemp.buyer)
             if(user){
-              user.buyerReview.push(review._id)
+              user.buyerReviews.push(review._id)
               await user.save()
             }
           }
           if(billTemp.shopId){
             const shop = await Shop.findById(billTemp.shopId)
             if(shop){
-              shop.reviews.push(review._id)
+              shop.sellerReviews.push(review._id)
               await shop.save()
             }
           } else {
             if(billTemp.seller){
               const user = await User.findById(billTemp.seller)
               if(user){
-                user.sellerReview.push(review._id)
+                user.sellerReviews.push(review._id)
                 await user.save()
               }
             }
@@ -69,7 +69,7 @@ const reviewController = {
       if(billTemp.buyer){
         const user = await User.findById(billTemp.buyer)
         if(user){
-          user.reviews.push(review._id)
+          //user.buyerReviews.push(review._id)
           await user.save()
         }
       }
