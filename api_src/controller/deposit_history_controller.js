@@ -110,8 +110,8 @@ const VNPayReturn = async (req, res) => {
         delete vnp_Params['vnp_SecureHash'];
         delete vnp_Params['vnp_SecureHashType'];
         vnp_Params = sortObject(vnp_Params);
-        var tmnCode = "LH4KB9IF";
-        var secretKey = "PYQGMCGPRIPWTBPYTKTJCOHTPGKZWWDK"
+        var tmnCode = process.env.TMN_CODE;
+        var secretKey = process.env.SECRET_KEY
         var querystring = require('qs');
         var signData = querystring.stringify(vnp_Params, { encode: false });
         var crypto = require("crypto");
@@ -161,7 +161,7 @@ const VNPayReturn = async (req, res) => {
 
         if(secureHash === signed){
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-            res.status(200).json({message})
+            res.status(200).json({statusCode: vnp_Params['vnp_ResponseCode'], message})
         } else{
             res.status(400).json({code: '97'})
         }
