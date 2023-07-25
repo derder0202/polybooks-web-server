@@ -7,8 +7,12 @@ router.get('/', billController.getBills);
 router.get('/:id', billController.getBillById);
  // Tạo hóa đơn mới
 router.post('/', billController.createBill);
+router.post('/checkBill', billController.checkBill);
  // Cập nhật hóa đơn
 router.put('/:id', billController.updateBill);
  // Xóa hóa đơn
 router.delete('/:id', billController.deleteBill);
  module.exports = router;
+
+
+ // check bill tồn tại theo posts[0] và buyer

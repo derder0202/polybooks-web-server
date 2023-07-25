@@ -23,16 +23,13 @@ const reviewController = {
       const review = new Review(req.body)
       if(req.body.bill){
         const billTemp = await Bill.findById(req.body.bill)
-
-        if(review.status === 0){
           if(billTemp.buyer){
             const user = await User.findById(billTemp.buyer)
             if(user){
-              user.reviews.push(review._id)
+              user.buyerReview.push(review._id)
               await user.save()
             }
           }
-        } else {
           if(billTemp.shopId){
             const shop = await Shop.findById(billTemp.shopId)
             if(shop){
@@ -43,12 +40,12 @@ const reviewController = {
             if(billTemp.seller){
               const user = await User.findById(billTemp.seller)
               if(user){
-                user.reviews.push(review._id)
+                user.sellerReview.push(review._id)
                 await user.save()
               }
             }
           }
-        }
+
       }
       const saveReview = await review.save()
       res.status(200).json(saveReview);
@@ -99,17 +96,22 @@ const reviewController = {
 },
   delete: async (req, res) => {
     try {
-      const review = await Review.findByIdAndDelete(req.params.id,{new:true});
+      const review = await Review.findByIdAndDelete(req.params.id,{new:true}).populate('bill');
       if (!review) {
         return res.status(404).json({ success: false, message: 'Review not found' });
       }
-      // Update user's reviews field
-      const user = await User.findByIdAndUpdate(review.user, { $pull: { reviews: review._id }}, { new: true });
-      // Update post's reviews field
-      const post = await Post.findByIdAndUpdate(review.post, { $pull: { reviews: review._id }}, { new: true });
-      if(post.shopId){
-        await Post.findByIdAndUpdate(post.shopId, { $pull: { reviews: review._id }});
+      if(review.bill){
+        if(review.bill.buyer){
+          await User.findByIdAndUpdate(review.bill.buyer, { $pull: { buyerReviews: review._id }}, { new: true });
+        }
+        if(review.bill.seller){
+          await User.findByIdAndUpdate(review.bill.seller, { $pull: { sellerReview: review._id }}, { new: true });
+        }
+        if(review.bill.shopId){
+            await Shop.findByIdAndUpdate(review.bill.shopId, { $pull: { reviews: review._id }});
+        }
       }
+
       const bucket = admin.storage().bucket();
       await bucket.deleteFiles({
         prefix: "reviews/"+review._id,

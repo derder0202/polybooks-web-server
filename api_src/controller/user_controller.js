@@ -186,17 +186,18 @@ const userController = {
     },
 
     removeFromFavorite: async function(req, res) {
-        const postId = req.body.postId;
+        const posts = req.body.posts;
         const userId = req.params.id;
         try {
             const user = await User.findById(userId);
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }
-            if(!user.favorite.includes(postId)){
-                return res.status(404).json({ message: "this post is not in favorite of this user"});
+            for(let post of posts){
+                if(user.favorite.includes(post)){
+                    user.favorite.pull(post);
+                }
             }
-            user.favorite.pull(postId);
             await user.save();
             return res.status(200).json({ message: "Post removed from favorites" });
         } catch (err) {

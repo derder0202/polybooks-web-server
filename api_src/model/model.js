@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
     buyBills: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bill' }],
     sellBills: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bill' }],
     role: { type: Number, default: 0 },
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    buyerReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    sellerReview: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
     active: {type: Boolean, default:true},
     location: {
@@ -322,13 +323,15 @@ ShopSchema.pre('save',async function (next) {
 UserSchema.pre('save',async function (next) {
     try {
         //if(this.isModified("reviews")){
-            await this.populate('reviews','rating')
+            await this.populate({path:'reviews',select:'rating',strictPopulate:false})
             const reviews = this.reviews
-            if (reviews.length === 0) {
-                this.rating = 0;
-            } else {
-                const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                this.rating = totalRating / reviews.length;
+            if(reviews){
+                if (reviews.length === 0) {
+                    this.rating = 0;
+                } else {
+                    const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+                    this.rating = totalRating / reviews.length;
+                }
             }
             next();
         //}
