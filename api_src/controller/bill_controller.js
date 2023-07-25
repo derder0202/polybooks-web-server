@@ -13,6 +13,23 @@ const billController = {
       res.status(500).send('Lỗi máy chủ');
     }
   },
+    checkBill:async (req, res) => {
+        try {
+            //req.body.postId
+            //req.body.userId buyer
+            const bill = await Bill.find({buyer:req.body.userId, "posts.0":req.body.postId})
+            if (!bill) {
+                return res.status(400).json({ result: false });
+            }
+            res.status(200).json({result: true});
+        } catch (error) {
+            console.error(error.message);
+            if (error.kind === 'ObjectId') {
+                return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
+            }
+            res.status(500).send('Lỗi máy chủ');
+        }
+    },
    getBillById: async (req, res) => {
     try {
       const bill = await Bill.findById(req.params.id).populate('posts').populate('userId');
