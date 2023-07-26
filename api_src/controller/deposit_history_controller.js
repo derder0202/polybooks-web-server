@@ -66,7 +66,7 @@ const createPaymentLink = async (req, res)=>{
         var tmnCode = process.env.TMN_CODE;
         var secretKey = process.env.SECRET_KEY
         var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        var returnUrl = "https://polybooks.store/api/depositHistory/VNPayReturn";
+        var returnUrl = "http://localhost:3000/api/depositHistory/VNPayReturn";
         var date = new Date();
         var createDate = moment(date).format("YYYYMMDDHHmmss") //dateFormat(date, 'yyyymmddHHmmss');
         var orderId = moment(date).format('HHmmss');
@@ -161,7 +161,11 @@ const VNPayReturn = async (req, res) => {
 
         if(secureHash === signed){
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-            res.status(200).json({statusCode: vnp_Params['vnp_ResponseCode'], message})
+            if(vnp_Params['vnp_ResponseCode'] === '00'){
+              // return  res.status(200).json({statusCode: vnp_Params['vnp_ResponseCode'], message})
+                return res.status(200).render('test',{statusCode: vnp_Params['vnp_ResponseCode'], message})
+            }
+            return res.status(400).render('test',{statusCode: vnp_Params['vnp_ResponseCode'], message})
         } else{
             res.status(400).json({code: '97'})
         }

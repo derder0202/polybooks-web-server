@@ -226,6 +226,18 @@ const shopController = {
         }
     },
 
+    getAllDiscountsByShop: async(req,res) => {
+        try {
+            const shop = await Shop.findById(req.params.id).populate('allDiscounts');
+            if (!shop) {
+                return res.status(400).json('shop not found')
+            }
+            return res.status(200).json(shop.allDiscounts);
+        } catch (error) {
+            res.status(500).json('server loi')
+        }
+    },
+
     getSellBillsByShop : async (req,res) => {
         try {
             const { startIndex, limit } = req.query;

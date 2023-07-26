@@ -38,7 +38,7 @@ router.post('/:id/removeAddress', userController.removeAddress);
 router.put('/editAddress/:id',userController.editAddress)
 
 router.get('/:id/posts', userController.getPostsByUser);
-router.getf('/:id/reviews', userController.getReviewsByUser);
+router.get('/:id/reviews', userController.getReviewsByUser);
 router.get('/:id/notification', userController.getNotificationsByUser);
 router.get('/:id/buyBills', userController.getBuyBillsByUser);
 router.get('/:id/sellBills', userController.getSellBillsByUser);
