@@ -173,6 +173,9 @@ app.use('/api/notifications',apiNotificationRouter)
 app.use('/policy',(req,res)=>{
     res.render('policy')
 })
+app.use('/test',(req,res)=>{
+    res.render('test')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

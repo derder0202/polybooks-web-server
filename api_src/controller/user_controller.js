@@ -28,7 +28,7 @@ const userController = {
     getUserById : async (req, res) => {
         const { id } = req.params;
         try {
-            const user = await User.findById(id);
+            const user = await User.findById(id).populate("shopId","name");
             if(user){
                 res.status(200).json(user);
             } else {
@@ -186,17 +186,18 @@ const userController = {
     },
 
     removeFromFavorite: async function(req, res) {
-        const postId = req.body.postId;
+        const posts = req.body.posts;
         const userId = req.params.id;
         try {
             const user = await User.findById(userId);
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }
-            if(!user.favorite.includes(postId)){
-                return res.status(404).json({ message: "this post is not in favorite of this user"});
+            for(let post of posts){
+                if(user.favorite.includes(post)){
+                    user.favorite.pull(post);
+                }
             }
-            user.favorite.pull(postId);
             await user.save();
             return res.status(200).json({ message: "Post removed from favorites" });
         } catch (err) {
@@ -280,14 +281,17 @@ const userController = {
         }
     },
     getReviewsByUser : async (req, res) => {
-        const { startIndex, limit } = req.query;
+        const { startIndex, limit, isSeller} = req.query;
        // const { userId } = req.body;
         try {
-            const user = await User.findById(req.params.id).populate({
-                path: 'reviews',
-                options: { skip: parseInt(startIndex) ||0, limit: parseInt(limit) || 20 }
-            });
-            res.status(200).json(user.reviews);
+            if(isSeller){
+                const user = await User.findById(req.params.id).populate({
+                    path: isSeller?'sellerReviews':"buyerReviews",
+                    options: { skip: parseInt(startIndex) ||0, limit: parseInt(limit) || 20 }
+                });
+                res.status(200).json(isSeller?user.sellerReviews:user.buyerReviews);
+            }
+            res.status(400).json({message:"Thiếu query isSeller"})
         } catch (err) {
             console.log(err);
             res.status(500).json({ message: 'Server Error' });

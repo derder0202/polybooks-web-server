@@ -48,9 +48,11 @@ const {Discount, Shop, Post} = require("../model/model");
                 }
             } else {
                 if(req.body.postId){
-                    const postTemp = await Post.findById(req.body.postId)
-                    postTemp.allDiscounts.push(discount._id)
-                    await postTemp.save()
+                    for(let post of req.body.postId){
+                        const postTemp = await Post.findById(post)
+                        postTemp.allDiscounts.push(discount._id)
+                        await postTemp.save()
+                    }
                 } else {
                     if(req.body.categoryId){
                         await Post.updateMany({category:req.body.categoryId,shopId:req.body.shopId},{$push:{allDiscounts: discount._id}})

@@ -1,4 +1,4 @@
-const {Shop, Category, User, Bill} = require("../model/model");
+const {Shop, User, Bill, Post} = require("../model/model");
 const multer = require("multer")
 const admin = require("firebase-admin");
 const mongoose = require("mongoose");
@@ -61,6 +61,9 @@ const shopController = {
                     })
                 } else {
                     const newShop = new Shop(req.body);
+                    if(newShop.user){
+                        await User.findByIdAndUpdate(newShop.user,{shopId: newShop._id})
+                    }
                     await newShop.save()
                     res.status(200).json(newShop);
                     //res.status(404).json({ error: "file not found" });
@@ -169,6 +172,7 @@ const shopController = {
                     skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 10,
                 },
+                populate: 'bill'
             });
             if (!shop) {
                 return res.status(404).json({ message: 'Shop not found' });
@@ -231,6 +235,24 @@ const shopController = {
                 options: { skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 20
                 },
+                populate:[
+                    {
+                        path:"buyer",
+                        select:"fullName phone"
+                    },
+                    {
+                        path:"seller",
+                        select:"fullName phone"
+                    },
+                    {
+                        path:"shopId",
+                        select:"name"
+                    },
+                    {
+                        path:"posts",
+                        select:"images bookName price"
+                    }
+                ]
             })
             if (!shop) {
                 return res.status(400).json("User not found")
@@ -241,43 +263,64 @@ const shopController = {
         }
     },
 
-    get7DaysStatistical: async (req,res)=>{
-
+    getShop7DaysStatistical: async (req, res)=>{
         try{
-            let id = new mongoose.Types.ObjectId(req.params.id)
             const today = new Date();
-            console.log(today)
-            const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6);
-            const pipeline = [
-                {
-                    $match: {
-                        createdAt: {
-                            $gte: startOfWeek,
-                            $lte: today
-                        },
-                        shopId: id
-                    }
-                },
-                {
-                    $group: {
-                        _id: {
-                            $dateToString: { format: "%d/%m", date: "$createdAt" }
-                        },
-                        totalPrice: { $sum: "$totalPrice" }
-                    }
-                },
-                {
-                    $sort: {
-                        _id: 1
+            const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6); // Ngày bắt đầu là 6 ngày trước hôm nay
+
+            // Create an empty map to store the counts
+            const dataThisWeekRegularTemplate = {};
+            const shop = await Shop.findById(req.params.id).populate('sellBills')
+            // Iterate over each day of the week
+            for (let i = 0; i < 7; i++) {
+                const currentDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
+                const nextDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i + 1);
+                let count = 0;
+                let totalPrice = 0;
+                // Count posts for the current day
+                // const postsCount = await Post.countDocuments({ createdAt: { $gte: currentDate, $lt: nextDate } });
+                for (let bill of shop.sellBills){
+                    if(bill.createdAt && bill.createdAt.getTime() > currentDate && bill.createdAt.getTime() < nextDate){
+                        count++;
+                        totalPrice+=bill.totalPrice
                     }
                 }
-            ];
-            const data = await Bill.aggregate(pipeline);
-            res.json(data)
+                // Get the day name
+                const dayName = currentDate.toLocaleDateString('vi-VN')
+
+                // Save the count in the map
+                dataThisWeekRegularTemplate[`${dayName.substring(0, dayName.lastIndexOf('/'))}`] = {count,totalPrice};
+            }
+
+            res.json(dataThisWeekRegularTemplate)
         } catch (e) {
           console.log(e)
         }
-    }
+    },
+    getShopStatisticalByTime: async (req, res)=>{
+        try{
+            const startDate = new Date(req.body.startDay)
+            const endDate = new Date(req.body.endDay)
+            startDate.setHours(startDate.getHours()+5)
+            endDate.setHours(endDate.getHours()+5)
+
+            const shop = await Shop.findById(req.params.id).populate('sellBills')
+            // Iterate over each day of the week
+            let count = 0
+            let totalPrice = 0
+
+            for(let bill of shop.sellBills){
+                if(bill.createdAt && bill.createdAt.getTime() > startDate && bill.createdAt.getTime() < endDate){
+                    count++;
+                    totalPrice+=bill.totalPrice
+                }
+            }
+            res.json({count,totalPrice})
+        } catch (e) {
+            console.log(e)
+        }
+    },
+
 
 }
 
