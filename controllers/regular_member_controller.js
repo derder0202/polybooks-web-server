@@ -18,7 +18,7 @@ const memberController = {
     //hiển thị thông tin theo user
     formEditRegularMember: async (req,res)=>{
         console.log(req.params)
-        let itemMember = await User.findById(req.params.id)
+        let itemMember = await User.findById(req.params.id).populate('address')
             .exec()
             .catch(function (err){
                 console.log(err);
