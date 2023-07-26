@@ -14,14 +14,21 @@ function confirmRedirectToVipMembers() {
     var confirmLeave = confirm("Bạn có chắc chắn muốn rời khỏi trang này không?"); // Hiển thị hộp thoại xác nhận
 
     if (confirmLeave) {
-        window.location.href = "/VipMembers"; // Nếu người dùng đồng ý, chuyển hướng tới "list_regular_member"
+        window.location.href = "/VipMembers"; 
     }
 }
 function confirmRedirectBookApproval() {
     var confirmLeave = confirm("Bạn có chắc chắn muốn rời khỏi trang này không?"); // Hiển thị hộp thoại xác nhận
 
     if (confirmLeave) {
-        window.location.href = "/BookApproval"; // Nếu người dùng đồng ý, chuyển hướng tới "list_regular_member"
+        window.location.href = "/BookApproval"; 
+    }
+}
+function confirmRedirectShop() {
+    var confirmLeave = confirm("Bạn có chắc chắn muốn rời khỏi trang này không?"); // Hiển thị hộp thoại xác nhận
+
+    if (confirmLeave) {
+        window.location.href = "/Shop"; 
     }
 }
 function clearInputs() {
@@ -54,6 +61,11 @@ function validateForm() {
     var role = document.getElementById('role').value;
     var phone = document.getElementById('phoneNumber').value;
 
+    var nameshop = document.getElementById('shop').value;
+    var phone1 = document.getElementById('phoneshop1').value;
+    var phone2 = document.getElementById('phoneshop2').value;
+    var mota = document.getElementById('motashop').value;
+    var diachishop = document.getElementById('shopdiachi').value;
     
 
     // Xóa thông báo lỗi trước đó
@@ -86,6 +98,14 @@ function validateForm() {
         isValid = false;
     }
     if (phone === '') {
+        displayErrorMessage('phoneError', 'Vui lòng nhập số điện thoại');
+        isValid = false;
+    }
+    if (nameshop === '') {
+        displayErrorMessage('phoneError', 'Vui lòng nhập tên cửa hàng');
+        isValid = false;
+    }
+    if (phone1 === '') {
         displayErrorMessage('phoneError', 'Vui lòng nhập số điện thoại');
         isValid = false;
     }
