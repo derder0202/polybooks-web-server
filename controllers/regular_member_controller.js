@@ -1,5 +1,5 @@
 const User = require("../api_src/model/model").User;
-const bcrypt = require('bcrypt');
+
 
 const memberController = {
     //Hiển thị toàn bộ list user
