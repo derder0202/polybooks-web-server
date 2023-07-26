@@ -35,23 +35,30 @@ const {Discount, Shop, Post} = require("../model/model");
                 for (let post of shop.posts){
                    const postTemp = await Post.findById(post).populate('allDiscounts').select("allDiscounts")
                        // console.log(postTemp)
-                    if(!postTemp.allDiscounts){
-                        postTemp.allDiscounts = [discount._id]
-                        //console.log("vao day ")
-                    } else {
-                        postTemp.allDiscounts.push(discount._id)
-                        //console.log("khong vao")
+                    if(postTemp){
+                        if(!postTemp.allDiscounts){
+                            postTemp.allDiscounts = [discount._id]
+                            //console.log("vao day ")
+                        } else {
+                            postTemp.allDiscounts.push(discount._id)
+                            //console.log("khong vao")
+                        }
+                        await postTemp.save()
                     }
-                    console.log(postTemp)
-                    await postTemp.save()
                   // await Post.findByIdAndUpdate(post,{$push:{allDiscounts: }})
                 }
             } else {
                 if(req.body.postId){
                     for(let post of req.body.postId){
                         const postTemp = await Post.findById(post)
-                        postTemp.allDiscounts.push(discount._id)
-                        await postTemp.save()
+                        if(postTemp){
+                            if(postTemp.allDiscounts){
+                                postTemp.allDiscounts.push(discount._id)
+                                await postTemp.save()
+                            } else {
+                                postTemp.allDiscounts = [discount._id]
+                            }
+                        }
                     }
                 } else {
                     if(req.body.categoryId){
@@ -59,6 +66,7 @@ const {Discount, Shop, Post} = require("../model/model");
                     }
                 }
             }
+            await Shop.findByIdAndUpdate(req.body.shopId,{$push:{allDiscounts: discount._id}})
             const savedDiscount = await discount.save()
             res.status(200).json(savedDiscount)
         } catch (error) {

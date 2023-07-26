@@ -287,7 +287,8 @@ const userController = {
             if(isSeller){
                 const user = await User.findById(req.params.id).populate({
                     path: isSeller?'sellerReviews':"buyerReviews",
-                    options: { skip: parseInt(startIndex) ||0, limit: parseInt(limit) || 20 }
+                    options: { skip: parseInt(startIndex) ||0, limit: parseInt(limit) || 20 },
+
                 });
                 res.status(200).json(isSeller?user.sellerReviews:user.buyerReviews);
             }
