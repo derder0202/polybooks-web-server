@@ -284,13 +284,33 @@ const userController = {
         const { startIndex, limit, isSeller} = req.query;
        // const { userId } = req.body;
         try {
-            if(isSeller){
+            if(req.query.isSeller){
                 const user = await User.findById(req.params.id).populate({
                     path: isSeller?'sellerReviews':"buyerReviews",
                     options: { skip: parseInt(startIndex) ||0, limit: parseInt(limit) || 20 },
-
+                    populate: {
+                        path: 'bill',
+                        populate:[
+                            {
+                                path:"buyer",
+                                select:"fullName"
+                            },
+                            {
+                                path:"seller",
+                                select:"fullName"
+                            },
+                            {
+                                path:"shopId",
+                                select:"name"
+                            },
+                            {
+                                path:"posts",
+                                select:"images bookName price"
+                            }
+                        ]
+                    }
                 });
-                res.status(200).json(isSeller?user.sellerReviews:user.buyerReviews);
+                return res.status(200).json(isSeller?user.sellerReviews:user.buyerReviews);
             }
             res.status(400).json({message:"Thiếu query isSeller"})
         } catch (err) {
