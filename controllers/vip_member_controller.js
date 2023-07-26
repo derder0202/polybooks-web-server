@@ -3,7 +3,7 @@ const User = require("../api_src/model/model").User;
 const vipMembersController = {
     listVipMembers: async (req,res)=>{
         try {
-            const listUsersVip = await User.find({role : 1}).populate({path:'address',populate:{path:'name'}});
+            const listUsersVip = await User.find({role : 1});
             res.render('vip_member/list_vip_member',{ listUsersVip});
         } catch (error) {
             console.error(error);
@@ -12,7 +12,7 @@ const vipMembersController = {
     },
     formEditVipMember: async (req,res)=>{
         console.log(req.params)
-        let itemVipMember = await User.findById(req.params.id)
+        let itemVipMember = await User.findById(req.params.id).populate('address')
             .exec()
             .catch(function (err){
                 console.log(err);

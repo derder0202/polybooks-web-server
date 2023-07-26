@@ -82,11 +82,11 @@
                                     <label style="font-weight: bold;" class="small mb-1">Số điện thoại:</label>
                                     <span class="small mb-1">{{itemVipMember.phone}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
-                                    <span class="small mb-1">{{itemVipMember.address}}</span><br>
+                                    <span class="small mb-1">{{itemVipMember.address.[0].address}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Giới tính:</label>
                                     <span id="genderValue" class="small mb-1">{{itemVipMember.gender}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Ngày sinh:</label>
-                                    <span class="small mb-1">{{itemVipMember.birthday}}</span><br>
+                                    <span class="small mb-1">{{formatDateOfBirth itemVipMember.birthday}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Vai trò:</label>
                                     <span id="roleValue" class="small mb-1">{{itemVipMember.role}}</span><br>
                                 </div>
