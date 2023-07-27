@@ -17,7 +17,7 @@ const {Discount, Shop, Post} = require("../model/model");
     // GET discount by ID
     getDiscountById : async (req, res) => {
         try {
-            const discount = await Discount.findById(req.params.id)
+            const discount = await Discount.findById(req.params.id).populate('categoryId')
             if (!discount) {
                 return res.status(404).json({ message: 'Discount not found' })
             }
