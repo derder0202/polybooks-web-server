@@ -284,7 +284,7 @@ const userController = {
         const { startIndex, limit, isSeller} = req.query;
        // const { userId } = req.body;
         try {
-            if(req.query.isSeller){
+            if(req.query.isSeller!==null){
                 const user = await User.findById(req.params.id).populate({
                     path: isSeller?'sellerReviews':"buyerReviews",
                     options: { skip: parseInt(startIndex) ||0, limit: parseInt(limit) || 20 },
