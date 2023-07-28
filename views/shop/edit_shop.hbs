@@ -17,7 +17,7 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="/js/jscustom.js"></script>
-    <script src="/js/listmember.js"></script>
+    <script src="/js/validateshop.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -36,11 +36,11 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="user"></i></div>
-                                    Thông Tin Tài Khoản Cá Nhân
+                                    Thông Tin Của Hàng
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a onclick="confirmRedirectToRegularMembers()" class="btn btn-sm btn-light text-primary">
+                                <a onclick="confirmRedirectShop()" class="btn btn-sm btn-light text-primary">
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Quay lại
                                 </a>
@@ -58,32 +58,28 @@
                     <div class="col-xl-4">
                         <!-- Profile picture card-->
                         <div class="card mb-4 mb-xl-0">
-                            <div class="card-header">Chi Tiết Tài Khoản</div>
+                            <div class="card-header">Chi Tiết Cửa Hàng</div>
                             <div class="card-body text-center">
                                 <!-- Profile picture image-->
-                                <img  class="mb-3" src="/assets/img/illustrations/profiles/profile-3.png" alt="" style="width: 150px; height: 150px; border-radius: 50%;">
+                                <img  class="mb-3" src="{{itemShop.shopImage}}" alt="" style="width: 150px; height: 150px; border-radius: 50%;">
                                 <!-- Profile picture help block-->
-                                <div class="mb-2" style="font-weight: bold;font-size: 20px;">{{itemMember.fullName}}</div>
+                                <div class="mb-2" style="font-weight: bold;font-size: 20px;">{{itemShop.name}}</div>
                                 <!-- Profile picture upload button-->
-                                <span id="roleValue" class="badge bg-green-soft text-green">{{itemMember.role}}</span>
+                                <span id="roleValue" class="badge bg-green-soft text-green">{{itemShop.rating}} Sao</span>
                                 <hr style="border-top: 1px solid #000;">
                                 
                                 <div style="text-align: left">
                                     <label class="small text-muted mb-3">Chi Tiết</label><br>
-                                    <label style="font-weight: bold;" class="small mb-1">Họ tên:</label>
-                                    <span class="small mb-1">{{itemMember.fullName}}</span><br>
-                                    <label style="font-weight: bold;" class="small mb-1">Email:</label>
-                                    <span class="small mb-1">{{itemMember.email}}</span><br>
-                                    <label style="font-weight: bold;" class="small mb-1">Số điện thoại:</label>
-                                    <span class="small mb-1">{{itemMember.phone}}</span><br>
+                                    
+                                    <label style="font-weight: bold;" class="small mb-1">Số điện thoại 1:</label>
+                                    <span class="small mb-1">{{itemShop.phone1}}</span><br>
+                                    <label style="font-weight: bold;" class="small mb-1">Số điện thoại 2:</label>
+                                    <span class="small mb-1">{{itemShop.phone2}}</span><br>
+                                    <label style="font-weight: bold;" class="small mb-1">Mô tả:</label>
+                                    <label id="genderValue" class="small mb-1">{{itemShop.description}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
-                                    <label class="small mb-1">{{itemMember.address.[0].address}}</label><br>
-                                    <label style="font-weight: bold;" class="small mb-1">Giới tính:</label>
-                                    <label id="genderValue" class="small mb-1">{{itemMember.gender}}</label><br>
-                                    <label style="font-weight: bold;" class="small mb-1">Ngày sinh:</label>
-                                    <label class="small mb-1">{{formatDateOfBirth itemMember.birthday}}</label><br>
-                                    <label style="font-weight: bold;" class="small mb-1">Vai trò:</label>
-                                    <label id="roleValue" class="small mb-1">{{itemMember.role}}</label><br>
+                                    <label class="small mb-1">{{itemShop.address}}</label><br>
+                                    
                                 </div>
 
                             </div>
@@ -92,67 +88,50 @@
                     <div class="col-xl-8">
                         <!-- Account details card-->
                         <div class="card mb-4">
-                            <div class="card-header">Sửa thông tin tài khoản</div>
+                            <div class="card-header">Sửa thông tin cửa hàng</div>
                             <div class="card-body">
-                                <form action="" method="post" onsubmit="return validateForm()">
+                                <form action="" method="post" onsubmit="return validateFormShop()">
                                 <!-- Form Group (Họ Tên)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputUsername">Họ tên</label>
-                                    <input value="{{itemMember.fullName}}" name="member_name" class="form-control" id="inputUsername" type="text" placeholder="Nhập họ tên của bạn"/>
-                                    <div id="fullNameError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    <label class="small mb-1" for="inputUsername">Tên cửa hàng</label>
+                                    <input value="{{itemShop.name}}" name="shop_name" class="form-control" id="shop" type="text" placeholder="Nhập tên cửa hàng"/>
+                                    <div id="nameshopError" class="error-message" style="color: red; font-size: 12px;"></div>
                                 </div>
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
 
                                     <!-- Form Group (email address)-->
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="email">Email</label>
-                                        <input value="{{itemMember.email}}" name="member_email" class="form-control" id="email" type="email" placeholder="Nhập email của bạn"/>
-                                        <div id="emailError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                        <label class="small mb-1" for="email">Số điện thoại 1</label>
+                                        <input value="{{itemShop.phone1}}" name="shop_phone" class="form-control" id="phoneshop1" type="number" placeholder="Nhập số điện thoại của bạn"/>
+                                        <div id="phone1Error" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
 
                                     <!-- Form Group (Ngày Sinh)-->
-                                    {{!-- <div class="col-md-6">
-                                        <label class="small mb-1" for="inputBirthday">Ngày sinh</label>
-                                        <input name="member_birthday" class="form-control" id="inputBirthday" type="date"  placeholder="Nhập ngày sinh của bạn"/>
-                                        <div id="birthdayError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div> --}}
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputBirthday">Số điện thoại 2</label>
+                                        <input value="{{itemShop.phone2}}" name="phone_shop" class="form-control" id="phoneshop2" type="number"  placeholder="Nhập số điện thoại của bạn"/>
+                                        <div id="phone2Error" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
                                 </div>
                                 <!-- Form Group (Địa chỉ)-->
-                                {{!-- <div class="mb-3">
-                                        <label class="small mb-1" for="address">Địa chỉ</label>
-                                        <input name="member_address" class="form-control" id="address" type="text" placeholder="Nhập địa chỉ của bạn"/>
-                                        <div id="addressError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                </div> --}}
-                                <!-- Form Row-->
-                                <div class="row gx-3 mb-3">
+                               <div class="row gx-3 mb-3">
 
-                                    {{!-- <div class="col-md-6">
-                                        <label class="small mb-1" for="gender">Giới tính</label>
-                                        <input value="{{itemMember.gender}}" name="member_gender" class="form-control" id="gender" type="text" placeholder="Nhập giới tính của bạn"/>
-                                        <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div> --}}
-                                    <!-- Form Group (gender)-->
-                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="gender">Giới tính</label>
-                                            <select name="member_gender" class="form-select" id="gender">
-                                                <option disabled selected>Mời bạn chọn giới tính</option>
-                                                <option value="male" data-display-value="Nam">Nam</option>
-                                                <option value="female" data-display-value="Nữ">Nữ</option>
-                                            </select>
-                                        <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div>
-                                    <!-- Form Group (Role)-->
+                                    <!-- Form Group (email address)-->
                                     <div class="col-md-6">
-                                        <label class="small mb-1" for="role">Vai trò</label>
-                                            <select name="member_role" class="form-select" id="role">
-                                                <option disabled selected>Mời bạn chọn vai trò</option>
-                                                <option value="0" data-display-value="Thường">Thường</option>
-                                                <option value="1" data-display-value="VIP">VIP</option>
-                                            </select>
-                                        <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                        <label class="small mb-1" for="email">Mô tả</label>
+                                        <input value="{{itemShop.description}}" name="shop_description" class="form-control" id="motashop" type="text" placeholder="Nhập mô tả của bạn"/>
+                                        <div id="motaError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+
+                                    <!-- Form Group (Ngày Sinh)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputBirthday">Địa chỉ</label>
+                                        <input value="{{itemShop.address}}" name="shop_address" class="form-control" id="shopdiachi" type="text"  placeholder="Nhập địa chỉ cửa hàng của bạn"/>
+                                        <div id="diachishopError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
                                 </div>
+                                
                                 <!-- Save changes button-->
                                 <div class="card-body text-center">
                                     <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Lưu thông tin</button>

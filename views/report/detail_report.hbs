@@ -130,15 +130,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card mt-4 mb-xl-0">
-                            <div class="card-header">Phản hồi</div>
-                            <div class="card-body text-center">
-                                <textarea class="form-control mb-4" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                <a class="btn btn-primary" type="button" href="pending_report">Gửi phản hồi</a>
+                        <form method="post" action="/PendingReport/detail_repory/{{detailReport._id}}">
+                            <div class="card mt-4 mb-xl-0">
+                                <div class="card-header">Phản hồi</div>
+                                <div class="card-body text-center">
+                                    <textarea name="add_feedback" class="form-control mb-4" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="reply" value="approve">Gửi phản hồi</button>
+                                </div>
                             </div>
-
-
-                        </div>
+                        </form>
+                        
                     </div>
 
 

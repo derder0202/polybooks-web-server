@@ -36,13 +36,13 @@
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="award"></i></div>
-                                    Sửa banner
+                                    Duyệt banner
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
                                 <a class="btn btn-sm btn-light text-primary" href="/AdvertisingManagement">
                                     <i class="me-1" data-feather="arrow-left"></i>
-                                    Trở lại trang banner
+                                    Trở lại
                                 </a>
                             </div>
                         </div>
@@ -55,46 +55,28 @@
                         <div class="card mb-4 ">
                             <div class="card-header">Chi tiết banner</div>
                             <div class="card-body">
-
-                                    <form action="" method="post">
+                                    <form method="post" action="/AdvertisingManagement/edit_banner/{{detailBanner._id}}">
                                         <div class="row gx-3 mb-3">
-                                            <!-- Form Group (first name)-->
-<!--                                            <div class="col-md-6">-->
-<!--                                                <label class="small mb-1" for="inputFirstName">Người dùng</label>-->
-<!--                                                <input class="form-control" name="" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{editBanner.userId}}" readonly disabled/>-->
-<!--                                            </div>-->
-                                            <!-- Form Group (last name)-->
                                             <div class="col-md-6">
-                                                <label class="small mb-1" for="inputLastName">ID người dùng</label>
-                                                <input class="form-control" name="userId_banner" id="inputLastName" type="text" placeholder="Enter your last name" value="{{editBanner.userId}}" readonly disabled/>
+                                                <label class="small mb-1" for="inputBirthday">Người dùng</label>
+                                                <input value="{{editBanner.userId}}" name="member_birthday" class="form-control" id="inputBirthday" type="text"/>
+                                                <div id="birthdayError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                            </div>
+                                  
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="email">Nội dung</label>
+                                                <input value="{{editBanner.content}}" name="member_email" class="form-control" id="email" type="text"/>
+                                                <div id="emailError" class="error-message" style="color: red; font-size: 12px;"></div>
                                             </div>
                                         </div>
-<!--                                        <div >-->
-<!--                                            <label class="small mb-1" for="inputUsername">Tình trạng</label>-->
-<!--                                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="Đang sử dụng" />-->
-<!--                                        </div>-->
-                                        <div class="mb-3">
-                                            <label class="small mb-1" for="role">Tình trạng</label>
-                                            <select name="isActive_banner" class="form-select" id="role">
-                                                <option disabled selected>Mời bạn chọn tình trạng</option>
-                                                <option value="true" data-display-value="Đang sử dụng">Đang sử dụng</option>
-                                                <option value="false" data-display-value="Chưa sử dụng">Chưa sử dụng</option>
-                                            </select>
-<!--                                            <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>-->
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="small mb-1" for="inputUsername">Nội dung</label>
-                                            <input class="form-control" name="content_banner" id="inputUsername" type="text" placeholder="Enter your username" value="{{editBanner.content}}" />
-                                        </div>
+                                       
                                         <label class="small mb-1" for="inputUsername">Hình ảnh Banner</label>
                                         <div class="card-body text-center">
                                             <img src="{{editBanner.image}}" name="image_banner" class="d-block w-100" alt="...">
 
                                         </div>
-                                        <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Lưu thông tin</button>
-
+                                        <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="addbanner">Duyệt banner</button>
                                     </form>
-
                             </div>
                         </div>
                     </div>

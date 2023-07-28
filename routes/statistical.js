@@ -1,7 +1,7 @@
 var express = require('express');
 const statisticalController = require("../controllers/statistical_controller");
 const checkAuth = require("../api_src/middleware/checkAuth");
-const {User, Post, Bill} = require("../api_src/model/model");
+const {User, Post, Bill,Shop} = require("../api_src/model/model");
 var router = express.Router();
 const admin = require('firebase-admin');
 
@@ -15,9 +15,65 @@ router.get('/getVipUser',async(req,res)=>{
     const regularUserPercentage = Math.round((regularUsers / (regularUsers+vipUsers)) * 100);
     const vipUserPercentage = Math.round((vipUsers / (regularUsers+vipUsers)) * 100);
     res.json({regularUserPercentage, vipUserPercentage,regularUsers,vipUsers})
-
 })
+router.get('/newUser',async(req,res)=>{
+    let statisticalToday = {}
+    let statisticalWeek = {}
+    let statisticalMonth = {}
+        // Count new users for today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+    const todayCountUser = await User.countDocuments({ createdAt: { $gte: today } }); // so user duoc tao hom nay
+    statisticalToday.userToday = todayCountUser
+        // Count new users for the past 7 days
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysCountUser = await User.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+    statisticalWeek.userWeek = sevenDaysCountUser
+        // Count new users for the past 30 days
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const thirtyDaysCountUser = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
+    statisticalMonth.userMonth = thirtyDaysCountUser
 
+    //Shop
+    const todayCountShop = await Shop.countDocuments({createAt: { $gte: today } });
+    statisticalToday.shopToday = todayCountShop;
+
+    const sevenDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+    statisticalWeek.shopWeek = sevenDaysCountShop;
+
+    const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }); //so user duoc tao 7 ngay
+    statisticalMonth.shopMonth = thirtyDaysCountShop;
+
+    //Post
+    const todayCountPost = await Post.countDocuments({ createdAt: { $gte: today }, postStatus: { $gte: 1 } });
+    statisticalToday.postToday = todayCountPost;
+    // Count new posts for the past 7 days
+    const sevenDaysCountPost = await Post.countDocuments({ createdAt: { $gte: sevenDaysAgo }, postStatus: { $gte: 1 } });
+    statisticalWeek.postWeek = sevenDaysCountPost;
+    // Count new posts for the past 30 days
+    const thirtyDaysCountPost = await Post.countDocuments({ createdAt: { $gte: thirtyDaysAgo }, postStatus: { $gte: 1 } });
+    statisticalMonth.postMonth = thirtyDaysCountPost;
+    
+    //Send Bill
+    const todaySendBills = await Bill.countDocuments({ createdAt: { $gte: today }, status:{ $in: [0, 1, 2 ] } });
+    statisticalToday.sendBillsToday = todaySendBills;
+    const sevenDaysAgoSendBills = await Bill.countDocuments({ createdAt: { $gte: sevenDaysAgo },status:{ $in: [0, 1, 2] } });
+    statisticalWeek.sendBillsWeek = sevenDaysAgoSendBills;
+    const thirtyDaysAgoSendBills = await Bill.countDocuments({ createdAt: { $gte: thirtyDaysAgo },status:{ $in: [0, 1, 2] } });
+    statisticalMonth.sendBillsMonth = thirtyDaysAgoSendBills;
+
+    //Complete Bill
+    const todayCompleteBills = await Bill.countDocuments({ createdAt: { $gte: today }, status:{ $in: [3 ] } });
+    statisticalToday.completeBillsToday = todayCompleteBills;
+    const sevenDaysAgoCompleteBills = await Bill.countDocuments({ createdAt: { $gte: sevenDaysAgo },status:{ $in: [3] } });
+    statisticalWeek.completeBillsWeek = sevenDaysAgoCompleteBills;
+    const thirtyDaysAgoCompleteBills = await Bill.countDocuments({ createdAt: { $gte: thirtyDaysAgo },status:{ $in: [3] } });
+    statisticalMonth.completeBillsMonth = thirtyDaysAgoCompleteBills;
+    
+    res.json({statisticalToday, statisticalWeek,statisticalMonth})
+})
 
 router.get('/getRegularBookDataChart', async (req, res) => {
     const today = new Date();
