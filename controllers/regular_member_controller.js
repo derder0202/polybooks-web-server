@@ -1,5 +1,4 @@
 const User = require("../api_src/model/model").User;
-
 const memberController = {
     //Hiển thị toàn bộ list user
     listRegularMember: async (req,res)=>{
@@ -17,7 +16,7 @@ const memberController = {
     //hiển thị thông tin theo user
     formEditRegularMember: async (req,res)=>{
         console.log(req.params)
-        let itemMember = await User.findById(req.params.id)
+        let itemMember = await User.findById(req.params.id).populate('address')
             .exec()
             .catch(function (err){
                 console.log(err);
@@ -63,6 +62,12 @@ const memberController = {
         const role = req.body.role;
         // Mã hóa mật khẩu
         const base64Password = Buffer.from(plainPassword).toString('base64');
+
+        const existingUser = await User.findOne({ phone });
+        if (existingUser) {
+            // If a user with the same phone number exists, send a message
+            return res.send("Số điện thoại đã được đăng ký cho người dùng khác. Vui lòng sử dụng số điện thoại khác.");
+        }
 
         const newUser = new User({
             fullName,

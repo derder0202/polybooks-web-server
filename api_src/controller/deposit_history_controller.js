@@ -163,7 +163,7 @@ const VNPayReturn = async (req, res) => {
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
             if(vnp_Params['vnp_ResponseCode'] === '00'){
               // return  res.status(200).json({statusCode: vnp_Params['vnp_ResponseCode'], message})
-                return res.status(200).render('test',{statusCode: vnp_Params['vnp_ResponseCode'], message})
+                return res.status(200).render('payment_success_page',{statusCode: vnp_Params['vnp_ResponseCode'], message})
             }
             return res.status(400).render('test',{statusCode: vnp_Params['vnp_ResponseCode'], message})
         } else{

@@ -17,18 +17,6 @@
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-    <script src="../js/listmember.js"></script>
-    {{!-- <style>
-    .time {
-        position: relative;
-        {{!-- left: 50px; --}}
-        {{!-- text-align: center; --}}
-    }
-    .test{
-        position: relative;
-         top: 20px;
-    }
-</style> --}}
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -46,12 +34,16 @@
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    
-                                    <div class="page-header-icon"><img style="width: 17px;height: 17px;" src="assets/img/illustrations/profiles/clipboard.png"></img></div>
-                                    Đấu giá
+                                    <div class="page-header-icon"><img style="width: 20px;height: 20px;" src="assets/img/illustrations/profiles/shop.png"></img></div>
+                                    Danh Sách Cửa Hàng
                                 </h1>
                             </div>
-                            
+                            <div class="col-12 col-xl-auto mb-3">
+                                <a class="btn btn-sm btn-light text-primary" href="/Shop/add_shop">
+                                   <img style="width: 15px;height: 15px;margin-right: 3px;" src="assets/img/illustrations/profiles/store.png"></img>
+                                    Thêm Mới Cửa Hàng
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,36 +55,30 @@
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Người bán</th>
-                                <th>Tên sách</th>
-                                <th>Trạng thái</th>
-                                <th>Giá khởi điểm</th>
-                                <th>Giá hiện tại</th>
-                                <th>Thời gian diễn ra</th>
-                                {{!-- <th>Actions</th> --}}
+                                <th>Ảnh</th>
+                                <th>Tên cửa hàng</th>
+                                <th>Số điện thoại 1</th>
+                                <th>Số điện thoại 2</th>
+                                <th>Đánh giá</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each documentList}}
+                                {{#each listShops}} 
                             <tr>
-                                <td>{{this.seller.fullName}}</td>
+                                <td><div class="avatar me-2"><img class="avatar-img img-fluid" src="{{this.shopImage}}" /></div></td>
+                                <td>{{this.name}}</td>
+                                <td>{{this.phone1}}</td>
+                                <td>{{this.phone2}}</td>
+                                
                                 <td>
-                                    {{this.bookName}}
+                                    <span id="shopValue">{{this.rating}} Sao</span>
                                 </td>
+
                                 <td>
-                                    <span id="statussValue">
-                                        {{this.bookStatus}}
-                                    </span>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/Shop/edit_shop/{{this._id}}"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="/Shop/delete_shop/{{this._id}}"><i data-feather="trash-2"></i></a>
                                 </td>
-                                <td><h4 class="text-danger">{{this.startPrice}}đ</h4></td>
-                                <td><h4 class="text-danger">{{this.endPrice}}đ</h4></td>
-                                <td>
-                                    <h4 class="text-primary">{{roundedTimeDifference}} phút</h4>
-                                </td>
-                                {{!-- <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2 test" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark test" href="#!"><i data-feather="trash-2"></i></a>
-                                </td> --}}
                             </tr>
                             {{/each}}
                             </tbody>
@@ -100,7 +86,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
         <footer class="footer-admin mt-auto footer-light">
             <div class="container-xl px-4">
@@ -115,10 +100,12 @@
             </div>
         </footer>
     </div>
-
     <!--            End Content-->
 
 </div>
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>

@@ -53,7 +53,7 @@ const admanagementRouter = require('./routes/admanagement');
 const statisticalRouter = require('./routes/statistical');
 const authenticationRouter = require('./routes/authentication');
 const autionApprovalRouter = require('./routes/autionapproval');
-
+const shopRouter = require('./routes/shop');
 
 const apiNotificationRouter =  require('./api_src/route/notification')
 const apiUserRouter = require('./api_src/route/user')
@@ -152,6 +152,7 @@ app.use('/ProcessedReport',processedreportRouter)
 app.use('/AdvertisingManagement',admanagementRouter)
 app.use('/Statistical',statisticalRouter)
 app.use('/Login',authenticationRouter)
+app.use('/Shop',shopRouter)
 
 
 //API

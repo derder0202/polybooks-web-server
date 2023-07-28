@@ -4,7 +4,8 @@ var router = express.Router();
 
 
 router.get('/',pendingReportController.listPendingReport)
-router.get('/detail_report',pendingReportController.detailReport)
+router.get('/detail_report/:id',pendingReportController.detailReport)
+router.post('/detail_report/:id',pendingReportController.replyfeedbackReport)
 
 
 module.exports = router;
