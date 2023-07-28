@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
     buyerReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     sellerReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
+    reports: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Report' }],
     active: {type: Boolean, default:true},
     location: {
         type: [Number],
@@ -342,14 +343,10 @@ UserSchema.pre('save',async function (next) {
 })
 
 const reportSchema = new mongoose.Schema({
-    userID: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    },
-    createAt: {
-        type: Date,
-        default: Date.now
     },
     content: {
         type: String,
@@ -361,13 +358,15 @@ const reportSchema = new mongoose.Schema({
     },
     feedback: {
         type: String,
-        required: true
+    },
+    replyReport:{
+        type:String
     },
     attachedFiles: {
         type: [String],
         required: false
     }
-});
+},{timestamps:true});
 // Schema cho giảm giá
 const discountSchema = new mongoose.Schema({
     shopId: {

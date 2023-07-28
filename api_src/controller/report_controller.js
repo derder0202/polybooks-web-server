@@ -3,13 +3,7 @@ const {Report} = require("../model/model");
  const createReport = async (req, res) => {
   try {
     const { userID, content, status, feedback, attachedFiles } = req.body;
-     const report = new Report({
-      userID,
-      content,
-      status,
-      feedback,
-      attachedFiles
-    });
+     const report = new Report(req.body);
      await report.save();
      res.status(200).json(report);
   } catch (error) {
@@ -35,6 +29,7 @@ const getReportById = async (req, res) => {
      if (!report) {
       return res.status(404).json({ success: false, message: 'Report not found' });
     }
+     await User.findByIdAndUpdate(report.userId,{$push:{reports: report._id}})
      res.status(200).json(report);
   } catch (error) {
     console.log(error);
@@ -45,16 +40,10 @@ const getReportById = async (req, res) => {
 const updateReport = async (req, res) => {
   try {
     const { id } = req.params;
-     const report = await Report.findById(id);
+     const report = await Report.findByIdAndUpdate(id,req.body,{new:true})
      if (!report) {
-      return res.status(404).json({ success: false, message: 'Report not found' });
+      return res.status(400).json({ success: false, message: 'Report not found' });
     }
-     const { content, status, feedback, attachedFiles } = req.body;
-     report.content = content;
-    report.status = status;
-    report.feedback = feedback;
-    report.attachedFiles = attachedFiles;
-     await report.save();
      res.status(200).json({ success: true, report });
   } catch (error) {
     console.log(error);
