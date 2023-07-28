@@ -23,6 +23,8 @@ router.put('/:id', userController.updateUser);
 // DELETE /users/:id
 router.delete('/:id', userController.deleteUser);
 
+router.get('/address/:id', userController.getAddressById);
+
 router.post('/checkPhoneNumber', userController.checkPhoneNumber);
 router.post('/changePasswordByPhone', userController.changePasswordByPhone);
 

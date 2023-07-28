@@ -39,6 +39,20 @@ const userController = {
             res.status(500).json({ message: 'Error getting user', error });
         }
     },
+    getAddressById:async (req, res) => {
+        const { id } = req.params;
+        try {
+            const address = await Address.findById(id)
+            if(address){
+                res.status(200).json(address);
+            } else {
+                res.status(404).json({message: "address is not exists"})
+            }
+
+        } catch (error) {
+            res.status(500).json({ message: 'Error getting user', error });
+        }
+    },
     createUser : async (req, res) => {
         try {
             const newUser = new User(req.body);
@@ -127,7 +141,9 @@ const userController = {
     changePasswordByPhone : async (req, res) => {
         const { phone, newPassword } = req.body;
         const user = await User.findOne(phone);
-
+        if(!user){
+            return res.status(400).json({message: "user not found."})
+        }
         // Check if the current password matches the password in the database
         user.password = newPassword;
         await user.save();
