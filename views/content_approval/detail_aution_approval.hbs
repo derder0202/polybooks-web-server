@@ -28,7 +28,17 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <script src="/js/jscustom.js"></script>
-    
+    <script src="/js/listmember.js"></script>
+    <style>
+    /* Thiết lập giao diện cho thẻ input khi có thuộc tính disabled */
+    .abc[disabled] {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 6px 12px;
+        color: #495057;
+    }
+    </style>
 
 </head>
 <body class="nav-fixed">
@@ -138,7 +148,7 @@
                                         <!-- Form Group (Số trang)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Số trang</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.totalPage}}" disabled readonly/>
+                                            <input class="form-control abc" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{detailAution.totalPage}}" disabled readonly/>
                                         </div>
                                     </div>
                                     
@@ -146,8 +156,20 @@
                                         <!-- Form Group (Tình trạng)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLastName">Tình trạng</label>
-                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{detailAution.bookStatus}}" disabled readonly/>
+                                            <input class="form-control" id="statussValue" type="text" placeholder="Enter your last name" value="{{detailAution.bookStatus}}" disabled readonly/>
                                         </div>
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function() {
+                                            const statusInput = document.getElementById("statussValue");
+                                            const bookStatus = statusInput.value;
+                                            if (bookStatus === "0") {
+                                            statusInput.value = "Mới";
+                                            } else {
+                                            statusInput.value = "Cũ";
+                                            }
+                                        });
+                                        </script>
+                                        
                                        
                                         <!-- Form Group (Giá bán)-->
                                         <div class="col-md-6">

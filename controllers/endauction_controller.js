@@ -14,7 +14,7 @@ const endAuctionController = {
         const data = doc.data();
         const endTimeDate = new Date(data.endTime); // Chuyển đổi chuỗi thành đối tượng Date
 
-        if (endTimeDate <= currentDate) {
+        if (endTimeDate <= currentDate && data.auctionType === 1) {
           // Hiển thị dữ liệu nếu thời gian hiện tại đã qua thời gian của trường endTime
           documentList.push(data);
         }
