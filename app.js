@@ -68,6 +68,8 @@ const apiReportRouter = require('./api_src/route/report')
 const apiBannerRouter = require('./api_src/route/banner')
 const apiPublisherRouter = require('./api_src/route/publisher')
 const apiBillRouter = require('./api_src/route/bill')
+const apiWithdrawRequest = require('./api_src/route/withdraw_request')
+
 const passport = require("passport");
 const {User} = require("./api_src/model/model");
 
@@ -166,6 +168,8 @@ app.use('/api/banners',apiBannerRouter)
 app.use('/api/publishers',apiPublisherRouter)
 app.use('/api/bills',apiBillRouter)
 app.use('/api/notifications',apiNotificationRouter)
+app.use('/api/withdrawRequests',apiWithdrawRequest)
+
 
 
 

@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
     sellerReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
     reports: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Report' }],
+    withdrawRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WithdrawRequest'}],
     active: {type: Boolean, default:true},
     location: {
         type: [Number],
@@ -425,6 +426,35 @@ const depositHistorySchema = new mongoose.Schema({
         //required: true
     },
 },{timestamps: true});
+
+const withdrawRequestSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    withdrawAmount: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: Number,
+        default: 0
+    },
+    description: {
+        type: String,
+    },
+    bankNumber: {
+        type: String,
+    },
+    bankCode:{
+        type:String
+    },
+    bankName:{
+        type:String
+    }
+}, { timestamps: true });
+
 const   bannerSchema = new mongoose.Schema({
     name: {
         type:String,
@@ -465,10 +495,13 @@ const Bill = mongoose.model('Bill', BillSchema);
 const Report= mongoose.model('Report', reportSchema)
 const Discount = mongoose.model('Discount', discountSchema)
 const DepositHistory = mongoose.model('DepositHistory', depositHistorySchema)
+const WithdrawRequest = mongoose.model('WithdrawRequest', withdrawRequestSchema);
+
 
 //const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = {
+    WithdrawRequest,
     Address,
     Banner,
     Report,

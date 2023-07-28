@@ -2,7 +2,6 @@
 const {Report} = require("../model/model");
  const createReport = async (req, res) => {
   try {
-    const { userID, content, status, feedback, attachedFiles } = req.body;
      const report = new Report(req.body);
      await report.save();
      res.status(200).json(report);
