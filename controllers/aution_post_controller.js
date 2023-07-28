@@ -14,7 +14,7 @@ const autionPostController = {
         const data = doc.data();
         const createdAtDate = new Date(data.createdAt); // Chuyển đổi chuỗi thành đối tượng Date
 
-        if (createdAtDate > currentDate) {
+        if (createdAtDate > currentDate && data.auctionType === 1) {
           // Hiển thị dữ liệu nếu thời gian hiện tại trước thời gian của trường createdAt
           documentList.push(data);
         }

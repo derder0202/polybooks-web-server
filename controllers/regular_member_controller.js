@@ -65,6 +65,12 @@ const memberController = {
         // Mã hóa mật khẩu
         const base64Password = Buffer.from(plainPassword).toString('base64');
 
+        const existingUser = await User.findOne({ phone });
+        if (existingUser) {
+            // If a user with the same phone number exists, send a message
+            return res.send("Số điện thoại đã được đăng ký cho người dùng khác. Vui lòng sử dụng số điện thoại khác.");
+        }
+
         const newUser = new User({
             fullName,
             phone,

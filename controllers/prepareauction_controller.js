@@ -15,7 +15,7 @@ const endAuctionController = {
         const createdAtDate = new Date(data.createdAt); // Chuyển đổi chuỗi thành đối tượng Date
         const endTimeDate = new Date(data.endTime); // Chuyển đổi chuỗi thành đối tượng Date
 
-        if (createdAtDate <= currentDate && currentDate <= endTimeDate) {
+        if (createdAtDate <= currentDate && currentDate <= endTimeDate && data.auctionType === 1) {
           // Hiển thị dữ liệu nếu thời gian hiện tại nằm giữa thời gian của trường createdAt và endTime
           // Tính khoảng thời gian giữa createdAt và endTime
           const timeDifferenceInMilliseconds = endTimeDate.getTime() - createdAtDate.getTime();

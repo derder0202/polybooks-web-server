@@ -58,7 +58,7 @@
                                 <th>Giá khởi điểm</th>
                                 <th>Giá hiện tại</th>
                                 <th>Bắt đầu</th>
-                                <th>Actions</th>
+                                {{!-- <th>Actions</th> --}}
                             </tr>
                             </thead>
                             <tbody>
@@ -76,10 +76,10 @@
                                 <td><h4 class="text-danger">{{this.startPrice}}đ</h4></td>
                                 <td><h4 class="text-danger">{{this.endPrice}}đ</h4></td>
                                 <td><h4 class="text-primary">{{formatTime this.createdAt}}</h4></td>
-                                <td>
+                                {{!-- <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td>
+                                </td> --}}
                             </tr>
                             {{/each}}
                             </tbody>

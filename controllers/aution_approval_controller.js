@@ -7,7 +7,7 @@ const autionApprovalController ={
             const db = admin.firestore();
             const documentList = [];
 
-            const snapshot = await db.collection("PostAuction").where("auctionType", "==", 1).get();
+            const snapshot = await db.collection("PostAuction").where("auctionType", "==", 0).get();
             snapshot.forEach((doc) => {
             documentList.push({_id:doc.id,...doc.data()});
         });
