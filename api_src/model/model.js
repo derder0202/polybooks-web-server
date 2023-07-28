@@ -449,7 +449,7 @@ const withdrawRequestSchema = new mongoose.Schema({
     },
     bankCode:{
         type:String
-    },
+    },//VCB
     bankName:{
         type:String
     }
