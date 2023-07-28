@@ -23,6 +23,7 @@ const reviewController = {
       const review = new Review(req.body)
       if(req.body.bill){
         const billTemp = await Bill.findById(req.body.bill)
+        if(req.body.status === 0){
           if(billTemp.buyer){
             const user = await User.findById(billTemp.buyer)
             if(user){
@@ -30,6 +31,7 @@ const reviewController = {
               await user.save()
             }
           }
+        } else {
           if(billTemp.shopId){
             const shop = await Shop.findById(billTemp.shopId)
             if(shop){
@@ -45,7 +47,7 @@ const reviewController = {
               }
             }
           }
-
+        }
       }
       const saveReview = await review.save()
       res.status(200).json(saveReview);

@@ -33,7 +33,11 @@ const billController = {
     },
    getBillById: async (req, res) => {
     try {
-      const bill = await Bill.findById(req.params.id).populate('posts').populate('userId');
+      const bill = await Bill.findById(req.params.id)
+          .populate('posts',"bookName price images")
+          .populate('buyer', "fullName")
+          .populate('seller',"fullName")
+          .populate('shopId',"name")
       if (!bill) {
         return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
       }

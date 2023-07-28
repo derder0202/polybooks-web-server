@@ -1,6 +1,4 @@
 const User = require("../api_src/model/model").User;
-
-
 const memberController = {
     //Hiển thị toàn bộ list user
     listRegularMember: async (req,res)=>{
