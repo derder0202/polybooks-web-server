@@ -23,7 +23,6 @@ const reviewController = {
       const review = new Review(req.body)
       if(req.body.bill){
         const billTemp = await Bill.findById(req.body.bill)
-        if(req.body.status === 0){
           if(billTemp.buyer){
             const user = await User.findById(billTemp.buyer)
             if(user){
@@ -31,11 +30,11 @@ const reviewController = {
               await user.save()
             }
           }
-        } else {
           if(billTemp.shopId){
+            console.log("hehe")
             const shop = await Shop.findById(billTemp.shopId)
             if(shop){
-              shop.sellerReviews.push(review._id)
+              shop.reviews.push(review._id)
               await shop.save()
             }
           } else {
@@ -47,7 +46,7 @@ const reviewController = {
               }
             }
           }
-        }
+
       }
       const saveReview = await review.save()
       res.status(200).json(saveReview);

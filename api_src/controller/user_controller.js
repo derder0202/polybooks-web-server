@@ -140,7 +140,7 @@ const userController = {
 
     changePasswordByPhone : async (req, res) => {
         const { phone, newPassword } = req.body;
-        const user = await User.findOne(phone);
+        const user = await User.findOne({phone});
         if(!user){
             return res.status(400).json({message: "user not found."})
         }

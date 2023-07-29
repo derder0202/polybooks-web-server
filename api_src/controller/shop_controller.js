@@ -156,6 +156,7 @@ const shopController = {
             if (!shop) {
                 res.status(404).json({ error: 'Shop not found.' });
             } else {
+                await User.findByIdAndUpdate(shop.user,{shopId:null})
                 res.status(200).json({message: "Shop is deleted"});
             }
         } catch (error) {
