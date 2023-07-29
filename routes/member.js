@@ -8,7 +8,7 @@ router.get('/',memberController.listRegularMember)
 
 //Sửa thông tin user
 router.get('/edit_regular_member/:id',memberController.formEditRegularMember)
-router.post('/edit_regular_member/:id',checkAuth,memberController.postEditRegularMember)
+router.post('/edit_regular_member/:id',memberController.postEditRegularMember)
 
 
 
