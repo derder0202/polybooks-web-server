@@ -39,8 +39,7 @@ const memberController = {
               email: req.body.member_email,
               role: Number(req.body.member_role),
               gender: req.body.member_gender,
-            //   address: req.body.member_address,
-            //   birthday: new Date(req.body.member_birthday)
+              birthday: new Date(req.body.member_birthday)
             };
         
             await User.updateOne(dieu_kien, du_lieu);
@@ -60,6 +59,7 @@ const memberController = {
         const email = req.body.email;
         const gender = req.body.gender;
         const role = req.body.role;
+        const birthday = req.body.inputBirthday
         // Mã hóa mật khẩu
         const base64Password = Buffer.from(plainPassword).toString('base64');
 
@@ -75,7 +75,8 @@ const memberController = {
             password: base64Password,
             email,
             gender,
-            role
+            role,
+            birthday
         });
         await newUser.save();
         res.redirect('/RegularMembers');

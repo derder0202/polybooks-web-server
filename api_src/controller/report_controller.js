@@ -13,7 +13,7 @@ const {Report} = require("../model/model");
  // Lấy tất cả báo cáo
 const getAllReports = async (req, res) => {
   try {
-    const reports = await Report.find().populate('userID', 'name email');
+    const reports = await Report.find().populate('userId', 'name email');
      res.status(200).json(reports);
   } catch (error) {
     console.log(error);

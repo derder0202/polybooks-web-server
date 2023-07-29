@@ -16,7 +16,8 @@
     <link rel="icon" type="image/x-icon" href="/assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-    <script src="../js/jscustom.js"></script>
+    <script src="/js/addmember.js"></script>
+    <script src="/js/jscustom.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -50,39 +51,37 @@
                         </div>
                     </header>
                     <!-- Main page content-->
-                    <div class="container-xl px-4 mt-4">
+                    <div class="container-fluid px-4">
+                        <div class="card">
                         <div class="row">
-                            <div class="col-xl-4">
-                                <!-- Profile picture card-->
-                                <div class="card mb-4 mb-xl-0">
-                                    <div class="card-header">Thông tin tài khoản</div>
-                                    <div class="card-body text-center">
-                                        <!-- Profile picture image-->
-                                        <img class="img-account-profile rounded-circle mb-2" src="../assets/img/demo/user-placeholder.svg" alt="" />
-                                        <!-- Profile picture help block-->
-                                        <div class="small font-italic text-muted mb-4">JPG hoặc PNG không lớn hơn 5 MB</div>
-                                        <!-- Profile picture upload button-->
-                                        <button class="btn btn-primary" type="button">Tải ảnh lên</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-8">
+                            
+                           
                                 <!-- Account details card-->
-                                <div class="card mb-4">
+                                <div class="mb-4">
                                     <div class="card-header">Thông Tin Chi Tiết</div>
                                     <div class="card-body">
-                                    <form action="" method="post" onsubmit="return validateForm()">
+                                    <form action="" method="post" onsubmit="return validateFormAddMember()">
                                     <!-- Form Group (Họ Tên)-->
                                     <div class="row gx-3 mb-3">
-                                        <div class="col-md-6">
+                                        <div class="col-mb-3">
                                             <label class="small mb-1" for="inputUsername">Họ tên</label>
                                             <input class="form-control" id="inputUsername" type="text" name="inputUsername" placeholder="Nhập họ tên của bạn" />
                                             <div id="fullNameError" class="error-message" style="color: red; font-size: 12px;"></div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="password">Password</label>
-                                            <input class="form-control" id="password" type="text" name="password" placeholder="Nhập password của bạn" />
-                                            <div id="passwordError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                            <label class="small mb-1" for="inputBirthday">Ngày sinh</label>
+                                            <input class="form-control" id="inputBirthday" type="date" name="inputBirthday"/>
+                                            <div id="birthdayError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                            
+                                            {{!-- <label class="small mb-1" for="inputBirthday">Ngày sinh</label>
+                                            <input name="member_birthday" class="form-control" id="inputBirthday" type="date"  placeholder="Nhập ngày sinh của bạn"/>
+                                            <div id="birthdayError" class="error-message" style="color: red; font-size: 12px;"></div> --}}
+
+                                        </div>
+                                        <div class="col-md-6">
+                                        <label class="small mb-1" for="password">Password</label>
+                                        <input class="form-control" id="password" type="text" name="password" placeholder="Nhập password của bạn" />
+                                        <div id="passwordError" class="error-message" style="color: red; font-size: 12px;"></div>
                                         </div>
                                     </div>
                                     <!-- Form Row-->
@@ -103,12 +102,7 @@
                                     <!-- Form Row        -->
                                     <div class="row gx-3 mb-3">
                                         
-                                        <!-- Form Group (Giới Tính)-->
-                                        {{!-- <div class="col-md-6">
-                                            <label class="small mb-1" for="gender">Giới tính</label>
-                                            <input class="form-control" id="gender" type="text" name="gender" placeholder="Nhập giới tính của bạn" />
-                                            <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                        </div> --}}
+                                       
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="gender">Giới tính</label>
                                                 <select name="gender" class="form-select" id="gender">
@@ -118,19 +112,17 @@
                                                 </select>
                                             <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
                                         </div>
-                                        <!-- Form Group (Vai trò)-->
-                                        {{!-- <div class="col-md-6">
-    <label class="small mb-1" for="role">Vai trò</label>
-    <select name="member_role" class="form-select" id="role" disabled>
-        <option value="0" selected>Thường</option>
-    </select>
-    <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
-</div> --}}
-                                    <div class="col-md-6">
-                                        <label class="small mb-1" for="role">Vai trò</label>
-                                        <input type="text" name="member_role" class="form-control" id="role" value="Thường" readonly data-value="0">
-                                        <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div>
+
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="role">Vai trò</label>
+                                            <select name="member_role" class="form-select" id="role">
+                                                <option disabled selected>Mời bạn chọn vai trò</option>
+                                                <option value="0" data-display-value="Thường">Thường</option>
+                                            </select>
+                                            <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                        </div>
+                                        
+                                    
                                     </div>
                                     <!-- Form Row-->
                                     
@@ -143,7 +135,8 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            
+                        </div>
                         </div>
                     </div>
                 </main>

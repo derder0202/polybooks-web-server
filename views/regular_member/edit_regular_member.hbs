@@ -112,19 +112,13 @@
                                     </div>
 
                                     <!-- Form Group (Ngày Sinh)-->
-                                    {{!-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <label class="small mb-1" for="inputBirthday">Ngày sinh</label>
                                         <input name="member_birthday" class="form-control" id="inputBirthday" type="date"  placeholder="Nhập ngày sinh của bạn"/>
                                         <div id="birthdayError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div> --}}
+                                    </div>
                                 </div>
-                                <!-- Form Group (Địa chỉ)-->
-                                {{!-- <div class="mb-3">
-                                        <label class="small mb-1" for="address">Địa chỉ</label>
-                                        <input name="member_address" class="form-control" id="address" type="text" placeholder="Nhập địa chỉ của bạn"/>
-                                        <div id="addressError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                </div> --}}
-                                <!-- Form Row-->
+                                
                                 <div class="row gx-3 mb-3">
 
                                     {{!-- <div class="col-md-6">
@@ -142,6 +136,18 @@
                                             </select>
                                         <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                        var genderSelect = document.getElementById("gender");
+                                        var itemVipMembergender = "{{itemMember.gender}}"; // Giả sử giá trị là một chuỗi số hợp lệ (VD: "0" hoặc "1")
+
+                                        // Kiểm tra nếu có giá trị hợp lệ
+                                        if (itemVipMembergender) {
+                                            // Đặt giá trị vào select
+                                            genderSelect.value = itemVipMembergender;
+                                        }
+                                    });
+                                    </script>
                                     <!-- Form Group (Role)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="role">Vai trò</label>
@@ -152,6 +158,18 @@
                                             </select>
                                         <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                        var roleSelect = document.getElementById("role");
+                                        var itemVipMemberRole = "{{itemMember.role}}"; // Giả sử giá trị là một chuỗi số hợp lệ (VD: "0" hoặc "1")
+
+                                        // Kiểm tra nếu có giá trị hợp lệ
+                                        if (itemVipMemberRole) {
+                                            // Đặt giá trị vào select
+                                            roleSelect.value = itemVipMemberRole;
+                                        }
+                                    });
+                                    </script>
                                 </div>
                                 <!-- Save changes button-->
                                 <div class="card-body text-center">

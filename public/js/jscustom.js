@@ -57,15 +57,12 @@ function validateForm() {
     var email = document.getElementById('email').value;
     // var address = document.getElementById('address').value;
     var gender = document.getElementById('gender').value;
-    // var birthday = document.getElementById('inputBirthday').value;
+    var birthday = document.getElementById('inputBirthday').value;
     var role = document.getElementById('role').value;
-    var phone = document.getElementById('phoneNumber').value;
+    
+  
 
-    var nameshop = document.getElementById('shop').value;
-    var phone1 = document.getElementById('phoneshop1').value;
-    var phone2 = document.getElementById('phoneshop2').value;
-    var mota = document.getElementById('motashop').value;
-    var diachishop = document.getElementById('shopdiachi').value;
+ 
     
 
     // Xóa thông báo lỗi trước đó
@@ -81,6 +78,7 @@ function validateForm() {
         displayErrorMessage('emailError', 'Vui lòng nhập email');
         isValid = false;
     }
+    
     // if (address === '') {
     //     displayErrorMessage('addressError', 'Vui lòng nhập địa chỉ');
     //     isValid = false;
@@ -89,26 +87,15 @@ function validateForm() {
         displayErrorMessage('genderError', 'Vui lòng nhập giới tính');
         isValid = false;
     }
-    // if (birthday === '') {
-    //     displayErrorMessage('birthdayError', 'Vui lòng nhập ngày sinh');
-    //     isValid = false;
-    // }
+    if (birthday === '') {
+        displayErrorMessage('birthdayError', 'Vui lòng nhập ngày sinh');
+        isValid = false;
+    }
     if (role === 'Mời bạn chọn vai trò') {
         displayErrorMessage('roleError', 'Vui lòng chọn vai trò');
         isValid = false;
     }
-    if (phone === '') {
-        displayErrorMessage('phoneError', 'Vui lòng nhập số điện thoại');
-        isValid = false;
-    }
-    if (nameshop === '') {
-        displayErrorMessage('phoneError', 'Vui lòng nhập tên cửa hàng');
-        isValid = false;
-    }
-    if (phone1 === '') {
-        displayErrorMessage('phoneError', 'Vui lòng nhập số điện thoại');
-        isValid = false;
-    }
+   
     return isValid;
 }
 

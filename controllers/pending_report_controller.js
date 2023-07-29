@@ -1,43 +1,45 @@
 const Report = require("../api_src/model/model").Report;
+const User = require("../api_src/model/model").User;
 const pendingReportController = {
     listPendingReport: async (req,res)=>{
         try {
-            const listReport = await Report.find();
+            const listReport = await Report.find({status : 0}).populate('userId');
             res.render('report/pending_report',{listReport});
         }catch (e) {
             console.error(error);
-            res.status(500).send('Lỗi khi lấy danh sách duyệt sách bán');
+            res.status(500).send('Lỗi khi lấy danh sách report');
         }
     },
     detailReport: async (req,res)=>{
-        let detailReports = await Report.findById(req.params.id)
+        let detailReports = await Report.findById(req.params.id).populate('userId')
             .exec()
             .catch(function (err) {
                 console.log(err)
             });
         console.log(detailReports)
-        if (detailAution == null){
+        if (detailReports == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('report/detail_report');
+        res.render('report/detail_report',{detailReports});
     },
     replyfeedbackReport: async(req,res)=>{
         try {
-            const detailReport = await Report.findById(req.params.id);
+            const detailReports = await Report.findById(req.params.id);
         
-        if (!detailReport) {
+        if (!detailReports) {
             return res.send('Không tìm thấy bản ghi');
         }
         
         if (req.body.action === 'reply') {
-            detailReport.status = 1;
+            detailReports.status = 1;
+            detailReports.replyReport = req.body.replyReport;
         } else if (req.body.action === 'noreply') {
-            detailReport.status = 3;
+            detailReports.status = 3;
         }
         
-        await detailReport.save();
+        await detailReports.save();
         
-        console.log('Thông tin được thay đổi:', detailReport);
+        console.log('Thông tin được thay đổi:', detailReports);
         res.redirect('/PendingReport');
         } catch (err) {
             console.error(err);
