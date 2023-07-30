@@ -197,7 +197,28 @@
                                     <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="reject">Không duyệt</button>
                                 </div>
                                 </form>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const approveButton = document.querySelector("button[value='approve']");
+                                        const rejectButton = document.querySelector("button[value='reject']");
 
+                                        approveButton.addEventListener("click", function () {
+                                        // Set the cookie to store the toast message
+                                        document.cookie = "toastMessage=✅ Bài đăng sách đã được duyệt!; expires=; path=/";
+
+                                        // Redirect to the /BookApproval page
+                                       
+                                        });
+
+                                        rejectButton.addEventListener("click", function () {
+                                        // Set the cookie to store the toast message
+                                        document.cookie = "toastMessage=ℹ️  Bài đăng sách không được duyệt!; expires=; path=/";
+
+                                        // Redirect to the /BookApproval page
+                                        
+                                        });
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>

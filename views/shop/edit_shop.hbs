@@ -134,10 +134,18 @@
                                 
                                 <!-- Save changes button-->
                                 <div class="card-body text-center">
-                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Lưu thông tin</button>
+                                    <button id="editshop" style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Lưu thông tin</button>
                                     <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
                                 </div>
                             </form>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    const saveButton = document.getElementById("editshop");
+                                    saveButton.addEventListener("click", function () {
+                                        document.cookie = "toastMessage=✏️ Sửa thông tin cửa hàng thành công!; expires=; path=/";
+                                    });
+                                });
+                            </script>
                             </div>
                         </div>
                     </div>
