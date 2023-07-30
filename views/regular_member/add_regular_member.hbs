@@ -83,6 +83,7 @@
                                         <input class="form-control" id="password" type="text" name="password" placeholder="Nhập password của bạn" />
                                         <div id="passwordError" class="error-message" style="color: red; font-size: 12px;"></div>
                                         </div>
+                                        
                                     </div>
                                     <!-- Form Row-->
                                     <div class="row gx-3 mb-3">
@@ -121,7 +122,11 @@
                                             </select>
                                             <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
                                         </div>
-                                        
+                                        <div style="color: red; font-size: 14px; font-weight: bold; margin-top: 10px;">
+                                            {{#if errorMessage}}
+                                                {{{errorMessage}}}
+                                            {{/if}}
+                                        </div>
                                     
                                     </div>
                                     <!-- Form Row-->
