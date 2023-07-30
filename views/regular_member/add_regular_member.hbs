@@ -53,9 +53,7 @@
                     <!-- Main page content-->
                     <div class="container-fluid px-4">
                         <div class="card">
-                        <div class="row">
-                            
-                           
+                            <div class="row">
                                 <!-- Account details card-->
                                 <div class="mb-4">
                                     <div class="card-header">Thông Tin Chi Tiết</div>
@@ -133,18 +131,25 @@
                                     
                                     <!-- Save changes button-->
                                     <div class="card-body text-center">
-                                        <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Đồng ý</button>
+                                        <button id="addButton" style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Đồng ý</button>
                                         <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
                                     </div>
                                 </form>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const saveButton = document.getElementById("addButton");
 
-                                    </div>
-                                </div>
-                            
-                        </div>
-                        </div>
+                                        saveButton.addEventListener("click", function () {
+                                            document.cookie = "toastMessage=➕ Thêm tài khoản thành công!; expires=; path=/";
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>     
                     </div>
-                </main>
+                </div>
+                </div>
+            </main>
                 <footer class="footer-admin mt-auto footer-light">
                     <div class="container-xl px-4">
                         <div class="row">
