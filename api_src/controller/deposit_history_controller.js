@@ -165,7 +165,7 @@ const VNPayReturn = async (req, res) => {
               // return  res.status(200).json({statusCode: vnp_Params['vnp_ResponseCode'], message})
                 return res.status(200).render('payment_success_page',{statusCode: vnp_Params['vnp_ResponseCode'], message})
             }
-            return res.status(400).render('test',{statusCode: vnp_Params['vnp_ResponseCode'], message})
+            return res.status(400).render('cancel_deal_page',{statusCode: vnp_Params['vnp_ResponseCode'], message})
         } else{
             res.status(400).json({code: '97'})
         }
