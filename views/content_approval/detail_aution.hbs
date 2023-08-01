@@ -37,6 +37,9 @@
         padding: 6px 12px;
         color: #495057;
     }
+    .error-message {
+        color: red; /* Màu chữ đỏ cho thông báo lỗi */
+    }
     </style>
 
 </head>
@@ -182,17 +185,45 @@
                                         <label class="small mb-1" for="inputUsername">Địa chỉ bán</label>
                                         <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="{{auctionData.address}}" disabled readonly/>
                                     </div>
-                                    
+                                    {{!-- <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Lý do không duyệt bài</label>
+                                        <input class="form-control" type="text" id="reasonInput" name="reason" value="">
+                                    </div> --}}
                                     <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Lý do không duyệt bài</label>
+                                        <input class="form-control" type="text" id="reasonInput" name="reason" value="">
+                                        <span class="error-message" id="reasonError"></span>
                                     </div>
                                     <!-- Save changes button-->
                                     {{!-- <a style="margin-top: 30px;" class="btn btn-primary" type="button" href="/AutionApproval">Duyệt bài</a> --}}
                                     <div class="card-body text-center">
-                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="duyet">Duyệt bài</button>
-                                    <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="khongduyet">Không duyệt</button>
+                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="duyet" onclick="approvePost()">Duyệt bài</button>
+                                    <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="khongduyet" onclick="rejectPost()">Không duyệt</button>
                                 </div>
                                 </form>
-                                    <script>
+                                <script>
+                                    function approvePost() {
+                                        // Cho phép người dùng duyệt bài mà không cần nhập lý do
+                                        document.getElementById('reasonInput').setCustomValidity('');
+                                        document.getElementById('reasonError').textContent = '';
+                                    }
+
+                                    function rejectPost() {
+                                        const reasonInput = document.getElementById('reasonInput');
+                                        const reasonError = document.getElementById('reasonError');
+                                        const reason = reasonInput.value.trim();
+
+                                        if (reason === '') {
+                                        reasonInput.setCustomValidity(''); // Xóa thông báo lỗi mặc định
+                                        reasonInput.setCustomValidity('Vui lòng nhập lý do không duyệt bài.');
+                                        reasonError.textContent = 'Vui lòng nhập lý do không duyệt bài.'; // Hiển thị thông báo lỗi dưới ô input
+                                        } else {
+                                        reasonInput.setCustomValidity(''); // Xóa thông báo lỗi nếu trường nhập liệu hợp lệ
+                                        reasonError.textContent = ''; // Xóa thông báo lỗi dưới ô input nếu trường nhập liệu hợp lệ
+                                        }
+                                    }
+                                </script>
+                                <script>
                                     document.addEventListener("DOMContentLoaded", function () {
                                         const approveButton = document.querySelector("button[value='duyet']");
                                         const rejectButton = document.querySelector("button[value='khongduyet']");

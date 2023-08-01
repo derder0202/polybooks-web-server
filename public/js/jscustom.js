@@ -60,11 +60,6 @@ function validateForm() {
     var birthday = document.getElementById('inputBirthday').value;
     var role = document.getElementById('role').value;
     
-  
-
- 
-    
-
     // Xóa thông báo lỗi trước đó
     clearErrorMessages();
 

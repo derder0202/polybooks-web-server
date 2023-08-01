@@ -81,8 +81,8 @@ const postController = {
                 } else if (err) {
                     // An unknown error occurred when uploading.
                 }
-                const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName, category, publisherName, totalPage , seller,shopId,location} = req.body;
-                const post = new Post({ bookName, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller,shopId });
+                const { bookName, postTitle, description, price, bookStatus, bookSize, language,authorName,replyToPost, category, publisherName, totalPage , seller,shopId,location} = req.body;
+                const post = new Post({ bookName,replyToPost, postTitle, description,category, price, bookStatus, bookSize, language, totalPage, seller,shopId });
                 if(seller){
                     await User.findByIdAndUpdate(seller,{$push:{posts: post._id},$inc:{totalPost: 1},updateTotalPost:new Date()})
                 }
