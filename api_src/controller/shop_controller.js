@@ -156,6 +156,7 @@ const shopController = {
             if (!shop) {
                 res.status(404).json({ error: 'Shop not found.' });
             } else {
+                await User.findByIdAndUpdate(shop.user,{shopId:null})
                 res.status(200).json({message: "Shop is deleted"});
             }
         } catch (error) {
@@ -172,7 +173,19 @@ const shopController = {
                     skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 10,
                 },
-                populate: 'bill'
+                populate: {
+                    path: 'bill',
+                    populate:[
+                        {
+                            path: 'buyer',
+                            select: 'fullName'
+                        },
+                        {
+                            path: 'posts',
+                            select: 'bookName price images'
+                        },
+                    ]
+                }
             });
             if (!shop) {
                 return res.status(404).json({ message: 'Shop not found' });

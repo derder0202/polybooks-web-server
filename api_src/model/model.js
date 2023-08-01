@@ -102,6 +102,9 @@ const ShopSchema = new mongoose.Schema({
         coverImage: {
             type: String
         },
+        endTime:{
+            type:Date
+        },
         posts: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -237,6 +240,8 @@ const BillSchema = new mongoose.Schema({
     buyer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
+    reviewBuyer: {type: Number, default:0},
+    reviewSeller: {type: Number, default:0},
 },{timestamps:true});
 
 BillSchema.pre('save',async function (next) {
