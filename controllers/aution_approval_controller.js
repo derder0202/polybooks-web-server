@@ -7,7 +7,7 @@ const autionApprovalController ={
             const db = admin.firestore();
             const documentList = [];
 
-            const snapshot = await db.collection("PostAuction").where("auctionType", "==", 0).get();
+            const snapshot = await db.collection("PostAuction").get();
             snapshot.forEach((doc) => {
             documentList.push({_id:doc.id,...doc.data()});
         });
@@ -43,17 +43,17 @@ const autionApprovalController ={
         const db = admin.firestore();
         const docRef = db.collection("PostAuction").doc(req.params.id);
 
-        if (req.body.action === 'duyet') {
-          auctionType = 1;
-        } else if (req.body.action === 'khongduyet') {
-          auctionType = 3;
-        }
-    
-
         const currentTime = moment();
         const updatedTime = moment(currentTime).add(1, 'hour');
         const formattedTime = updatedTime.format('YYYY-MM-DD HH:mm:ss.SSS');
 
+        if (req.body.action === 'duyet') {
+          auctionType = 1;
+        } else if (req.body.action === 'khongduyet') {
+          auctionType = 3;
+          const reason = req.body.reason; // Get the reason from the user input
+          await docRef.update({ auctionType, createdAt: formattedTime, replyToAuction: reason });
+        }
         await docRef.update({auctionType,createdAt: formattedTime });
 
         res.redirect('/AutionApproval');

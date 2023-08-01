@@ -4,7 +4,7 @@ const contentController = {
     //list duyệt bài đăng bán
     listContent: async (req,res)=>{
         try {
-            const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
+            const listBook = await Post.find().populate("seller", "fullName").populate("category","name");
             res.render('content_approval/book_approval',{listBook});
         }catch (e) {
             console.error(error);
@@ -35,6 +35,7 @@ const contentController = {
             detailAution.postStatus = 1;
           } else if (req.body.action === 'reject') {
             detailAution.postStatus = 3;
+            detailAution.replyToPost = req.body.replyToPost;
           }
       
           await detailAution.save();
