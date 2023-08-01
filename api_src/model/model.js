@@ -142,6 +142,7 @@ const PostSchema = new mongoose.Schema({
     address: {type:String, default: ""},
     isbn: {type:String,default:""},
     postStatus: {type:String,default:"0"},
+    replyToPost:{type:String},
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
     startPrice: {type:String},
     endPrice: {type:String},
