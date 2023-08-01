@@ -1,7 +1,7 @@
 var express = require('express');
 const statisticalController = require("../controllers/statistical_controller");
 const checkAuth = require("../api_src/middleware/checkAuth");
-const {User, Post, Bill,Shop} = require("../api_src/model/model");
+const {User, Post, Bill,Shop,DepositHistory} = require("../api_src/model/model");
 var router = express.Router();
 const admin = require('firebase-admin');
 
@@ -36,15 +36,24 @@ router.get('/newUser',async(req,res)=>{
     const thirtyDaysCountUser = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
     statisticalMonth.userMonth = thirtyDaysCountUser
 
-    //Shop
-    const todayCountShop = await Shop.countDocuments({createAt: { $gte: today } });
+    const todayCountShop = await Shop.countDocuments({createdAt: { $gte: today } });
     statisticalToday.shopToday = todayCountShop;
 
-    const sevenDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); //so user duoc tao 7 ngay
+    const sevenDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); 
     statisticalWeek.shopWeek = sevenDaysCountShop;
 
-    const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }); //so user duoc tao 7 ngay
+    const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }); 
     statisticalMonth.shopMonth = thirtyDaysCountShop;
+
+    //DepositHistory
+    const todayCountDepositHistory = await DepositHistory.countDocuments({createdAt: { $gte: today } });
+    statisticalToday.DepositHistoryToday = todayCountDepositHistory;
+
+    const sevenDaysCountDepositHistory= await DepositHistory.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); 
+    statisticalWeek.DepositHistoryWeek = sevenDaysCountDepositHistory;
+
+    const thirtyDaysCountDepositHistory = await DepositHistory.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }); 
+    statisticalMonth.DepositHistoryMonth = thirtyDaysCountDepositHistory;
 
     //Post
     const todayCountPost = await Post.countDocuments({ createdAt: { $gte: today }, postStatus: { $gte: 1 } });

@@ -38,8 +38,8 @@
                             <button class="btn btn-light dropdown-toggle" id="dropdownButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hôm nay</button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" id="today-option" onclick="updateData('today')">Hôm nay</a>
-                                <a class="dropdown-item" id="week-option" onclick="updateData('week')">Tuần trước</a>
-                                <a class="dropdown-item" id="month-option" onclick="updateData('month')">Tháng trước</a>
+                                <a class="dropdown-item" id="week-option" onclick="updateData('week')">Một tuần</a>
+                                <a class="dropdown-item" id="month-option" onclick="updateData('month')">Một tháng</a>
                             </div>
                         </div>
                         <div class="">
@@ -54,6 +54,23 @@
                                                     <div class="row">
                                                         <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
                                                         <div id="dataDisplay" class="col-6 ml-1 h5 mt-1"></div>
+                                                    </div>
+                                                </div>
+                                                <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm  mb-2">
+                                    <!-- Dashboard info Tai khoan moi-->
+                                    <div class="card border-start-lg border-start-primary h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <div class="uppercase fw-bold text-primary mb-3">Số người nạp tiền</div>
+                                                    <div class="row">
+                                                        <div class="col-3"><i class="fas fa-solid fa-money-check-dollar fa-lg text-gray-200"></i></div>
+                                                        <div id="deposit-history" class="col-6 ml-1 h5 mt-1"></div>
                                                     </div>
                                                 </div>
                                                 <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
@@ -90,7 +107,6 @@
                                                         <div class="col-3"><i class="fas fa-solid fa-book fa-lg text-gray-200"></i></div>
                                                         <div id="post-count" class="col-6 h5 mt-1"></div>
                                                     </div>
-
                                                 </div>
                                                 <!--                                                <div class="ms-2"><i class="fas fa-solid fa-check fa-2x text-gray-200"></i></div>-->
                                             </div>
@@ -248,6 +264,7 @@
         const statisticalMonth = data.statisticalMonth;
 
         let dataToDisplayValue;
+        let DepositHistoryToDisplayValue;
         let shopToDisplayValue;
         let postToDisplayValue;
         let sendBillToDisplayValue;
@@ -255,18 +272,21 @@
 
         if (dataToDisplay === "today") {
             dataToDisplayValue = statisticalToday.userToday;
+            DepositHistoryToDisplayValue = statisticalToday.DepositHistoryToday;
             shopToDisplayValue = statisticalToday.shopToday;
             postToDisplayValue = statisticalToday.postToday;
             sendBillToDisplayValue = statisticalToday.sendBillsToday;
             completeBillToDisplayValue = statisticalToday.completeBillsToday;
         } else if (dataToDisplay === "week") {
             dataToDisplayValue = statisticalWeek.userWeek;
+            DepositHistoryToDisplayValue = statisticalWeek.DepositHistoryWeek;
             shopToDisplayValue = statisticalWeek.shopWeek;
             postToDisplayValue = statisticalWeek.postWeek;
             sendBillToDisplayValue = statisticalWeek.sendBillsWeek;
             completeBillToDisplayValue = statisticalWeek.completeBillsWeek;
         } else if (dataToDisplay === "month") {
             dataToDisplayValue = statisticalMonth.userMonth;
+            DepositHistoryToDisplayValue = statisticalMonth.DepositHistoryMonth;
             shopToDisplayValue = statisticalMonth.shopMonth;
             postToDisplayValue = statisticalMonth.postMonth;
             sendBillToDisplayValue = statisticalMonth.sendBillsMonth;
@@ -279,6 +299,9 @@
         // Update user count in the "dataDisplay" div
         const dataDisplay = document.getElementById('dataDisplay');
         dataDisplay.textContent = dataToDisplayValue;
+
+        const DepositHistorycount = document.getElementById('deposit-history');
+        DepositHistorycount.textContent = DepositHistoryToDisplayValue;
 
         const shopCount = document.getElementById('shop-count');
         shopCount.textContent = shopToDisplayValue;

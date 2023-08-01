@@ -54,6 +54,7 @@ const statisticalRouter = require('./routes/statistical');
 const authenticationRouter = require('./routes/authentication');
 const autionApprovalRouter = require('./routes/autionapproval');
 const shopRouter = require('./routes/shop');
+const rechargeHistoryRouter = require('./routes/rechargehistory');
 
 const apiNotificationRouter =  require('./api_src/route/notification')
 const apiUserRouter = require('./api_src/route/user')
@@ -153,6 +154,7 @@ app.use('/AdvertisingManagement',admanagementRouter)
 app.use('/Statistical',statisticalRouter)
 app.use('/Login',authenticationRouter)
 app.use('/Shop',shopRouter)
+app.use('/RechargeHistory',rechargeHistoryRouter)
 
 
 //API

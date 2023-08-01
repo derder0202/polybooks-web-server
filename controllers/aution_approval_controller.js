@@ -4,10 +4,10 @@ const moment = require('moment');
 const autionApprovalController ={
     listAutionApproval: async (req,res) =>{
         try {
-            const db = admin.firestore();
+            const db = admin.firestore(); 
             const documentList = [];
 
-            const snapshot = await db.collection("PostAuction").get();
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
             snapshot.forEach((doc) => {
             documentList.push({_id:doc.id,...doc.data()});
         });

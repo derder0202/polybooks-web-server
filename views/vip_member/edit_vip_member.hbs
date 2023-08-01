@@ -18,6 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="/js/jscustom.js"></script>
     <script src="/js/listmember.js"></script>
+    <script src="/js/dialogmember.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -175,14 +176,7 @@
                                 </div>
                             </form>
                             <script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    const saveButton = document.getElementById("saveVip");
-
-                                    saveButton.addEventListener("click", function () {
-                                        // Set the cookie to store the toast message
-                                        document.cookie = "toastMessage=✏️ Thông tin đã được lưu!; expires=; path=/"; 
-                                    });
-                                });
+                                
                             </script>
                             </div>
                         </div>
