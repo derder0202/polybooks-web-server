@@ -211,7 +211,7 @@ runAtMidnight(async () => {
         {status:3}
     )
     const today = new Date()
-    Post.updateMany({endTime: {$lte: today}},{postStatus:"0"})
+    Post.updateMany({endTime: {$lte: today},postStatus:"1"},{postStatus:"0"})
     if(today.getDate() === 1){
         User.updateMany({},{totalPost: 0})
     }
