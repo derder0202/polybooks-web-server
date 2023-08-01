@@ -18,6 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="/js/addmember.js"></script>
     <script src="/js/jscustom.js"></script>
+    <script src="/js/dialogmember.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -135,15 +136,7 @@
                                         <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
                                     </div>
                                 </form>
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", function () {
-                                        const saveButton = document.getElementById("addButton");
-
-                                        saveButton.addEventListener("click", function () {
-                                            document.cookie = "toastMessage=➕ Thêm tài khoản thành công!; expires=; path=/";
-                                        });
-                                    });
-                                </script>
+                                
                             </div>
                         </div>     
                     </div>
