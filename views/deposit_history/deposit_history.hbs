@@ -60,7 +60,7 @@
                                 {{#each listdepositHistorys}} 
                             <tr>
                                 <td>{{this.userId.fullName}}</td>
-                                <td>{{this.depositAmount}} đ</td>
+                                <td>{{formatCurrency this.depositAmount}}</td>
                                 <td>{{this.paymentMethod}}</td>
                                 <td>{{formatTime this.createdAt}}</td>
                             </tr>

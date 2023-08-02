@@ -67,10 +67,10 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
-                                                    <div class="uppercase fw-bold text-primary mb-3">Số người nạp tiền</div>
+                                                    <div class="uppercase fw-bold text-primary mb-3">Tổng số tiền nạp</div>
                                                     <div class="row">
-                                                        <div class="col-3"><i class="fas fa-solid fa-money-check-dollar fa-lg text-gray-200"></i></div>
-                                                        <div id="deposit-history" class="col-6 ml-1 h5 mt-1"></div>
+                                                        <div class="col-3"><i class="fas fa-solid fa-money-check-dollar fa-lg text-gray-200"></i></div><br>
+                                                        <div style="margin-left: 30px;margin-top: -25px;color: black;" id="deposit-history"></div>                       
                                                     </div>
                                                 </div>
                                                 <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
@@ -246,7 +246,6 @@
         </main>
     </div>
 </div>
-
 <script>
     let dataToDisplay = "today"; // Default option is "Hôm nay"
 
@@ -301,7 +300,7 @@
         dataDisplay.textContent = dataToDisplayValue;
 
         const DepositHistorycount = document.getElementById('deposit-history');
-        DepositHistorycount.textContent = DepositHistoryToDisplayValue;
+        DepositHistorycount.textContent = DepositHistoryToDisplayValue; 
 
         const shopCount = document.getElementById('shop-count');
         shopCount.textContent = shopToDisplayValue;
@@ -316,6 +315,7 @@
         const completeBillCount = document.getElementById('complete-bill-count');
         completeBillCount.textContent = completeBillToDisplayValue;
 
+        
         // Update the dropdown button text based on the selected option
         const dropdownButton = document.getElementById('dropdownButton');
         dropdownButton.textContent = option === "today" ? "Hôm nay" : option === "week" ? "Tuần trước" : "Tháng trước";
