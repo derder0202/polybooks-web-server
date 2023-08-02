@@ -35,7 +35,6 @@
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    
                                     <div class="page-header-icon"><img style="width: 17px;height: 17px;" src="assets/img/illustrations/profiles/clipboard.png"></img></div>
                                     Đấu giá
                                 </h1>
@@ -56,7 +55,7 @@
                                 <th>Tên sách</th>
                                 <th>Trạng thái</th>
                                 <th>Giá khởi điểm</th>
-                                <th>Giá hiện tại</th>
+                                <th>Giá bắt đầu</th>
                                 <th>Bắt đầu</th>
                                 {{!-- <th>Actions</th> --}}
                             </tr>
@@ -73,8 +72,8 @@
                                         {{this.bookStatus}}
                                     </span>
                                 </td>
-                                <td><h4 class="text-danger">{{this.startPrice}}đ</h4></td>
-                                <td><h4 class="text-danger">{{this.endPrice}}đ</h4></td>
+                                <td><h4 class="text-danger">{{formatCurrency this.startPrice}}</h4></td>
+                                <td><h4 class="text-danger">{{formatCurrency this.endPrice}}</h4></td>
                                 <td><h4 class="text-primary">{{formatTime this.createdAt}}</h4></td>
                                 {{!-- <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>

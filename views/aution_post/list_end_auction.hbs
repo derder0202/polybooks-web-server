@@ -56,7 +56,7 @@
                                 <th>Tên sách</th>
                                 <th>Trạng thái</th>
                                 <th>Giá khởi điểm</th>
-                                <th>Giá hiện tại</th>
+                                <th>Giá kết thúc</th>
                                 <th>Kết thúc</th>
                                 {{!-- <th>Actions</th> --}}
                             </tr>
@@ -73,8 +73,8 @@
                                         {{this.bookStatus}}
                                     </span>
                                 </td>
-                                <td><h4 class="text-danger">{{this.startPrice}}đ</h4></td>
-                                <td><h4 class="text-danger">{{this.endPrice}}đ</h4></td>
+                                <td><h4 class="text-danger">{{formatCurrency this.startPrice}}</h4></td>
+                                <td><h4 class="text-danger">{{formatCurrency this.endPrice}}</h4></td>
                                 <td><h4 class="text-primary">{{formatTime this.endTime}}</h4></td>
                                 {{!-- <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>

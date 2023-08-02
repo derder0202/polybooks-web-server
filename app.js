@@ -95,6 +95,15 @@ hbs.registerHelper('formatDateOfBirth', function (date){
     const formattedDate = moment(date).format('DD-MM-YYYY ');
     return new hbs.SafeString(formattedDate);
 });
+hbs.registerHelper('formatCurrency', function (amount) {
+  const formatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
+  });
+  return formatter.format(amount);
+});
+
 
 
 app.use(bodyParser.urlencoded({extended: true}))

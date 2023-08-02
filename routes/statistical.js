@@ -46,14 +46,48 @@ router.get('/newUser',async(req,res)=>{
     statisticalMonth.shopMonth = thirtyDaysCountShop;
 
     //DepositHistory
-    const todayCountDepositHistory = await DepositHistory.countDocuments({createdAt: { $gte: today } });
-    statisticalToday.DepositHistoryToday = todayCountDepositHistory;
-
-    const sevenDaysCountDepositHistory= await DepositHistory.countDocuments({ createdAt: { $gte: sevenDaysAgo } }); 
-    statisticalWeek.DepositHistoryWeek = sevenDaysCountDepositHistory;
-
-    const thirtyDaysCountDepositHistory = await DepositHistory.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }); 
-    statisticalMonth.DepositHistoryMonth = thirtyDaysCountDepositHistory;
+    const todayTotalDepositAmount = await DepositHistory.aggregate([
+        {
+          $match: { createdAt: { $gte: today } }
+        },
+        {
+          $group: {
+            _id: null,
+            totalAmount: { $sum: "$depositAmount" }
+          }
+        }
+      ]);
+      
+      statisticalToday.DepositHistoryToday = todayTotalDepositAmount.length > 0 ? todayTotalDepositAmount[0].totalAmount : 0;
+      
+      const sevenDaysTotalDepositAmount = await DepositHistory.aggregate([
+        {
+          $match: { createdAt: { $gte: sevenDaysAgo } }
+        },
+        {
+          $group: {
+            _id: null,
+            totalAmount: { $sum: "$depositAmount" }
+          }
+        }
+      ]);
+      
+      statisticalWeek.DepositHistoryWeek = sevenDaysTotalDepositAmount.length > 0 ? sevenDaysTotalDepositAmount[0].totalAmount : 0;
+      
+      const thirtyDaysTotalDepositAmount = await DepositHistory.aggregate([
+        {
+          $match: { createdAt: { $gte: thirtyDaysAgo } }
+        },
+        {
+          $group: {
+            _id: null,
+            totalAmount: { $sum: "$depositAmount" }
+          }
+        }
+      ]);
+      
+      statisticalMonth.DepositHistoryMonth = thirtyDaysTotalDepositAmount.length > 0 ? thirtyDaysTotalDepositAmount[0].totalAmount : 0;
+      
 
     //Post
     const todayCountPost = await Post.countDocuments({ createdAt: { $gte: today }, postStatus: { $gte: 1 } });
