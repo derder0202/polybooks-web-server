@@ -2,18 +2,14 @@ const { config } = require("dotenv");
 const {User, Post, Bill, Shop} = require("../api_src/model/model");
 const statisticalController = {
     liststatistical: async (req,res)=>{
- 
-       let urls = require("../config_url")
-       console.log(urls)
+    let urls = require("../config_url")
+    const categoryCounts = await Bill.countByCategory();
+    const filteredCategoryCounts = categoryCounts.filter(item => item.count >= 5);
 
-        
-//     // đếm sách trong các bill (chưa tính status bill đã hoàn thành hay chưa) tối hỏi
-        const categoryCounts = await Bill.countByCategory();
-       
-        res.render('statistical/account_statistics',{
-            categoryCounts, 
-            urls
+    res.render('statistical/account_statistics',{
+        categoryCounts: filteredCategoryCounts, 
+        urls
         });
-        },
+    },
 }
 module.exports = statisticalController

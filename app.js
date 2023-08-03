@@ -103,7 +103,19 @@ hbs.registerHelper('formatCurrency', function (amount) {
   });
   return formatter.format(amount);
 });
+hbs.registerHelper('formatTimes', function (time) {
+  let totalSeconds = time;
+  if (typeof time !== 'number') {
+    if (!(time instanceof Date)) {
+      time = new Date(time);
+    }
+    totalSeconds = Math.floor(time.getTime() / 1000);
+  }
+  const hours = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2);
+  const minutes = (totalSeconds % 60).toString().padStart(2);
 
+  return `${hours} giờ ${minutes}`;
+});
 
 
 app.use(bodyParser.urlencoded({extended: true}))
