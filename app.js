@@ -91,6 +91,7 @@ hbs.registerHelper('formatTime', function (date){
     const formattedDate = moment(date).format('HH:mm:ss DD-MM-YYYY ');
     return new hbs.SafeString(formattedDate);
 });
+
 hbs.registerHelper('formatDateOfBirth', function (date){
     const formattedDate = moment(date).format('DD-MM-YYYY ');
     return new hbs.SafeString(formattedDate);
