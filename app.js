@@ -184,7 +184,7 @@ app.use('/api/withdrawRequests',apiWithdrawRequest)
 //     // const newDate = new Date()
 //
 // }
-setInterval(checkEveryday,24*60*60*1000)  // 24*60*60*1000 => 1 ngay`
+// setInterval(checkEveryday,24*60*60*1000)  // 24*60*60*1000 => 1 ngay`
 
 function runAtMidnight(callback) {
   const now = new Date();
@@ -211,7 +211,7 @@ runAtMidnight(async () => {
         {status:3}
     )
     const today = new Date()
-    Post.updateMany({endTime: {$lte: today},postStatus:"1"},{postStatus:"0"})
+    Post.updateMany({endTime: {$lte: today},postStatus:"1"},{postStatus:"2"})
     if(today.getDate() === 1){
         User.updateMany({},{totalPost: 0})
     }
