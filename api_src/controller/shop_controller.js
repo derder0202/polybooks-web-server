@@ -83,7 +83,7 @@ const shopController = {
             if (!shop) {
                 return res.status(404).json({ error: 'Shop not found' });
             }
-            res.json({ shop });
+            res.json(shop);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -334,16 +334,20 @@ const shopController = {
 
             const shop = await Shop.findById(req.params.id).populate('sellBills')
             // Iterate over each day of the week
-            let count = 0
+            let countSendBill = 0
+            let countDoneBill = 0
             let totalPrice = 0
 
             for(let bill of shop.sellBills){
                 if(bill.createdAt && bill.createdAt.getTime() > startDate && bill.createdAt.getTime() < endDate){
-                    count++;
+                    countSendBill++;
+                }
+                if(bill.updatedAt && bill.updatedAt.getTime() > startDate && bill.updatedAt.getTime() < endDate && bill.status === 3){
+                    countDoneBill++;
                     totalPrice+=bill.totalPrice
                 }
             }
-            res.json({count,totalPrice})
+            res.json({countSendBill,countDoneBill,totalPrice})
         } catch (e) {
             console.log(e)
         }
