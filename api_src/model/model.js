@@ -465,24 +465,31 @@ const withdrawRequestSchema = new mongoose.Schema({
 const bannerSchema = new mongoose.Schema({
     name: {
         type:String,  
+        required: true
     },
     phone:{
         type:String,
+        required: true
     },
     address:{
         type:String,  
+        required: true
     },
     link: {
         type: String, 
+        required: true
     },
     description: {
         type: String,
+        required: true
     },
     endTime: {
         type: Date,
+        
     },
     price: {
         type: String,
+        required: true
     },
     image: {
         type: String,
@@ -494,8 +501,9 @@ const bannerSchema = new mongoose.Schema({
     createUser: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', 
+        required: true
     }
-},{timestamp : true}
+},{timestamps : true}
 );
 const AddressSchema = new mongoose.Schema({
     name: { type: String, required: true },

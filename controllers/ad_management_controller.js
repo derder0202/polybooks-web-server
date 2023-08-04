@@ -7,7 +7,8 @@ const adManagementController = {
     //lay ra list banner
     listBannerManagement: async (req,res)=>{
         try {
-            const listBanner = await Banner.find();
+            const listBanner = await Banner.find({isActive:true}).populate('createUser');
+            
             res.render('advertisement/ad_management',{listBanner})
 
         } catch (e) {
@@ -16,11 +17,36 @@ const adManagementController = {
 
         }
     },
+    detailBanner: async (req,res)=>{
+        let detailBanners = await Banner.findById(req.params.id).populate('createUser')
+            .exec()
+            .catch(function (err) {
+                console.log(err)
+            });
+        console.log(detailBanners)
+        if (detailBanners == null){
+            res.send('Không tìm thấy bản ghi');
+        }
+        res.render('advertisement/banner_details',{detailBanners});
+    },
     getformbanner: async (req,res)=>{
-        res.render('advertisement/add_new_banner')
+        const userId = req.user._id;
+        res.render('advertisement/add_new_banner',{userId})
     },
     postAddBanner: async (req,res)=>{
-        console.log(req.body);
+        const { name, phone, address,image,isActive, link, description, endTime, price} = req.body;
+            const newBanner = new Banner({
+                name,
+                phone,
+                address,
+                link,
+                image,
+                isActive,
+                description,
+                endTime,
+                price,
+                createUser:req.user._id,
+            });
         try {
             upload(req, res, async function (err) {
                 if (err instanceof multer.MulterError) {
@@ -28,18 +54,6 @@ const adManagementController = {
                 } else if (err) {
                     // An unknown error occurred when uploading.
                 }
-                    const { name, phone, address, link, image, description, endTime, price, createUser } = req.body;
-                    const newBanner = new Banner({
-                        name,
-                        phone,
-                        address,
-                        link,
-                        image,
-                        description,
-                        endTime,
-                        price,
-                        createUser,
-                    });
                 const file = req.file;
                 if (file){
                     const bucket = admin.storage().bucket()
