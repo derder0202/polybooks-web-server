@@ -16,7 +16,7 @@ const shopController = {
             res.render('shop/add_shop', { listUser});
         } catch (error) {
             console.error(error);
-            res.status(500).send('Lỗi khi lấy danh sách shop');
+            res.status(500).send('Lỗi khi lấy danh sách');
         }
     },
     formEditShop: async (req,res)=>{
@@ -89,7 +89,7 @@ const shopController = {
         const phone1 = req.body.ShopPhoneNumber;
         const phone2 = req.body.ShopPhone;
         const description = req.body.description;
-        const address = req.body.address;      
+        const address = req.body.address;   
 
         const newShop = new Shop({
             name,
