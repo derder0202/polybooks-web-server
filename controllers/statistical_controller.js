@@ -5,7 +5,7 @@ const statisticalController = {
     let urls = require("../config_url")
     const categoryCounts = await Bill.countByCategory();
     const filteredCategoryCounts = categoryCounts.filter(item => item.count >= 5);
-
+    console.log(req.user)
     res.render('statistical/account_statistics',{
         categoryCounts: filteredCategoryCounts, 
         urls

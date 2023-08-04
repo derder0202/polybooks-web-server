@@ -60,6 +60,12 @@ const memberController = {
         const gender = req.body.gender;
         const role = req.body.role;
         const birthday = req.body.inputBirthday
+
+        const phoneRegex = /^0[2-9]{1}\d{8,9}$/;
+        if (!phoneRegex.test(phone)) {
+            res.locals.errorMessage = 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại hợp lệ.';
+            return res.render('regular_member/add_regular_member');
+        }
         // Mã hóa mật khẩu
         const base64Password = Buffer.from(plainPassword).toString('base64');
 
