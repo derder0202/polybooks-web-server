@@ -66,7 +66,7 @@ const createPaymentLink = async (req, res)=>{
         var tmnCode = process.env.TMN_CODE;
         var secretKey = process.env.SECRET_KEY
         var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        var returnUrl = "http://localhost:3000/api/depositHistory/VNPayReturn";
+        var returnUrl = "https://polybooks.store/api/depositHistory/VNPayReturn";
         var date = new Date();
         var createDate = moment(date).format("YYYYMMDDHHmmss") //dateFormat(date, 'yyyymmddHHmmss');
         var orderId = moment(date).format('HHmmss');
