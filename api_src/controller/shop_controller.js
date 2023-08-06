@@ -303,13 +303,17 @@ const shopController = {
             for (let i = 0; i < 7; i++) {
                 const currentDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
                 const nextDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i + 1);
-                let count = 0;
-                let totalPrice = 0;
+                let countSendBill = 0
+                let countDoneBill = 0
+                let totalPrice = 0
                 // Count posts for the current day
                 // const postsCount = await Post.countDocuments({ createdAt: { $gte: currentDate, $lt: nextDate } });
                 for (let bill of shop.sellBills){
                     if(bill.createdAt && bill.createdAt.getTime() > currentDate && bill.createdAt.getTime() < nextDate){
-                        count++;
+                        countSendBill++;
+                    }
+                    if(bill.updatedAt && bill.updatedAt.getTime() > currentDate && bill.updatedAt.getTime() < nextDate && bill.status === 3){
+                        countDoneBill++;
                         totalPrice+=bill.totalPrice
                     }
                 }
@@ -317,7 +321,7 @@ const shopController = {
                 const dayName = currentDate.toLocaleDateString('vi-VN')
 
                 // Save the count in the map
-                dataThisWeekRegularTemplate[`${dayName.substring(0, dayName.lastIndexOf('/'))}`] = {count,totalPrice};
+                dataThisWeekRegularTemplate[`${dayName.substring(0, dayName.lastIndexOf('/'))}`] = {countDoneBill,countSendBill,totalPrice};
             }
 
             res.json(dataThisWeekRegularTemplate)
