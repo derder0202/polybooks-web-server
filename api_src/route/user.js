@@ -6,12 +6,13 @@ const userController = require('../controller/user_controller');
 
 const authMiddleware = require("../middleware/authMiddleware");
 const {Bill, User} = require("../model/model");
+const authenToken = require("../middleware/authentication");
 // GET /users
 router.post('/filter', userController.getUsers);
 
 router.post('/login', userController.login);
 
-router.get('/test',async (req,res)=>{
+router.get('/test',authenToken,async (req,res)=>{
   res.json('blabla')
 });
 // GET /users/:id
@@ -44,5 +45,7 @@ router.get('/:id/reviews', userController.getReviewsByUser);
 router.get('/:id/notification', userController.getNotificationsByUser);
 router.get('/:id/buyBills', userController.getBuyBillsByUser);
 router.get('/:id/sellBills', userController.getSellBillsByUser);
+router.get('/:id/withdrawRequests', userController.getWithdrawRequestsByUser);
+router.get('/:id/depositHistories', userController.getDepositHistoryByUser);
 
 module.exports = router;

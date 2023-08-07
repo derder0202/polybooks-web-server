@@ -1,4 +1,4 @@
-const {DepositHistory} = require("../model/model");
+const {DepositHistory, User} = require("../model/model");
 const moment = require('moment');
 function sortObject(obj) {
     let sorted = {};
@@ -35,8 +35,10 @@ const getAllDepositHistories = async (req, res) => {
  const createDepositHistory = async (req, res) => {
   try {
     const depositHistory = await DepositHistory.create(req.body);
+    await User.findByIdAndUpdate(depositHistory.userId,{$push: {depositHistories: depositHistory._id}})
     res.status(200).json(depositHistory);
   } catch (error) {
+      console.log(error)
     res.status(400).json({ error: error.message });
   }
 };
@@ -66,7 +68,7 @@ const createPaymentLink = async (req, res)=>{
         var tmnCode = process.env.TMN_CODE;
         var secretKey = process.env.SECRET_KEY
         var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        var returnUrl = "http://localhost:3000/api/depositHistory/VNPayReturn";
+        var returnUrl = "https://polybooks.store/api/depositHistory/VNPayReturn";
         var date = new Date();
         var createDate = moment(date).format("YYYYMMDDHHmmss") //dateFormat(date, 'yyyymmddHHmmss');
         var orderId = moment(date).format('HHmmss');

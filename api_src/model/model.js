@@ -31,7 +31,8 @@ const UserSchema = new mongoose.Schema({
     updateTotalPost:{type:Date},
     token:{type:String},
     rating:{type: Number,default: 0},
-    coin:{type:Number,default: 0}
+    coin:{type:Number,default: 0},
+    depositHistories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DepositHistory'}],
 }, {timestamps: true});
 
 UserSchema.statics.calculateRolePercentage = function(callback) {
