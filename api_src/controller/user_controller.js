@@ -2,7 +2,7 @@ const {User, Address} = require("../model/model");
 const multer = require("multer")
 const admin = require("firebase-admin");
 const upload = require("../upload_image").single("avatar");
-
+const jwt = require('jsonwebtoken');
 
 const userController = {
     getUsers : async (req, res) => {
@@ -57,8 +57,10 @@ const userController = {
         try {
             const newUser = new User(req.body);
             const saveUser = await newUser.save()
-            res.status(200).json(saveUser)
-
+            const accessToken = jwt.sign({saveUser}, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: '1000 days',
+            });
+            res.status(200).json({data: saveUser,accessToken})
         } catch (error) {
             res.status(500).json({ message: 'Error creating user', error });
         }
@@ -126,7 +128,11 @@ const userController = {
 
             if(user){
                 if(btoa(password) === user.password){
-                    res.status(200).json({message:"Đăng nhập thành công", data: user})
+                    const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {
+                        expiresIn: '1000 days',
+                    });
+                    console.log(accessToken)
+                    res.status(200).json({message:"Đăng nhập thành công", data: user,accessToken})
                 } else {
                     res.status(404).json({message: "Sai mật khẩu"})
                 }
@@ -134,6 +140,7 @@ const userController = {
                 res.status(404).json({message: "Số điện thoại không tồn tại"})
             }
         } catch (error) {
+            console.log(error)
             res.status(500).json({ message: 'Server Error', error })
         }
     },
