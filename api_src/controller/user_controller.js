@@ -512,6 +512,18 @@ const userController = {
         } catch (error) {
             throw error;
         }
+    },
+    getReportsByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('reports');
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.reports);
+        } catch (error) {
+            throw error;
+        }
     }
 }
 //for nothing just test gitxx
