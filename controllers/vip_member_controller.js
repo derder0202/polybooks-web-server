@@ -4,7 +4,16 @@ const vipMembersController = {
     listVipMembers: async (req,res)=>{
         try {
             const listUsersVip = await User.find({role : 1});
-            res.render('vip_member/list_vip_member',{ listUsersVip});
+            const userName = req.user.fullName;
+            const userEmail = req.user.email;
+            res.render('vip_member/list_vip_member',{
+                partials: {
+                    nav_header: 'partials/nav_header'
+                },
+                listUsersVip,
+                userName,
+                userEmail
+            });
         } catch (error) {
             console.error(error);
             res.status(500).send('Lỗi khi lấy danh sách người dùng');
@@ -21,7 +30,16 @@ const vipMembersController = {
         if (itemVipMember == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('vip_member/edit_vip_member',{itemVipMember});
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('vip_member/edit_vip_member',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            itemVipMember,
+            userName,
+            userEmail
+        });
     },
     postEditVipMember: async (req,res)=>{
         try {

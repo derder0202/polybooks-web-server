@@ -6,12 +6,20 @@ const autionApprovalController ={
         try {
             const db = admin.firestore(); 
             const documentList = [];
-
             const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
             snapshot.forEach((doc) => {
             documentList.push({_id:doc.id,...doc.data()});
         });
-        res.render('content_approval/aution_approval', { documentList });
+          const userName = req.user.fullName;
+          const userEmail = req.user.email;
+        res.render('content_approval/aution_approval', {
+          partials: {
+            nav_header: 'partials/nav_header'
+        },
+          documentList,
+          userName,
+          userEmail
+        });
         } catch (e) {
             console.error(error);
             res.status(500).send('Lỗi khi lấy danh sách duyệt đấu giá');
@@ -30,9 +38,17 @@ const autionApprovalController ={
       
           const auctionData = {_id: snapshot.id, ...snapshot.data()};
       
-          console.log(auctionData);
+          const userName = req.user.fullName;
+          const userEmail = req.user.email;
       
-          res.render('content_approval/detail_aution', { auctionData });
+          res.render('content_approval/detail_aution', {
+            partials: {
+              nav_header: 'partials/nav_header'
+            },
+            auctionData,
+            userName,
+            userEmail
+          });
         } catch (error) {
           console.error(error);
           res.status(500).send('Lỗi khi lấy thông tin duyệt đấu giá');

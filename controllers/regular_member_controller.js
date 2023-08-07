@@ -4,14 +4,31 @@ const memberController = {
     listRegularMember: async (req,res)=>{
         try {
             const listUsers = await User.find({role : 0}).populate('address');
-            res.render('regular_member/list_regular_member', { listUsers});
+            const userName = req.user.fullName;
+            const userEmail = req.user.email;
+            res.render('regular_member/list_regular_member', {
+                partials: {
+                    nav_header: 'partials/nav_header'
+                },
+                listUsers,
+                userName,
+                userEmail
+                });
         } catch (error) {
             console.error(error);
             res.status(500).send('Lỗi khi lấy danh sách người dùng');
         }
     },
     formAddRegularMember: async (req,res)=>{
-        res.render('regular_member/add_regular_member');
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('regular_member/add_regular_member',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            userName,
+            userEmail
+        });
     },
     //hiển thị thông tin theo user
     formEditRegularMember: async (req,res)=>{
@@ -21,11 +38,19 @@ const memberController = {
             .catch(function (err){
                 console.log(err);
             });
-        console.log(itemMember)
         if (itemMember == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('regular_member/edit_regular_member',{itemMember});
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('regular_member/edit_regular_member',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            itemMember,
+            userName,
+            userEmail
+        });
     },
     //logic post sửa thông tin user
     postEditRegularMember: async (req,res)=>{

@@ -8,9 +8,17 @@ const adManagementController = {
     listBannerManagement: async (req,res)=>{
         try {
             const listBanner = await Banner.find({isActive:true}).populate('createUser');
-            
-            res.render('advertisement/ad_management',{listBanner})
-
+            const userName = req.user.fullName;
+            const userEmail = req.user.email
+            res.render('advertisement/ad_management',
+            {
+                partials: {
+                    nav_header: 'partials/nav_header'
+                },
+                listBanner,
+                userName,
+                userEmail
+            })
         } catch (e) {
             console.error(e);
             res.status(500).send('Lỗi khi lấy danh sách banner');
@@ -27,11 +35,29 @@ const adManagementController = {
         if (detailBanners == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('advertisement/banner_details',{detailBanners});
+        const userName = req.user.fullName;
+        const userEmail = req.user.email
+        res.render('advertisement/banner_details',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            detailBanners,
+            userName,
+            userEmail
+        });
     },
     getformbanner: async (req,res)=>{
         const userId = req.user._id;
-        res.render('advertisement/add_new_banner',{userId})
+        const userName = req.user.fullName;
+        const userEmail = req.user.email
+        res.render('advertisement/add_new_banner',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            userId,
+            userName,
+            userEmail
+        })
     },
     postAddBanner: async (req,res)=>{
         const { name, phone, address,image,isActive, link, description, endTime, price} = req.body;
