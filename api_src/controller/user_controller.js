@@ -481,6 +481,30 @@ const userController = {
         } catch (error) {
             res.status(500).json({ message: 'Server Error' });
         }
+    },
+    getWithdrawRequestsByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('withdrawRequests');
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.withdrawRequests);
+        } catch (error) {
+            throw error;
+        }
+    },
+    getDepositHistoryByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('depositHistories');
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.depositHistories);
+        } catch (error) {
+            throw error;
+        }
     }
 }
 //for nothing just test gitxx

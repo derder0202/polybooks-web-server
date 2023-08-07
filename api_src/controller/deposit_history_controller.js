@@ -1,4 +1,4 @@
-const {DepositHistory} = require("../model/model");
+const {DepositHistory, User} = require("../model/model");
 const moment = require('moment');
 function sortObject(obj) {
     let sorted = {};
@@ -35,8 +35,10 @@ const getAllDepositHistories = async (req, res) => {
  const createDepositHistory = async (req, res) => {
   try {
     const depositHistory = await DepositHistory.create(req.body);
+    await User.findByIdAndUpdate(depositHistory.userId,{$push: {depositHistories: depositHistory._id}})
     res.status(200).json(depositHistory);
   } catch (error) {
+      console.log(error)
     res.status(400).json({ error: error.message });
   }
 };
