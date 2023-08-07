@@ -55,6 +55,9 @@ const authenticationRouter = require('./routes/authentication');
 const autionApprovalRouter = require('./routes/autionapproval');
 const shopRouter = require('./routes/shop');
 const rechargeHistoryRouter = require('./routes/rechargehistory');
+const withdrawRequestsRouter = require('./routes/withdrawrequests');
+const browseWithdrawalsRouter = require('./routes/browsewithdrawals');
+
 
 const apiNotificationRouter =  require('./api_src/route/notification')
 const apiUserRouter = require('./api_src/route/user')
@@ -177,6 +180,8 @@ app.use('/Statistical',statisticalRouter)
 app.use('/Login',authenticationRouter)
 app.use('/Shop',shopRouter)
 app.use('/RechargeHistory',rechargeHistoryRouter)
+app.use('/WithdrawRequests',withdrawRequestsRouter)
+app.use('/BrowseWithdrawals',browseWithdrawalsRouter)
 
 
 //API

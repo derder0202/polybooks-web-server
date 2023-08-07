@@ -54,7 +54,7 @@ function clearInputs() {
 function validateForm() {
     // Lấy giá trị từ các trường nhập liệu
     var fullName = document.getElementById('inputUsername').value;
-    var email = document.getElementById('email').value;
+    var email = document.getElementById('inputEmail').value;
     // var address = document.getElementById('address').value;
     var gender = document.getElementById('gender').value;
     var birthday = document.getElementById('inputBirthday').value;
@@ -70,7 +70,7 @@ function validateForm() {
         isValid = false;
     }
     if (email === '') {
-        displayErrorMessage('emailError', 'Vui lòng nhập email');
+        displayErrorMessage('emailError', 'Vui lòng nhập email của bạn');
         isValid = false;
     }
     
