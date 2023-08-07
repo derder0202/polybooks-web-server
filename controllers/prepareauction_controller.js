@@ -32,8 +32,16 @@ const endAuctionController = {
           documentList.push(data);
         }
       });
-
-      res.render('aution_post/list_prepare_auction', { documentList });
+      const userName = req.user.fullName;
+      const userEmail = req.user.email;
+      res.render('aution_post/list_prepare_auction', {
+        partials: {
+          nav_header: 'partials/nav_header'
+        },
+        documentList,
+        userName,
+        userEmail 
+        });
     } catch (e) {
       console.error(e);
       res.status(500).send('Lỗi khi lấy danh sách đấu giá đã kết thúc');

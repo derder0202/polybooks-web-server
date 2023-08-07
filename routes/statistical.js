@@ -6,7 +6,7 @@ var router = express.Router();
 const admin = require('firebase-admin');
 
 
-router.get('/',statisticalController.liststatistical)
+router.get('/',checkAuth,statisticalController.liststatistical)
 
 router.get('/getVipUser',async(req,res)=>{
     //const totalUsers = await User.countDocuments();

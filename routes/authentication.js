@@ -3,7 +3,7 @@ const authenticationController = require("../controllers/authentication_controll
 const checkAuth = require("../api_src/middleware/checkAuth");
 var router = express.Router();
 
-// router.get('/',checkAuth,authenticationController.formLogin)
+router.get('/',authenticationController.formLogin)
 
 
 module.exports = router;

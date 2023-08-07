@@ -4,7 +4,16 @@ const pendingReportController = {
     listPendingReport: async (req,res)=>{
         try {
             const listReport = await Report.find({status : 0}).populate('userId');
-            res.render('report/pending_report',{listReport});
+            const userName = req.user.fullName;
+            const userEmail = req.user.email;
+            res.render('report/pending_report',{
+                partials: {
+                    nav_header: 'partials/nav_header'
+                },
+                listReport,
+                userName,
+                userEmail
+            });
         }catch (e) {
             console.error(error);
             res.status(500).send('Lỗi khi lấy danh sách report');
@@ -20,7 +29,16 @@ const pendingReportController = {
         if (detailReports == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('report/detail_report',{detailReports});
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('report/detail_report',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            detailReports,
+            userName,
+            userEmail
+        });
     },
     replyfeedbackReport: async(req,res)=>{
         try {
