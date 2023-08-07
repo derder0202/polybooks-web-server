@@ -19,8 +19,16 @@ const autionPostController = {
           documentList.push(data);
         }
       });
-
-      res.render('aution_post/list_aution_post', { documentList });
+      const userName = req.user.fullName;
+      const userEmail = req.user.email;
+      res.render('aution_post/list_aution_post', { 
+      partials: {
+        nav_header: 'partials/nav_header'
+      },
+        documentList,
+        userName,
+        userEmail
+      });
     } catch (e) {
       console.error(e);
       res.status(500).send('Lỗi khi lấy danh sách duyệt đấu giá');

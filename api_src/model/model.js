@@ -1,3 +1,4 @@
+const { create } = require('hbs');
 const mongoose = require('mongoose');
 
 //change
@@ -462,24 +463,49 @@ const withdrawRequestSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const   bannerSchema = new mongoose.Schema({
+const bannerSchema = new mongoose.Schema({
     name: {
-        type:String,
-        required: true,
+        type:String,  
+        required: true
     },
-    content: {
+    phone:{
+        type:String,
+        required: true
+    },
+    address:{
+        type:String,  
+        required: true
+    },
+    link: {
+        type: String, 
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    endTime: {
+        type: Date,
+        
+    },
+    price: {
         type: String,
         required: true
     },
     image: {
         type: String,
-        required: true
     },
     isActive: {
         type: Boolean,
         default:true
+    },
+    createUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', 
+        required: true
     }
-});
+},{timestamps : true}
+);
 const AddressSchema = new mongoose.Schema({
     name: { type: String, required: true },
     address: { type: String, required: true },

@@ -4,7 +4,16 @@ const shopController = {
     listShop : async (req,res)=>{
         try {
             const listShops = await Shop.find();
-            res.render('shop/list_shop', { listShops});
+            const userName = req.user.fullName;
+            const userEmail = req.user.email;
+            res.render('shop/list_shop', {
+                partials: {
+                    nav_header: 'partials/nav_header'
+                },
+                listShops,
+                userName,
+                userEmail
+            });
         } catch (error) {
             console.error(error);
             res.status(500).send('Lỗi khi lấy danh sách shop');
@@ -16,7 +25,7 @@ const shopController = {
             res.render('shop/add_shop', { listUser});
         } catch (error) {
             console.error(error);
-            res.status(500).send('Lỗi khi lấy danh sách shop');
+            res.status(500).send('Lỗi khi lấy danh sách');
         }
     },
     formEditShop: async (req,res)=>{
@@ -30,7 +39,16 @@ const shopController = {
         if (itemShop == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('shop/edit_shop',{itemShop});
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('shop/edit_shop',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            itemShop,
+            userName,
+            userEmail
+        });
     },
     postEditShop: async (req,res)=>{
         try {
@@ -80,7 +98,15 @@ const shopController = {
         res.redirect('/Shop');
     },
     formAddShop: async (req,res)=>{
-        res.render('shop/add_shop');
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('shop/add_shop',{ 
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            userName,
+            userEmail
+        });
     },
     addShop: async (req,res)=>{
         try {
@@ -89,7 +115,7 @@ const shopController = {
         const phone1 = req.body.ShopPhoneNumber;
         const phone2 = req.body.ShopPhone;
         const description = req.body.description;
-        const address = req.body.address;      
+        const address = req.body.address;   
 
         const newShop = new Shop({
             name,

@@ -41,7 +41,7 @@
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a onclick="confirmRedirectToRegularMembers()" class="btn btn-sm btn-light text-primary">
+                                <a class="btn btn-sm btn-light text-primary" href="/AdvertisingManagement">
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Quay lại
                                 </a>
@@ -60,42 +60,56 @@
                         <div class="card mb-3" style="width: 104%; margin-left: -25px;">
                             <div class="card-header">Chi tiết banner</div>
                             <div class="card-body">
-                                <form onsubmit="return validateForm()">
+                                
                                     <div class="row gx-3 mb-3">
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="newpass">Người đăng</label>
+                                            <div class="input-group">
+                                                <input class="form-control" id="confirmpass" type="text" value="{{detailBanners.createUser.fullName}}" disabled readonly/>
+                                            </div>
+                                        </div>
                                         <!-- Form Group (New pass)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="newpass">Người dùng</label>
+                                            <label class="small mb-1" for="newpass">Khách hàng</label>
                                             <div class="input-group">
-                                                <input class="form-control" id="newpass" type="text" placeholder="abcabc"/>
+                                                <input class="form-control" id="confirmpass" type="text" value="{{detailBanners.name}}" disabled readonly/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="confirmpass">ID người dùng</label>
+                                            <label class="small mb-1" for="confirmpass">Số điện thoại</label>
                                             <div class="input-group">
-                                                <input class="form-control" id="confirmpass" type="text" placeholder="1232132" />
+                                                <input class="form-control" id="confirmpass" type="text" value="{{detailBanners.phone}}" disabled readonly/>
                                             </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="small mb-1" for="">Tình trạng</label>
-                                            <input class="form-control" type="text" placeholder="Đang sử dụng"/>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="">Mô tả</label>
+                                            <input class="form-control" type="text"  value="{{detailBanners.description}}" disabled readonly/>
                                         </div>
-                                         <div class="mb-3">
-                                            <label class="small mb-1" for="">Nội dung</label>
-                                            <input class="form-control" type="text" placeholder="Đây là nội dung"/>
+                                         <div class="col-md-6">
+                                            <label class="small mb-1" for="">Địa chỉ</label>
+                                            <input class="form-control" type="text"  value="{{detailBanners.address}}" disabled readonly/>
                                         </div>
-                                        <label class="small mb-1" for="">Các hình ảnh</label>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="">Giá</label>
+                                            <input class="form-control" type="text"  value="{{formatCurrency detailBanners.price}}" disabled readonly/>
+                                        </div>
+                                         <div class="col-md-6">
+                                            <label class="small mb-1" for="">Ngày hết hạn</label>
+                                            <input class="form-control" type="text"  value="{{formatDateOfBirth detailBanners.endTime}}" disabled readonly/>
+                                        </div>
+                                         <div class="col-md-6">
+                                            <label class="small mb-1" for="">Liên kết</label>
+                                            <input class="form-control" type="text"  value="{{detailBanners.link}}" disabled readonly/>
+                                        </div>
+                                        <label class="small mb-1" for="">Hình ảnh</label>
                                         <div style="margin-bottom: 10px;" class=" me-2 ">
-                                            <img class="img-fluid" style="object-fit: fill" src="https://inquangcaopcm.com/upload/images/54.jpeg" />
+                                            <img class="img-fluid" style="object-fit: fill" src="{{detailBanners.image}}" disabled readonly/>
                                         </div>
                                         
                                         
                                     </div>
-                                    <!-- Save changes button-->
-                                    {{!-- <div class="card-body text-center">
-                                        <button style="font-weight: bold; margin-right: 15px;" class="btn btn-primary" type="submit">Đổi mật khẩu</button>
-                                        <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
-                                    </div> --}}
-                                </form>
+                                    
+                               
                             </div>
                         </div>
                     </div>

@@ -218,10 +218,7 @@
                             
                             <div class="chart-pie mb-4 d-flex justify-content-center align-items-center">
                                 <canvas id="myPieChart" width="100%" height="50"></canvas>
-                            </div>
-                           
-                            
-                            
+                            </div>                                                   
                             <div class="mt-4 list-group list-group-flush">
                                 <div class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
                                     <div class="me-3">
@@ -247,15 +244,19 @@
     </div>
 </div>
 <script>
+    function formatCurrency(amount) {
+    const formatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
+    });
+    return formatter.format(amount);
+    }
     let dataToDisplay = "today"; // Default option is "Hôm nay"
-
-    // Function to update the displayed data based on the selected option
     async function updateData(option) {
         dataToDisplay = option;
-        
-        
+
         const response = await fetch(`{{this.urls.ADD_USER_URL}}`);
-        
         
         const data = await response.json();
         const statisticalToday = data.statisticalToday;
@@ -291,21 +292,18 @@
             sendBillToDisplayValue = statisticalMonth.sendBillsMonth;
             completeBillToDisplayValue = statisticalMonth.completeBillsMonth;
         } else {
-            // Handle invalid option here if needed
             return;
         }
 
-        // Update user count in the "dataDisplay" div
         const dataDisplay = document.getElementById('dataDisplay');
         dataDisplay.textContent = dataToDisplayValue;
 
         const DepositHistorycount = document.getElementById('deposit-history');
-        DepositHistorycount.textContent = DepositHistoryToDisplayValue; 
+        DepositHistorycount.textContent = formatCurrency(DepositHistoryToDisplayValue); 
 
         const shopCount = document.getElementById('shop-count');
         shopCount.textContent = shopToDisplayValue;
 
-        // Update post count in the "shop-count" div
         const postCount = document.getElementById('post-count');
         postCount.textContent = postToDisplayValue;
 
@@ -315,14 +313,11 @@
         const completeBillCount = document.getElementById('complete-bill-count');
         completeBillCount.textContent = completeBillToDisplayValue;
 
-        
-        // Update the dropdown button text based on the selected option
+
         const dropdownButton = document.getElementById('dropdownButton');
         dropdownButton.textContent = option === "today" ? "Hôm nay" : option === "week" ? "Một tuần" : "Một Tháng";
         
     }
-
-    // Initial data display on page load
     updateData(dataToDisplay);
 </script>
 

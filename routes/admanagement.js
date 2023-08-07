@@ -1,19 +1,16 @@
 var express = require('express');
-const adManagementController = require("../controllers/ad_management_controller");
+const {adManagementController,upload} = require("../controllers/ad_management_controller");
+const checkAuth = require("../api_src/middleware/checkAuth");
 var router = express.Router();
 
 
-router.get('/',adManagementController.listBannerManagement);
+router.get('/',checkAuth,adManagementController.listBannerManagement);
 
-router.get('/edit_banner/:id',adManagementController.editBannerManagement);
-router.post('/edit_banner/:id',adManagementController.postEditBanner);
+// router.get('/edit_banner/:id',adManagementController.editBannerManagement);
+// router.post('/edit_banner/:id',adManagementController.postEditBanner);
+router.get('/banner_details/:id',checkAuth,adManagementController.detailBanner);
 
-// router.get('/add_new_banner',adManagementController.formAddNewBanner);
-// router.post('/add_new_banner',adManagementController.postAddNewBanner);
-
-
-// router.get('/banner_details',adManagementController.detailManagement)
-
-
+router.get('/add_new_banner',checkAuth,adManagementController.getformbanner);
+router.post('/add_new_banner',checkAuth,upload,adManagementController.postAddBanner);
 
 module.exports = router;

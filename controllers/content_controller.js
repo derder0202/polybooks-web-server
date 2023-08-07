@@ -5,7 +5,16 @@ const contentController = {
     listContent: async (req,res)=>{
         try {
             const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
-            res.render('content_approval/book_approval',{listBook});
+            const userName = req.user.fullName;
+            const userEmail = req.user.email;
+            res.render('content_approval/book_approval',{
+              partials: {
+                nav_header: 'partials/nav_header'
+            },
+              listBook,
+              userName,
+              userEmail
+            });
         }catch (e) {
             console.error(error);
             res.status(500).send('Lỗi khi lấy danh sách duyệt sách bán');
@@ -17,11 +26,19 @@ const contentController = {
             .catch(function (err) {
                 console.log(err)
             });
-        console.log(detailAution)
         if (detailAution == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('content_approval/detail_aution_approval',{detailAution})
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('content_approval/detail_aution_approval',{
+          partials: {
+            nav_header: 'partials/nav_header'
+          },
+          detailAution,
+          userName,
+          userEmail
+        })
     },
     approveAution : async (req, res) => {
         try {
