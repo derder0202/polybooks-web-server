@@ -37,12 +37,33 @@
 
                     </nav>
                 </div>
-                <div class="sidenav-menu-heading">Recharge History</div>
+                <div class="sidenav-menu-heading">History</div>
+                <!-- Sidenav Accordion (Pages)-->
+                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseMoneys" aria-expanded="false" aria-controls="collapseMoneys">
+                        <div class="nav-link-icon"><img style="width: 17px;height: 17px;" src="/assets/img/illustrations/profiles/credit.png"></img></div>
+                        Quản lý tiền
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseMoneys" data-bs-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                            <a class="nav-link" href="/RechargeHistory">Lịch sử nạp tiền</a>
+                            <a class="nav-link " href="/WithdrawRequests">Lịch sử rút tiền </a>
+                            <a class="nav-link" href="/BrowseWithdrawals">Duyệt rút tiền</a>
+                        </nav>
+                </div>
+
+                {{!-- <div class="sidenav-menu-heading">Recharge History</div>
                 <!-- Sidenav Accordion (Thống kê)-->
                 <a class="nav-link" href="/RechargeHistory">
                     <div class="nav-link-icon"><img style="width: 18px;height: 18px;" src="/assets/img/illustrations/profiles/money.png"></img></div>
                     Lịch sử nạp tiền
                 </a>
+                <div class="sidenav-menu-heading">WithdrawRequests</div>
+                <!-- Sidenav Accordion (Thống kê)-->
+                <a class="nav-link" href="/WithdrawRequests">
+                    <div class="nav-link-icon"><img style="width: 18px;height: 18px;" src="/assets/img/illustrations/profiles/credit.png"></img></div>
+                    Lịch sử rút tiền
+                </a> --}}
                 <div class="sidenav-menu-heading">Shop</div>
                 <!-- Sidenav Accordion (Thống kê)-->
                 <a class="nav-link" href="/Shop">
