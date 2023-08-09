@@ -392,9 +392,11 @@ const discountSchema = new mongoose.Schema({
     },//neu co cai nay thi sach giam gia
     title: {
         type: String,
+        default: ""
     },
     description: {
         type: String,
+        default: ""
     },
     forAll: {
         type: Boolean,
