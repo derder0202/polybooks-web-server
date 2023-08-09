@@ -12,11 +12,19 @@
 
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <link href="/css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src="/js/validatereport.js"></script>
+    <script src="/js/dialogreport.js"></script>
+    
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -52,19 +60,16 @@
             <div class="container-xl px-4 mt-4">
                 <!-- Account page navigation-->
                 <div class="row">
-                    <div class="col-xl-7">
+                    <div class="col-xl-5">
                         <!-- Account details card-->
                         <div class="card mb-4">
                             <div class="card-header">Hình ảnh người dùng báo cáo cung cấp</div>
-                            <div class="card-body">
-                                
                                     <!-- Form Group (username)-->
-                                    <div class="mb-3">
                                         <div class="card-body text-center">
-                                                <div class="slick-slider">
+                                                <div class="slick-slider" >
                                                     {{#each detailReports.attachedFiles}}
                                                         <div>
-                                                            <img src="{{this}} " class="d-block h-100 w-100">
+                                                            <img src="{{this}}" style="width: 250px; height: 500px;margin-left: 100px;">
                                                         </div>
                                                     {{/each}}
                                                 </div>
@@ -74,32 +79,33 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                    </div>
-                    <div style="margin-top: -23px;" class="col-xl-5 ">
+                    <div style="margin-top: -23px;" class="col-xl-7">
                         <!-- Profile picture card-->
                         <div class="card mt-4 mb-xl-0">
                             <div class="card-header">Chi tiết báo cáo</div>
-                            <div class="card-body text-center">
+                            <div class="card-body">
                                 <div class="mb-3">
-                                    <label style="margin-left: -350px;" class="small mb-1" for="inputUsername">Người báo cáo</label>
-                                    <input class="form-control" id="inputUsername" type="text" value="{{detailReports.userId.fullName}}" disabled readonly/>
+                                    <label class="small mb-1" for="inputUsername">Người báo cáo: </label>
+                                    <span style="color: red;font-weight: bold;">{{detailReports.userId.fullName}}</span>
                                 </div>
-                                <div class="mb-3">
-                                    <label style="margin-left: -330px;" class="small mb-1" for="inputUsername">Nội dung báo cáo</label>
+                                <label class="small mb-1" for="inputUsername">Nội dung báo cáo</label>
+                                <div class="mb-3 text-center">
+                                    
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled readonly>{{detailReports.content}}</textarea>
                                 </div>
                             </div>
                                 
                         </div>
                         
-                        <form method="post" action="/PendingReport/detail_report/{{detailReports._id}}">
+                        <form method="post" action="/PendingReport/detail_report/{{detailReports._id}}" onsubmit="return validateFormReport()">
                             <div class="card mt-4 mb-xl-0">
                                 <div class="card-header">Phản hồi</div>
                                 <div class="card-body text-center">
-                                    <input class="form-control" type="text" name="replyReport" value="{{replyReport}}">
-                                    <button style="font-weight: bold;margin-right: 15px;margin-top: 10px;" class="btn btn-primary" type="submit" name="action" value="reply">Gửi phản hồi</button>
+                                    <input id="name" class="form-control" type="text" name="replyReport" value="{{replyReport}}" placeholder="Mời bạn nhập phải hồi">
+                                    <div id="nameError" class="error-message" style="color: red; font-size: 12px;text-align: left;margin-top: 10px;"></div>
+                                    <button style="font-weight: bold;margin-top: 10px;" class="btn btn-primary" type="submit" name="action" value="reply" onclick="approveButton()">Gửi phản hồi</button>
                                 </div>
+                                
                             </div>
                         </form>
                     </div>
