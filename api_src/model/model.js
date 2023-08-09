@@ -329,26 +329,26 @@ BillSchema.statics.countByCategory = function() {
 // })
 
 
-UserSchema.pre('save',async function (next) {
-    try {
-        //if(this.isModified("reviews")){
-        await this.populate('sellerReviews','rating')
-        await this.populate('buyerReviews','rating')
-            //await this.populate({path:'reviews',select:'rating',strictPopulate:false})
-            const reviews = [...this.sellerReviews,...this.buyerReviews]
-                if (reviews.length === 0) {
-                    this.rating = 0;
-                } else {
-                    const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                    this.rating = totalRating / reviews.length;
-                }
-
-            next();
-        //}
-    } catch (err) {
-        next(err);
-    }
-})
+// UserSchema.pre('save',async function (next) {
+//     try {
+//         //if(this.isModified("reviews")){
+//         await this.populate('sellerReviews','rating')
+//         await this.populate('buyerReviews','rating')
+//             //await this.populate({path:'reviews',select:'rating',strictPopulate:false})
+//             const reviews = [...this.sellerReviews,...this.buyerReviews]
+//                 if (reviews.length === 0) {
+//                     this.rating = 0;
+//                 } else {
+//                     const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+//                     this.rating = totalRating / reviews.length;
+//                 }
+//
+//             next();
+//         //}
+//     } catch (err) {
+//         next(err);
+//     }
+// })
 
 const reportSchema = new mongoose.Schema({
     userId: {
