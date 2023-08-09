@@ -51,7 +51,7 @@
                             <thead>
                             <tr>
                                 <th>Người báo cáo</th>
-                                <th>Nhận xét</th>
+                                {{!-- <th>Nhận xét</th> --}}
                                 <th>Nội dung</th>
                                 <th>Thời gian</th>
                                 <th>Xem báo cáo</th>
@@ -64,9 +64,9 @@
                                 <td>
                                     {{this.userId.fullName}}
                                 </td>
-                                <td>        
+                                {{!-- <td>        
                                     {{this.feedback}}
-                                </td>
+                                </td> --}}
                                 <td>{{this.content}}</td>
                                 <td>{{formatTime this.createdAt}}</td>
                                 <td>

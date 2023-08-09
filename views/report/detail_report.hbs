@@ -38,6 +38,12 @@
                                     Chi tết bài báo cáo
                                 </h1>
                             </div>
+                            <div class="col-12 col-xl-auto mb-3">
+                                <a href="/PendingReport" class="btn btn-sm btn-light text-primary">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Quay lại
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -49,92 +55,49 @@
                     <div class="col-xl-7">
                         <!-- Account details card-->
                         <div class="card mb-4">
-                            <div class="card-header">Chi tiết báo cáo</div>
+                            <div class="card-header">Hình ảnh người dùng báo cáo cung cấp</div>
                             <div class="card-body">
-                                <form>
+                                
                                     <!-- Form Group (username)-->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="inputUsername">Hình ảnh người báo cáo cung cấp</label>
                                         <div class="card-body text-center">
-                                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                                <div class="carousel-indicators">
-                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                <div class="slick-slider">
+                                                    {{#each detailReports.attachedFiles}}
+                                                        <div>
+                                                            <img src="{{this}} " class="d-block h-100 w-100">
+                                                        </div>
+                                                    {{/each}}
                                                 </div>
-                                                <div class="carousel-inner">
-                                                    <div class="carousel-item active">
-                                                        <img src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" class="d-block w-100" alt="...">
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <img src="https://jonathanvankin.com/wp-content/uploads/2022/02/Tac-gia-Dac-nhan-tam-la-ai-va-noi-dung-tung-phan-cua-cuon-sach.jpg" class="d-block w-100" alt="...">
-                                                    </div>
-                                                    <div class="carousel-item">
-                                                        <img src="https://sachngoaingu.org/wp-content/uploads/2019/05/58570445_890012078005036_2784590884711170048_o.jpg" class="d-block w-100" alt="...">
-                                                    </div>
-                                                </div>
-                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                </button>
-                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                </button>
-                                            </div>
+                                                <button type="button" class="slick-prev">Previous</button>
+                                                <button type="button" class="slick-next">Next</button>
+                                                <div class="slick-dots"></div>
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputUsername"></label>
-                                        <input class="form-control" id="inputUsername" type="text" value="{{detailReports.userId.fullName}}"/>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="inputUsername">Nội dung báo cáo</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{detailReports.content}}</textarea>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-5 ">
-                        <!-- Profile picture card-->
-                        <div class="card mb-4 mb-xl-0">
-                            <div class="card-header">Ảnh trong bài đăng</div>
-                            <div class="card-body text-center">
-                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                    </div>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="https://sachngoaingu.org/wp-content/uploads/2019/05/58570445_890012078005036_2784590884711170048_o.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://jonathanvankin.com/wp-content/uploads/2022/02/Tac-gia-Dac-nhan-tam-la-ai-va-noi-dung-tung-phan-cua-cuon-sach.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="https://i.doanhnhansaigon.vn/2021/10/23/25dacnhantam48-1634975033_750x0.jpg" class="d-block w-100" alt="...">
-                                        </div>
-                                    </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
                                 </div>
                             </div>
+                    </div>
+                    <div style="margin-top: -23px;" class="col-xl-5 ">
+                        <!-- Profile picture card-->
+                        <div class="card mt-4 mb-xl-0">
+                            <div class="card-header">Chi tiết báo cáo</div>
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <label style="margin-left: -350px;" class="small mb-1" for="inputUsername">Người báo cáo</label>
+                                    <input class="form-control" id="inputUsername" type="text" value="{{detailReports.userId.fullName}}" disabled readonly/>
+                                </div>
+                                <div class="mb-3">
+                                    <label style="margin-left: -330px;" class="small mb-1" for="inputUsername">Nội dung báo cáo</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled readonly>{{detailReports.content}}</textarea>
+                                </div>
+                            </div>
+                                
                         </div>
+                        
                         <form method="post" action="/PendingReport/detail_report/{{detailReports._id}}">
                             <div class="card mt-4 mb-xl-0">
                                 <div class="card-header">Phản hồi</div>
                                 <div class="card-body text-center">
-                                    <input class="form-control" type="text" name="replyReport" value="{{replyReport}}"> <!-- Thêm trường input ẩn -->
+                                    <input class="form-control" type="text" name="replyReport" value="{{replyReport}}">
                                     <button style="font-weight: bold;margin-right: 15px;margin-top: 10px;" class="btn btn-primary" type="submit" name="action" value="reply">Gửi phản hồi</button>
                                 </div>
                             </div>
@@ -157,5 +120,15 @@
 <script src="js/datatables/datatables-simple-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
 <script src="js/litepicker.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.slick-slider').slick({
+            dots: true,
+            arrows: true,
+            prevArrow: $('.slick-prev'),
+            nextArrow: $('.slick-next')
+        });
+    });
+</script>
 </body>
 </html>
