@@ -13,7 +13,7 @@ router.post('/filter', userController.getUsers);
 router.post('/login', userController.login);
 
 router.get('/test',authenToken,async (req,res)=>{
-  res.json('blabla')
+  res.json('blablaxxxxxxxx')
 });
 // GET /users/:id
 router.get('/:id', userController.getUserById);

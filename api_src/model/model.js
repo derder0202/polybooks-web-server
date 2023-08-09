@@ -166,7 +166,6 @@ PostSchema.pre('save'||'updateMany'||'updateOne',async function (next) {
         await this.populate('allDiscounts')
         let latestUpdatedAt = null;
         let latestDiscount = null;
-
         if((this.get('allDiscounts') && this.get('allDiscounts').length > 0)){
             for(let discount of this.get('allDiscounts')){
                 if(discount.isActive === true){
@@ -311,23 +310,23 @@ BillSchema.statics.countByCategory = function() {
     ],);
 };
 
-ShopSchema.pre('save',async function (next) {
-    try {
-        //if(this.isModified("reviews")){
-            await this.populate('reviews','rating')
-            const reviews = this.reviews
-            if (reviews.length === 0) {
-                this.rating = 0;
-            } else {
-                const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                this.rating = totalRating / reviews.length;
-            }
-            next();
-       // }
-    } catch (err) {
-        next(err);
-    }
-})
+// ShopSchema.pre('save',async function (next) {
+//     try {
+//         //if(this.isModified("reviews")){
+//             await this.populate('reviews','rating')
+//             const reviews = this.reviews
+//             if (reviews.length === 0) {
+//                 this.rating = 0;
+//             } else {
+//                 const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+//                 this.rating = totalRating / reviews.length;
+//             }
+//             next();
+//        // }
+//     } catch (err) {
+//         next(err);
+//     }
+// })
 
 
 UserSchema.pre('save',async function (next) {
@@ -407,7 +406,7 @@ const discountSchema = new mongoose.Schema({
     }, // theo %
     isActive: {
         type: Boolean,
-        default: true
+        default: false
     }
 },{timestamps:true});
 // Schema cho lịch sử đặt cọc

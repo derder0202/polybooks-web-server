@@ -4,6 +4,8 @@ const reviewController = require('../controller/review_controller');
 const router = express.Router();
 
 router.get('/',reviewController.getReviews)
+
+router.get('/:id',reviewController.getReviewById)
 // Create a new review
 router.post('/', reviewController.createReview);
 
