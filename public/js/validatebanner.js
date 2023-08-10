@@ -4,7 +4,7 @@ function validateFormBanner() {
     var phone = document.getElementById('phone').value;
     var mota = document.getElementById('mota').value;
     var diachi = document.getElementById('diachi').value;
-    var link = document.getElementById('link').value;
+    // var link = document.getElementById('link').value;
     var price = document.getElementById('price').value;
     var endTime = document.getElementById('endTime').value;
     
@@ -24,10 +24,10 @@ function validateFormBanner() {
         displayErrorMessage('phoneError', 'Vui lòng nhập số điện thoại');
         isValid = false;
     }
-    if (link === '') {
-        displayErrorMessage('linkError', 'Vui lòng nhập liên kết');
-        isValid = false;
-    }
+    // if (link === '') {
+    //     displayErrorMessage('linkError', 'Vui lòng nhập liên kết');
+    //     isValid = false;
+    // }
     if (mota === '') {
         displayErrorMessage('motaError', 'Vui lòng nhập mô tả');
         isValid = false;
