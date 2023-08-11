@@ -1,8 +1,13 @@
 const admin = require('firebase-admin');
 const moment = require('moment');
+const {Post,Report,WithdrawRequest} = require("../api_src/model/model");
 
 const autionApprovalController ={
     listAutionApproval: async (req,res) =>{
+        const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
         try {
             const db = admin.firestore(); 
             const documentList = [];
@@ -18,7 +23,11 @@ const autionApprovalController ={
         },
           documentList,
           userName,
-          userEmail
+          userEmail,
+          listBook,
+          totalItemCount,
+          listBrowsewithdrawals,
+          listReport,
         });
         } catch (e) {
             console.error(error);
@@ -37,7 +46,11 @@ const autionApprovalController ={
           }
       
           const auctionData = {_id: snapshot.id, ...snapshot.data()};
-      
+
+          const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
+          const listReport = await Report.find({status : 0});
+          const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+          const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
           const userName = req.user.fullName;
           const userEmail = req.user.email;
       
@@ -47,7 +60,11 @@ const autionApprovalController ={
             },
             auctionData,
             userName,
-            userEmail
+            userEmail,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
           });
         } catch (error) {
           console.error(error);

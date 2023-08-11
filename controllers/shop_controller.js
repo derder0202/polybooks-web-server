@@ -1,4 +1,4 @@
-const {Shop,User} = require("../api_src/model/model");
+const {Shop,User,Report,WithdrawRequest,Post} = require("../api_src/model/model");
 
 const shopController = {
     listShop : async (req,res)=>{
@@ -6,13 +6,21 @@ const shopController = {
             const listShops = await Shop.find();
             const userName = req.user.fullName;
             const userEmail = req.user.email;
+            const listBook = await Post.find({postStatus : 0});
+            const listReport = await Report.find({status : 0});
+            const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
             res.render('shop/list_shop', {
                 partials: {
                     nav_header: 'partials/nav_header'
                 },
                 listShops,
                 userName,
-                userEmail
+                userEmail,
+                listBook,
+                totalItemCount,
+                listBrowsewithdrawals,
+                listReport,
             });
         } catch (error) {
             console.error(error);
@@ -39,6 +47,10 @@ const shopController = {
         if (itemShop == null){
             res.send('Không tìm thấy bản ghi');
         }
+        const listBook = await Post.find({postStatus : 0});
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('shop/edit_shop',{
@@ -47,7 +59,11 @@ const shopController = {
             },
             itemShop,
             userName,
-            userEmail
+            userEmail,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
         });
     },
     postEditShop: async (req,res)=>{
@@ -105,7 +121,7 @@ const shopController = {
                 nav_header: 'partials/nav_header'
             },
             userName,
-            userEmail
+            userEmail,
         });
     },
     addShop: async (req,res)=>{

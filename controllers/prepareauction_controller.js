@@ -1,7 +1,12 @@
 const admin = require('firebase-admin');
+const {Post,Report,WithdrawRequest} = require("../api_src/model/model");
 
 const endAuctionController = {
     listPrepareAuction: async (req, res) => {
+    const listBook = await Post.find({postStatus : 0});
+    const listReport = await Report.find({status : 0});
+    const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+    const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
     try {
       const db = admin.firestore();
       const documentList = [];
@@ -40,7 +45,11 @@ const endAuctionController = {
         },
         documentList,
         userName,
-        userEmail 
+        userEmail,
+        listBook,
+        totalItemCount,
+        listBrowsewithdrawals,
+        listReport, 
         });
     } catch (e) {
       console.error(e);
