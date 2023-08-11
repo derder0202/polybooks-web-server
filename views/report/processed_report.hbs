@@ -63,7 +63,7 @@
                                     {{this.userId.fullName}}
                                 </td>
                                 <td><span id="truncated-content">{{this.content}}</span></td>
-                                <td>{{formatTime this.createdAt}}</td>
+                                <td>{{formatTime this.updatedAt}}</td>
                             </tr>
                             {{/each}}
                             </tbody>
@@ -80,12 +80,12 @@
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  var contentElement = document.getElementById("truncated-content");
-  if (contentElement) {
+  var contentElements = document.querySelectorAll("td span#truncated-content");
+  contentElements.forEach(function(contentElement) {
     var content = contentElement.textContent.trim();
     var truncatedContent = content.substring(0, 25) + (content.length > 25 ? '...' : '');
     contentElement.textContent = truncatedContent;
-  }
+  });
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
