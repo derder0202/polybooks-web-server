@@ -1,10 +1,13 @@
-const WithdrawRequest = require("../api_src/model/model").WithdrawRequest;
+const {WithdrawRequest,Post,Report} = require("../api_src/model/model");
 const User = require("../api_src/model/model").User;
 
 const browsewithdrawalsController = {
     listBrowsewithdrawals : async (req,res)=>{
         try {
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0}).populate('userId');
+            const listBook = await Post.find({postStatus : 0});
+            const listReport = await Report.find({status : 0});
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('browsewithdrawals/browsewithdrawals',{
@@ -13,7 +16,11 @@ const browsewithdrawalsController = {
                 },
                 listBrowsewithdrawals,
                 userName,
-                userEmail
+                userEmail, 
+                listBook,
+                totalItemCount,
+                listReport,
+
             });
         } catch (error) {
             console.error(error);

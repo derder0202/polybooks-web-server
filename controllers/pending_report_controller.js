@@ -1,9 +1,12 @@
-const Report = require("../api_src/model/model").Report;
+const {Report,Post,WithdrawRequest} = require("../api_src/model/model");
 const User = require("../api_src/model/model").User;
 const pendingReportController = {
     listPendingReport: async (req,res)=>{
         try {
             const listReport = await Report.find({status : 0}).populate('userId');
+            const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+            const listBook = await Post.find({postStatus : 0});
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('report/pending_report',{
@@ -12,7 +15,10 @@ const pendingReportController = {
                 },
                 listReport,
                 userName,
-                userEmail
+                userEmail,
+                listBook,
+                totalItemCount,
+                listBrowsewithdrawals
             });
         }catch (e) {
             console.error(error);
@@ -29,6 +35,10 @@ const pendingReportController = {
         if (detailReports == null){
             res.send('Không tìm thấy bản ghi');
         }
+        const listReport = await Report.find({status : 0}).populate('userId');
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const listBook = await Post.find({postStatus : 0});
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('report/detail_report',{
@@ -37,7 +47,11 @@ const pendingReportController = {
             },
             detailReports,
             userName,
-            userEmail
+            userEmail,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
         });
     },
     replyfeedbackReport: async(req,res)=>{
