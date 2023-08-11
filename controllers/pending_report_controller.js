@@ -1,5 +1,6 @@
 const {Report,Post,WithdrawRequest} = require("../api_src/model/model");
 const User = require("../api_src/model/model").User;
+const moment = require('moment');
 const pendingReportController = {
     listPendingReport: async (req,res)=>{
         try {
@@ -65,6 +66,8 @@ const pendingReportController = {
         if (req.body.action === 'reply') {
             detailReports.status = 1;
             detailReports.replyReport = req.body.replyReport;
+            const updatedTime = moment().add(1, 'minute');
+            detailReports.updatedAt = updatedTime.toDate();
         } else if (req.body.action === 'noreply') {
             detailReports.status = 3;
         }
