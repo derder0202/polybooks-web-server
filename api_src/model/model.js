@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String , default:"" },
     address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
     avatar: { type: String },
+    imageCover: { type: String },
     gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
     birthday: { type: Date , default:"" },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
@@ -243,6 +244,7 @@ const BillSchema = new mongoose.Schema({
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
     reviewBuyer: {type: Number, default:0},
     reviewSeller: {type: Number, default:0},
+    payment:{type:Number,default:0}
 },{timestamps:true});
 
 BillSchema.pre('save',async function (next) {
