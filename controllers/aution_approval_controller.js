@@ -80,14 +80,17 @@ const autionApprovalController ={
         const updatedTime = moment(currentTime).add(1, 'hour');
         const formattedTime = updatedTime.format('YYYY-MM-DD HH:mm:ss.SSS');
 
+        const endTime = moment(currentTime).add(24, 'hours'); // Calculate end time with 24 hours added
+        const formattedEndTime = endTime.format('YYYY-MM-DD HH:mm:ss.SSS');
+
         if (req.body.action === 'duyet') {
           auctionType = 1;
         } else if (req.body.action === 'khongduyet') {
           auctionType = 3;
-          const reason = req.body.reason; // Get the reason from the user input
-          await docRef.update({ auctionType, createdAt: formattedTime, replyToAuction: reason });
+          const reason = req.body.reason;
+          await docRef.update({ auctionType, createdAt: formattedTime, replyToAuction: reason});
         }
-        await docRef.update({auctionType,createdAt: formattedTime });
+        await docRef.update({auctionType,createdAt: formattedTime,endTime: formattedEndTime });
 
         res.redirect('/AutionApproval');
         } catch (error) {
