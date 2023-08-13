@@ -6,10 +6,16 @@ const autionPostController = {
     const listBook = await Post.find({postStatus : 0});
     const listReport = await Report.find({status : 0});
     const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-    const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+    const db = admin.firestore();
+    const documentList = [];
+    const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+    snapshot.forEach((doc) => {
+    documentList.push({_id:doc.id,...doc.data()});
+    });
+    const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
     try {
       const db = admin.firestore();
-      const documentList = [];
+      const documentLists = [];
 
       const currentDate = new Date(); // Lấy thời gian hiện tại
 
@@ -21,7 +27,7 @@ const autionPostController = {
 
         if (createdAtDate > currentDate && data.auctionType === 1) {
           // Hiển thị dữ liệu nếu thời gian hiện tại trước thời gian của trường createdAt
-          documentList.push(data);
+          documentLists.push(data);
         }
       });
       const userName = req.user.fullName;
@@ -30,6 +36,7 @@ const autionPostController = {
       partials: {
         nav_header: 'partials/nav_header'
       },
+        documentLists,
         documentList,
         userName,
         userEmail,

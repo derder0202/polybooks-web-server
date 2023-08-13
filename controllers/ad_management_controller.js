@@ -11,7 +11,13 @@ const adManagementController = {
             const listBook = await Post.find({postStatus : 0});
             const listReport = await Report.find({status : 0});
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email
             res.render('advertisement/ad_management',
@@ -22,6 +28,7 @@ const adManagementController = {
                 listBanner,
                 userName,
                 userEmail,
+                documentList,
                 listBook,
                 totalItemCount,
                 listBrowsewithdrawals,
@@ -49,7 +56,13 @@ const adManagementController = {
         const listBook = await Post.find({postStatus : 0});
         const listReport = await Report.find({status : 0});
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         res.render('advertisement/banner_details',{
             partials: {
                 nav_header: 'partials/nav_header'
@@ -57,6 +70,7 @@ const adManagementController = {
             detailBanners,
             userName,
             userEmail,
+            documentList,
             listBook,
             totalItemCount,
             listBrowsewithdrawals,
@@ -70,7 +84,13 @@ const adManagementController = {
         const listBook = await Post.find({postStatus : 0});
         const listReport = await Report.find({status : 0});
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         res.render('advertisement/add_new_banner',{
             partials: {
                 nav_header: 'partials/nav_header'
@@ -78,6 +98,7 @@ const adManagementController = {
             userId,
             userName,
             userEmail,
+            documentList,
             listBook,
             totalItemCount,
             listBrowsewithdrawals,

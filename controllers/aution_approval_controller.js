@@ -7,7 +7,6 @@ const autionApprovalController ={
         const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
         const listReport = await Report.find({status : 0});
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
         try {
             const db = admin.firestore(); 
             const documentList = [];
@@ -15,6 +14,7 @@ const autionApprovalController ={
             snapshot.forEach((doc) => {
             documentList.push({_id:doc.id,...doc.data()});
         });
+          const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
           const userName = req.user.fullName;
           const userEmail = req.user.email;
         res.render('content_approval/aution_approval', {
@@ -50,7 +50,12 @@ const autionApprovalController ={
           const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
           const listReport = await Report.find({status : 0});
           const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-          const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+          const documentList = [];
+          const snapshots = await db.collection("PostAuction").where("auctionType","==",0).get();
+          snapshots.forEach((doc) => {
+          documentList.push({_id:doc.id,...doc.data()});
+          });
+          const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
           const userName = req.user.fullName;
           const userEmail = req.user.email;
       
@@ -59,6 +64,7 @@ const autionApprovalController ={
               nav_header: 'partials/nav_header'
             },
             auctionData,
+            documentList,
             userName,
             userEmail,
             listBook,

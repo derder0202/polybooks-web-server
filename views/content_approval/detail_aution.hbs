@@ -65,7 +65,7 @@
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a onclick="confirmRedirectBookApproval()" class="btn btn-sm btn-light text-primary">
+                                <a href="/AutionApproval" class="btn btn-sm btn-light text-primary">
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Quay lại
                                 </a>
@@ -129,8 +129,8 @@
                                     <div class="row gx-3 mb-3">
                                         <!-- Form Group (Thể loại)-->
                                         <div class="col-md-6">
-                                            <label class="small mb-1" for="inputPhone">Thể loại</label>
-                                            <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{auctionData.category.name}}" disabled readonly/>
+                                            <label class="small mb-1" for="inputBirthday">Nhà xuất bản</label>
+                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{auctionData.publisher.name}}" disabled readonly/>
                                         </div>
                                         <!-- Form Group (Ngôn ngữ )-->
                                         <div class="col-md-6">
@@ -177,10 +177,7 @@
                                         </div>
                                     </div>
                                     <!-- Form Group (Nhà xuất bản)-->
-                                    <div class="mb-3">
-                                            <label class="small mb-1" for="inputBirthday">Nhà xuất bản</label>
-                                            <input class="form-control" id="inputBirthday" type="text" name="birthday" placeholder="Enter your birthday" value="{{auctionData.publisher.name}}" disabled readonly/>
-                                        </div>
+                                   
                                     <!-- Form Group (Địa chỉ bán)-->
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Địa chỉ bán</label>

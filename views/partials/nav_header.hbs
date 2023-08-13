@@ -30,6 +30,12 @@
                         <div style="font-size: 15px;" class="dropdown-notifications-item-content-text">Bài đăng sách chờ duyệt: <span style="color: red;font-weight: bold;">{{listBook.length}}</span></div>
                     </div>
                 </a>
+                <a id="documentListLink" class="dropdown-item dropdown-notifications-item" href="/AutionApproval">
+                    <div></div>
+                    <div class="dropdown-notifications-item-content">
+                        <div style="font-size: 15px;" class="dropdown-notifications-item-content-text">Bài đấu giá chờ duyệt: <span style="color: red;font-weight: bold;">{{documentList.length}}</span></div>
+                    </div>
+                </a>
                 <a id="reportLink" class="dropdown-item dropdown-notifications-item" href="/PendingReport">
                     <div></div>
                     <div class="dropdown-notifications-item-content">
@@ -87,6 +93,14 @@
 
     if (listReports === 0) {
         reportLink.style.display = "none";
+    }
+</script>
+<script type="text/javascript">
+    var documentList = {{documentList.length}};
+    var documentListLink = document.getElementById("documentListLink");
+
+    if (documentList === 0) {
+        documentListLink.style.display = "none";
     }
 </script>
 <script type="text/javascript">

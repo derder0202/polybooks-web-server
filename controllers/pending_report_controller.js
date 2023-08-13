@@ -1,5 +1,6 @@
 const {Report,Post,WithdrawRequest} = require("../api_src/model/model");
 const User = require("../api_src/model/model").User;
+const admin = require('firebase-admin');
 const moment = require('moment');
 const pendingReportController = {
     listPendingReport: async (req,res)=>{
@@ -7,7 +8,13 @@ const pendingReportController = {
             const listReport = await Report.find({status : 0}).populate('userId');
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
             const listBook = await Post.find({postStatus : 0});
-            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('report/pending_report',{
@@ -15,6 +22,7 @@ const pendingReportController = {
                     nav_header: 'partials/nav_header'
                 },
                 listReport,
+                documentList,
                 userName,
                 userEmail,
                 listBook,
@@ -39,7 +47,13 @@ const pendingReportController = {
         const listReport = await Report.find({status : 0}).populate('userId');
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
         const listBook = await Post.find({postStatus : 0});
-        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('report/detail_report',{
@@ -47,6 +61,7 @@ const pendingReportController = {
                 nav_header: 'partials/nav_header'
             },
             detailReports,
+            documentList,
             userName,
             userEmail,
             listBook,

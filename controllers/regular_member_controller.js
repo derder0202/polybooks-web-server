@@ -1,4 +1,5 @@
 const {User,Post,WithdrawRequest,Report} = require("../api_src/model/model");
+const admin = require('firebase-admin');
 const memberController = {
     //Hiển thị toàn bộ list user
     listRegularMember: async (req,res)=>{
@@ -7,7 +8,13 @@ const memberController = {
             const listBook = await Post.find({postStatus : 0});
             const listReport = await Report.find({status : 0});
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('regular_member/list_regular_member', {
@@ -15,6 +22,7 @@ const memberController = {
                     nav_header: 'partials/nav_header'
                 },
                 listUsers,
+                documentList,
                 userName,
                 userEmail,
                 listBook,
@@ -31,7 +39,13 @@ const memberController = {
         const listBook = await Post.find({postStatus : 0});
         const listReport = await Report.find({status : 0});
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('regular_member/add_regular_member',{
@@ -39,6 +53,7 @@ const memberController = {
                 nav_header: 'partials/nav_header'
             },
             userName,
+            documentList,
             userEmail,
             listBook,
             totalItemCount,
@@ -60,7 +75,13 @@ const memberController = {
         const listBook = await Post.find({postStatus : 0});
         const listReport = await Report.find({status : 0});
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-         const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('regular_member/edit_regular_member',{
@@ -69,6 +90,7 @@ const memberController = {
             },
             itemMember,
             userName,
+            documentList,
             userEmail,
             listBook,
             totalItemCount,

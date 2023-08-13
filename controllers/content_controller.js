@@ -1,5 +1,5 @@
 const {Post,Report,WithdrawRequest} = require("../api_src/model/model");
-
+const admin = require('firebase-admin');
 const contentController = {
     //list duyệt bài đăng bán
     listContent: async (req,res)=>{
@@ -7,7 +7,13 @@ const contentController = {
             const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
             const listReport = await Report.find({status : 0});
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('content_approval/book_approval',{
@@ -15,6 +21,7 @@ const contentController = {
                 nav_header: 'partials/nav_header'
               },
               listBook,
+              documentList,
               userName,
               userEmail,
               totalItemCount,
@@ -38,7 +45,13 @@ const contentController = {
         const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
         const listReport = await Report.find({status : 0});
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
-        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('content_approval/detail_aution_approval',{
@@ -47,6 +60,7 @@ const contentController = {
           },
           detailAution,
           userName,
+          documentList,
           userEmail,
           listBook,
           totalItemCount,
