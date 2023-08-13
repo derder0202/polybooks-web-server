@@ -1,4 +1,5 @@
 const {WithdrawRequest,Post,Report} = require("../api_src/model/model");
+const admin = require('firebase-admin');
 const User = require("../api_src/model/model").User;
 
 const browsewithdrawalsController = {
@@ -7,7 +8,13 @@ const browsewithdrawalsController = {
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0}).populate('userId');
             const listBook = await Post.find({postStatus : 0});
             const listReport = await Report.find({status : 0});
-            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('browsewithdrawals/browsewithdrawals',{
@@ -15,6 +22,7 @@ const browsewithdrawalsController = {
                     nav_header: 'partials/nav_header'
                 },
                 listBrowsewithdrawals,
+                documentList,
                 userName,
                 userEmail, 
                 listBook,
@@ -39,7 +47,13 @@ const browsewithdrawalsController = {
         const listBrowsewithdrawals = await WithdrawRequest.find({status: 0}).populate('userId');
         const listBook = await Post.find({postStatus : 0});
         const listReport = await Report.find({status : 0});
-        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length;
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('browsewithdrawals/detailbrowsewithdrawals',{
@@ -48,6 +62,7 @@ const browsewithdrawalsController = {
           },
           detailBrowsewithdrawals,
           userName,
+          documentList,
           userEmail,
           listBook,
           totalItemCount,
@@ -69,11 +84,17 @@ const browsewithdrawalsController = {
         } else if (req.body.action === 'noreplys') {
             detailBrowsewithdrawals.status = 3;
             detailBrowsewithdrawals.replywithdraw = req.body.replywithdraw;
+
+            const userId = detailBrowsewithdrawals.userId;
+            const user = await User.findById(userId);
+            if (user) {
+                user.coin += parseFloat(detailBrowsewithdrawals.withdrawAmount);
+                await user.save();
+            }
         }
         
         await detailBrowsewithdrawals.save();
         
-        console.log('Thông tin được thay đổi:', detailBrowsewithdrawals);
         res.redirect('/BrowseWithdrawals');
         } catch (err) {
             console.error(err);
