@@ -126,7 +126,7 @@ const shopController = {
       
         res.redirect('/Shop');
     },
-    formAddShop: async (req,res)=>{
+    formAddShop: async (req,res)=> {
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('shop/add_shop',{ 
