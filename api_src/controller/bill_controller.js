@@ -72,13 +72,14 @@ const billController = {
   },
    updateBill: async (req, res) => {
     try {
-      const { status } = req.body;
+      const { status,payment } = req.body;
       let bill = await Bill.findById(req.params.id);
       if (!bill) {
         return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
       }
       // bill.posts = posts;
       bill.status = status;
+      bill.payment = payment
       // bill.address = address;
       // bill.userId = userId;
       await bill.save();
