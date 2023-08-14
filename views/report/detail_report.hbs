@@ -85,12 +85,12 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="inputUsername">Người báo cáo</label>
-                                        <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="Phùng Hiển" />
+                                        <label class="small mb-1" for="inputUsername"></label>
+                                        <input class="form-control" id="inputUsername" type="text" value="{{detailReports.userId.fullName}}"/>
                                     </div>
                                     <div class="mb-3">
                                         <label class="small mb-1" for="inputUsername">Nội dung báo cáo</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"> Sách gửi đến khác với trên bài đăng</textarea>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{detailReports.content}}</textarea>
                                     </div>
 
                                 </form>
@@ -130,24 +130,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card mt-4 mb-xl-0">
-                            <div class="card-header">Phản hồi</div>
-                            <div class="card-body text-center">
-                                <textarea class="form-control mb-4" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                <a class="btn btn-primary" type="button" href="pending_report">Gửi phản hồi</a>
+                        <form method="post" action="/PendingReport/detail_report/{{detailReports._id}}">
+                            <div class="card mt-4 mb-xl-0">
+                                <div class="card-header">Phản hồi</div>
+                                <div class="card-body text-center">
+                                    <input class="form-control" type="text" name="replyReport" value="{{replyReport}}"> <!-- Thêm trường input ẩn -->
+                                    <button style="font-weight: bold;margin-right: 15px;margin-top: 10px;" class="btn btn-primary" type="submit" name="action" value="reply">Gửi phản hồi</button>
+                                </div>
                             </div>
-
-
-                        </div>
+                        </form>
                     </div>
-
-
                 </div>
-
-
             </div>
         </main>
-
     </div>
 
     <!--            End Content-->

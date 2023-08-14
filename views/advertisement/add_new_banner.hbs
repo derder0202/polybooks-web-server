@@ -17,6 +17,7 @@
     <link rel="icon" type="image/x-icon" href="/assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src="/js/validatebanner.js"></script>
 
 </head>
 <body class="nav-fixed">
@@ -42,7 +43,7 @@
                             <div class="col-12 col-xl-auto mb-3">
                                 <a class="btn btn-sm btn-light text-primary" href="/AdvertisingManagement">
                                     <i class="me-1" data-feather="arrow-left"></i>
-                                    Trở lại trang banner
+                                    Trở lại
                                 </a>
                             </div>
                         </div>
@@ -56,42 +57,63 @@
                         <div class="card-header">Thêm mới Banner</div>
                         <div class="card-body">
 
-                            <form action="/AdvertisingManagement/add_new_banner" method="post" >
-                                <div class="row gx-3 mb-3">
-                                    <!-- Form Group (first name)-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="small mb-1" for="userId_banner">Người dùng</label>-->
-<!--                                        <input class="form-control" id="userId_banner" type="text" placeholder="Enter your first name" name="userId_banner" />-->
-<!--                                    </div>-->
-                                    <!-- Form Group (last name)-->
-<!--                                    <div class="col-md-6">-->
-<!--                                        <label class="small mb-1" for="userId_banner">ID người dùng</label>-->
-<!--                                        <input class="form-control" id="userId_banner" type="text" placeholder="Enter your last name" name="userId_banner" />-->
-<!--                                    </div>-->
+                            <form action="/AdvertisingManagement/add_new_banner" method="post" enctype="multipart/form-data" onsubmit="return validateFormBanner()">
+                                <div class="row gx-3 mb-3">  
+                                    <div class="col-md-6">
+                                            <label class="small mb-1" for="phoneNumber">Khách hàng</label>
+                                            <input id="name" class="form-control" id="name" type="text" name="name" placeholder="Mời nhập họ tên khách hàng" />
+                                            <div id="nameError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="small mb-1" for="phoneNumber">Số điện thoại</label>
+                                            <input class="form-control" id="phone" type="text" pattern="[0-9]+" name="phone" placeholder="Nhập số điện thoại của bạn" />
+                                            <div id="phoneError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="role">Tình trạng</label>
-                                    <select name="isActive_banner" class="form-select" id="role">
-                                        <option disabled selected>Mời bạn chọn tình trạng</option>
-                                        <option value="true" data-display-value="Đang sử dụng">Đang sử dụng</option>
-                                        <option value="false" data-display-value="Chưa sử dụng">Chưa sử dụng</option>
-                                    </select>
-                                    <!--                                            <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>-->
+                                <div class="row gx-3 mb-3">  
+                                    <div class="col-md-6">
+                                            <label class="small mb-1" for="phoneNumber">Thời gian kết thúc</label>
+                                            <input class="form-control" id="endTime" type="date" name="endTime" />
+                                            <div id="endTimeError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="small mb-1" for="phoneNumber">Liên kết</label>
+                                            <input class="form-control" id="link" type="text" name="link" placeholder="Mời nhập liên kết" />
+                                            <div id="linkError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1" for="content_banner">Nội dung</label>
-                                    <input class="form-control" id="content_banner" type="text" placeholder="Enter your username" name="content_banner" />
+                                <div class="row gx-3 mb-3">  
+                                    <div class="col-md-6">
+                                            <label class="small mb-1" for="phoneNumber">Mô tả</label>
+                                            <input class="form-control" id="mota" type="text" name="description" placeholder="Mời nhập mô tả" />
+                                            <div id="motaError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label class="small mb-1" for="phoneNumber">Giá</label>
+                                            <input class="form-control" id="price" type="text" pattern="[0-9]+" name="price" placeholder="Mời nhập giá" />
+                                            <div id="priceError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
                                 </div>
-                                <label class="small mb-2" for="image_banner">Chọn banner tải lên</label>
+                                <div class="col mb-3">
+                                            <label class="small mb-1" for="phoneNumber">Địa chỉ</label>
+                                            <input class="form-control" id="diachi" type="text" name="address" placeholder="Mời nhập địa chỉ" />
+                                            <div id="diachiError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                </div>
+                                <div class="col-md-6" style="display: none;">
+                                    <label class="small mb-1" for="phoneNumber">Người tạo</label>
+                                    <input class="form-control" id="createUser" type="text" name="createUser" value="{{userId}}" disabled readonly/>    
+                                </div>
+                                
+                                <label class="small mb-2" for="image">Chọn banner tải lên</label>
                                 <div>
-                                        <input type="file" id="image_banner" name="image_banner" accept="image/*" onchange="previewImage(event)" class="mb-2">
-                                        <img id="preview" src="#"  class="d-block w-100 mb-2">
+                                    <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)" class="mb-2">
+                                    <img id="preview" src="#"  class="d-block w-100 mb-2">
                                 </div>
-
-                                <button type="submit">Thêm mới</button>
-
+                                {{!-- <div class="card-body text-center"> --}}
+                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Thêm mới</button>
+                                {{!-- </div> --}}
+                                
                             </form>
-
                         </div>
                     </div>
                 </div>

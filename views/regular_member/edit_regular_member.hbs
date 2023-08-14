@@ -18,6 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="/js/jscustom.js"></script>
     <script src="/js/listmember.js"></script>
+    <script src="/js/dialogmember.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -42,7 +43,7 @@
                             <div class="col-12 col-xl-auto mb-3">
                                 <a onclick="confirmRedirectToRegularMembers()" class="btn btn-sm btn-light text-primary">
                                     <i class="me-1" data-feather="arrow-left"></i>
-                                    Quay lại danh sách người dùng
+                                    Quay lại
                                 </a>
                             </div>
                         </div>
@@ -77,11 +78,11 @@
                                     <label style="font-weight: bold;" class="small mb-1">Số điện thoại:</label>
                                     <span class="small mb-1">{{itemMember.phone}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
-                                    <label class="small mb-1">{{itemMember.address}}</label><br>
+                                    <label class="small mb-1">{{itemMember.address.[0].address}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Giới tính:</label>
                                     <label id="genderValue" class="small mb-1">{{itemMember.gender}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Ngày sinh:</label>
-                                    <label class="small mb-1">{{itemMember.birthday}}</label><br>
+                                    <label class="small mb-1">{{formatDateOfBirth itemMember.birthday}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Vai trò:</label>
                                     <label id="roleValue" class="small mb-1">{{itemMember.role}}</label><br>
                                 </div>
@@ -112,19 +113,13 @@
                                     </div>
 
                                     <!-- Form Group (Ngày Sinh)-->
-                                    {{!-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <label class="small mb-1" for="inputBirthday">Ngày sinh</label>
                                         <input name="member_birthday" class="form-control" id="inputBirthday" type="date"  placeholder="Nhập ngày sinh của bạn"/>
                                         <div id="birthdayError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                    </div> --}}
+                                    </div>
                                 </div>
-                                <!-- Form Group (Địa chỉ)-->
-                                {{!-- <div class="mb-3">
-                                        <label class="small mb-1" for="address">Địa chỉ</label>
-                                        <input name="member_address" class="form-control" id="address" type="text" placeholder="Nhập địa chỉ của bạn"/>
-                                        <div id="addressError" class="error-message" style="color: red; font-size: 12px;"></div>
-                                </div> --}}
-                                <!-- Form Row-->
+                                
                                 <div class="row gx-3 mb-3">
 
                                     {{!-- <div class="col-md-6">
@@ -142,6 +137,18 @@
                                             </select>
                                         <div id="genderError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                        var genderSelect = document.getElementById("gender");
+                                        var itemVipMembergender = "{{itemMember.gender}}"; // Giả sử giá trị là một chuỗi số hợp lệ (VD: "0" hoặc "1")
+
+                                        // Kiểm tra nếu có giá trị hợp lệ
+                                        if (itemVipMembergender) {
+                                            // Đặt giá trị vào select
+                                            genderSelect.value = itemVipMembergender;
+                                        }
+                                    });
+                                    </script>
                                     <!-- Form Group (Role)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="role">Vai trò</label>
@@ -152,13 +159,26 @@
                                             </select>
                                         <div id="roleError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                        var roleSelect = document.getElementById("role");
+                                        var itemVipMemberRole = "{{itemMember.role}}"; // Giả sử giá trị là một chuỗi số hợp lệ (VD: "0" hoặc "1")
+
+                                        // Kiểm tra nếu có giá trị hợp lệ
+                                        if (itemVipMemberRole) {
+                                            // Đặt giá trị vào select
+                                            roleSelect.value = itemVipMemberRole;
+                                        }
+                                    });
+                                    </script>
                                 </div>
                                 <!-- Save changes button-->
                                 <div class="card-body text-center">
-                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Lưu thông tin</button>
+                                    <button id="saveButton" style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Lưu thông tin</button>
                                     <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
                                 </div>
                             </form>
+                            
                             </div>
                         </div>
                     </div>

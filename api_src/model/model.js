@@ -1,3 +1,4 @@
+const { create } = require('hbs');
 const mongoose = require('mongoose');
 
 //change
@@ -8,6 +9,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String , default:"" },
     address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
     avatar: { type: String },
+    imageCover: { type: String },
     gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
     birthday: { type: Date , default:"" },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
@@ -20,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     sellerReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
     reports: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Report' }],
+    withdrawRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WithdrawRequest'}],
     active: {type: Boolean, default:true},
     location: {
         type: [Number],
@@ -29,7 +32,8 @@ const UserSchema = new mongoose.Schema({
     updateTotalPost:{type:Date},
     token:{type:String},
     rating:{type: Number,default: 0},
-    coin:{type:Number,default: 0}
+    coin:{type:Number,default: 0},
+    depositHistories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DepositHistory'}],
 }, {timestamps: true});
 
 UserSchema.statics.calculateRolePercentage = function(callback) {
@@ -101,6 +105,9 @@ const ShopSchema = new mongoose.Schema({
         coverImage: {
             type: String
         },
+        endTime:{
+            type:Date
+        },
         posts: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -133,7 +140,7 @@ const PostSchema = new mongoose.Schema({
     bookSize: { type: String, default:"" },
     language: { type: String, default:"" },
     startTime:{type:Date},
-    endTime:{type:Date,default:Date.now()+ (30 * 24 * 60 * 60 * 1000)},
+    endTime:{type:Date,default: new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)).setHours(24, 0, 0, 0)},
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     publisher: { type: mongoose.Schema.Types.ObjectId, ref: 'Publisher' },
@@ -141,6 +148,7 @@ const PostSchema = new mongoose.Schema({
     address: {type:String, default: ""},
     isbn: {type:String,default:""},
     postStatus: {type:String,default:"0"},
+    replyToPost:{type:String},
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
     startPrice: {type:String},
     endPrice: {type:String},
@@ -159,7 +167,6 @@ PostSchema.pre('save'||'updateMany'||'updateOne',async function (next) {
         await this.populate('allDiscounts')
         let latestUpdatedAt = null;
         let latestDiscount = null;
-
         if((this.get('allDiscounts') && this.get('allDiscounts').length > 0)){
             for(let discount of this.get('allDiscounts')){
                 if(discount.isActive === true){
@@ -235,17 +242,10 @@ const BillSchema = new mongoose.Schema({
     buyer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
+    reviewBuyer: {type: Number, default:0},
+    reviewSeller: {type: Number, default:0},
+    payment:{type:Number,default:0}
 },{timestamps:true});
-
-async function updateBillStatus() {
-    const cutoffDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    await Bill.updateMany(
-        { updatedAt: { $lt: cutoffDate }, status: 2 },
-        { status: 3 }
-    );
-}
-// Run the updateBillStatus function once a day
-setInterval(updateBillStatus, 24 * 60 * 60 * 1000);
 
 BillSchema.pre('save',async function (next) {
     try {
@@ -312,45 +312,45 @@ BillSchema.statics.countByCategory = function() {
     ],);
 };
 
-ShopSchema.pre('save',async function (next) {
-    try {
-        //if(this.isModified("reviews")){
-            await this.populate('reviews','rating')
-            const reviews = this.reviews
-            if (reviews.length === 0) {
-                this.rating = 0;
-            } else {
-                const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                this.rating = totalRating / reviews.length;
-            }
-            next();
-       // }
-    } catch (err) {
-        next(err);
-    }
-})
+// ShopSchema.pre('save',async function (next) {
+//     try {
+//         //if(this.isModified("reviews")){
+//             await this.populate('reviews','rating')
+//             const reviews = this.reviews
+//             if (reviews.length === 0) {
+//                 this.rating = 0;
+//             } else {
+//                 const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+//                 this.rating = totalRating / reviews.length;
+//             }
+//             next();
+//        // }
+//     } catch (err) {
+//         next(err);
+//     }
+// })
 
 
-UserSchema.pre('save',async function (next) {
-    try {
-        //if(this.isModified("reviews")){
-        await this.populate('sellerReviews','rating')
-        await this.populate('buyerReviews','rating')
-            //await this.populate({path:'reviews',select:'rating',strictPopulate:false})
-            const reviews = [...this.sellerReviews,...this.buyerReviews]
-                if (reviews.length === 0) {
-                    this.rating = 0;
-                } else {
-                    const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                    this.rating = totalRating / reviews.length;
-                }
-
-            next();
-        //}
-    } catch (err) {
-        next(err);
-    }
-})
+// UserSchema.pre('save',async function (next) {
+//     try {
+//         //if(this.isModified("reviews")){
+//         await this.populate('sellerReviews','rating')
+//         await this.populate('buyerReviews','rating')
+//             //await this.populate({path:'reviews',select:'rating',strictPopulate:false})
+//             const reviews = [...this.sellerReviews,...this.buyerReviews]
+//                 if (reviews.length === 0) {
+//                     this.rating = 0;
+//                 } else {
+//                     const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+//                     this.rating = totalRating / reviews.length;
+//                 }
+//
+//             next();
+//         //}
+//     } catch (err) {
+//         next(err);
+//     }
+// })
 
 const reportSchema = new mongoose.Schema({
     userId: {
@@ -394,9 +394,11 @@ const discountSchema = new mongoose.Schema({
     },//neu co cai nay thi sach giam gia
     title: {
         type: String,
+        default: ""
     },
     description: {
         type: String,
+        default: ""
     },
     forAll: {
         type: Boolean,
@@ -408,30 +410,9 @@ const discountSchema = new mongoose.Schema({
     }, // theo %
     isActive: {
         type: Boolean,
-        default: true
+        default: false
     }
 },{timestamps:true});
-
-const coinChangeHistory = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    money: {
-        type: Number,
-        required: true
-    },
-    status: {
-        type: Number,
-        default:0
-    },
-    description: {
-        type: String,
-        required: true
-    },
-},{timestamps: true});
-
 // Schema cho lịch sử đặt cọc
 const depositHistorySchema = new mongoose.Schema({
     userId: {
@@ -456,24 +437,78 @@ const depositHistorySchema = new mongoose.Schema({
         //required: true
     },
 },{timestamps: true});
-const   bannerSchema = new mongoose.Schema({
-    name: {
-        type:String,
-        required: true,
+
+const withdrawRequestSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    content: {
+    withdrawAmount: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: Number,
+        default: 0
+    },
+    description: {
+        type: String,
+    },
+    bankNumber: {
+        type: String,
+    },
+    bankCode:{
+        type:String
+    },//VCB
+    bankName:{
+        type:String
+    }
+}, { timestamps: true });
+
+const bannerSchema = new mongoose.Schema({
+    name: {
+        type:String,  
+        required: true
+    },
+    phone:{
+        type:String,
+        required: true
+    },
+    address:{
+        type:String,  
+        required: true
+    },
+    link: {
+        type: String, 
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    endTime: {
+        type: Date,
+        
+    },
+    price: {
         type: String,
         required: true
     },
     image: {
         type: String,
-        required: true
     },
     isActive: {
         type: Boolean,
         default:true
+    },
+    createUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', 
+        required: true
     }
-});
+},{timestamps : true}
+);
 const AddressSchema = new mongoose.Schema({
     name: { type: String, required: true },
     address: { type: String, required: true },
@@ -496,11 +531,13 @@ const Bill = mongoose.model('Bill', BillSchema);
 const Report= mongoose.model('Report', reportSchema)
 const Discount = mongoose.model('Discount', discountSchema)
 const DepositHistory = mongoose.model('DepositHistory', depositHistorySchema)
-const CoinChangeHistory = mongoose.model('CoinChangeHistory', coinChangeHistory)
+const WithdrawRequest = mongoose.model('WithdrawRequest', withdrawRequestSchema);
+
+
 //const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = {
-    CoinChangeHistory,
+    WithdrawRequest,
     Address,
     Banner,
     Report,

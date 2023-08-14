@@ -6,13 +6,14 @@ const userController = require('../controller/user_controller');
 
 const authMiddleware = require("../middleware/authMiddleware");
 const {Bill, User} = require("../model/model");
+const authenToken = require("../middleware/authentication");
 // GET /users
 router.post('/filter', userController.getUsers);
 
 router.post('/login', userController.login);
 
-router.get('/test',async (req,res)=>{
-  res.json('blabla')
+router.get('/test',authenToken,async (req,res)=>{
+  res.json(req.user)
 });
 // GET /users/:id
 router.get('/:id', userController.getUserById);
@@ -22,6 +23,8 @@ router.post('/', userController.createUser);
 router.put('/:id', userController.updateUser);
 // DELETE /users/:id
 router.delete('/:id', userController.banAccount);
+
+router.get('/address/:id', userController.getAddressById);
 
 router.post('/checkPhoneNumber', userController.checkPhoneNumber);
 router.post('/changePasswordByPhone', userController.changePasswordByPhone);
@@ -42,5 +45,8 @@ router.get('/:id/reviews', userController.getReviewsByUser);
 router.get('/:id/notification', userController.getNotificationsByUser);
 router.get('/:id/buyBills', userController.getBuyBillsByUser);
 router.get('/:id/sellBills', userController.getSellBillsByUser);
+router.get('/:id/withdrawRequests', userController.getWithdrawRequestsByUser);
+router.get('/:id/depositHistories', userController.getDepositHistoryByUser);
+router.get('/:id/reports', userController.getReportsByUser);
 
 module.exports = router;

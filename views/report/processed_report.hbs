@@ -20,13 +20,66 @@
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
+
 <div id="layoutSidenav">
     <!--            Sidebar-->
     {{> sidebar}}
     <!--            End Sidebar-->
 
     <!--          Start Content-->
+    <div id="layoutSidenav_content">
+        <main><!-- Main page content-->
 
+            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                <div class="container-xl px-4">
+                    <div class="page-header-content">
+                        <div class="row align-items-center justify-content-between pt-3">
+                            <div class="col-auto mb-3">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="flag"></i></div>
+                                    Báo cáo chờ xử lý
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="container-fluid px-4">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Người báo cáo</th>
+                                <th>Nhận xét</th>
+                                <th>Nội dung</th>
+                                <th>Trả lời report</th>
+                                <th>Thời gian</th>
+                            </tr>
+                            </thead>
+                            
+                            <tbody>
+                            {{#each listprocessedReport}}
+                            <tr>
+                                <td>
+                                    {{this.userId.fullName}}
+                                </td>
+                                <td>        
+                                    {{this.feedback}}
+                                </td>
+                                <td>{{this.content}}</td>
+                                <td>{{this.replyReport}}</td>
+                                <td>{{formatTime this.createdAt}}</td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
 
     <!--            End Content-->
 

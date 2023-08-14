@@ -18,6 +18,17 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="../js/listmember.js"></script>
+    {{!-- <style>
+    .time {
+        position: relative;
+        {{!-- left: 50px; --}}
+        {{!-- text-align: center; --}}
+    }
+    .test{
+        position: relative;
+         top: 20px;
+    }
+</style> --}}
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -57,12 +68,12 @@
                                 <th>Trạng thái</th>
                                 <th>Giá khởi điểm</th>
                                 <th>Giá hiện tại</th>
-                                <th>Kết thúc</th>
-                                <th>Actions</th>
+                                <th>Thời gian diễn ra</th>
+                                {{!-- <th>Actions</th> --}}
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each documentLists}}
+                            {{#each documentList}}
                             <tr>
                                 <td>{{this.seller.fullName}}</td>
                                 <td>
@@ -73,13 +84,15 @@
                                         {{this.bookStatus}}
                                     </span>
                                 </td>
-                                <td><h4 class="text-danger">{{this.startPrice}}đ</h4></td>
-                                <td><h4 class="text-danger">{{this.endPrice}}đ</h4></td>
-                                <td><h4 class="text-primary">{{this.endTime}}</h4></td>
+                                <td><h4 class="text-danger">{{formatCurrency this.startPrice}}</h4></td>
+                                <td><h4 class="text-danger">{{formatCurrency this.endPrice}}</h4></td>
                                 <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                    <h4 class="text-primary">{{formatTimes roundedTimeDifference}} phút</h4>
                                 </td>
+                                {{!-- <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2 test" href="editUser"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark test" href="#!"><i data-feather="trash-2"></i></a>
+                                </td> --}}
                             </tr>
                             {{/each}}
                             </tbody>

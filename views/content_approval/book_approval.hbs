@@ -20,8 +20,8 @@
 
     <script src="../js/listposts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
+    <script src="../js/dialog.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -91,7 +91,6 @@
                                 <th>Người đăng</th>
                                 <th>Tên sách</th>
                                 <th>Thể loại</th>
-                                
                                 <th>Bán/Miễn phí</th>
                                 <th>Thời gian đăng</th>
                                 <th>Xem tin</th>
@@ -119,7 +118,10 @@
                                     </td>
                                 </tr>
                             {{/each}}
-                            
+                            <!-- Thêm container cho thông báo Toast -->
+                            <div class="toast" id="toast">
+                            <div class="toast__message"></div>
+                            </div>
 
                             </tbody>
                         </table>

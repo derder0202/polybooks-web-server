@@ -3,9 +3,17 @@ const User = require("../api_src/model/model").User;
 const vipMembersController = {
     listVipMembers: async (req,res)=>{
         try {
-
-            const listUsersVip = await User.find({role : 1}).populate({path:'address',populate:{path:'name'}});
-            res.render('vip_member/list_vip_member',{ listUsersVip});
+            const listUsersVip = await User.find({role : 1});
+            const userName = req.user.fullName;
+            const userEmail = req.user.email;
+            res.render('vip_member/list_vip_member',{
+                partials: {
+                    nav_header: 'partials/nav_header'
+                },
+                listUsersVip,
+                userName,
+                userEmail
+            });
         } catch (error) {
             console.error(error);
             res.status(500).send('Lỗi khi lấy danh sách người dùng');
@@ -13,7 +21,7 @@ const vipMembersController = {
     },
     formEditVipMember: async (req,res)=>{
         console.log(req.params)
-        let itemVipMember = await User.findById(req.params.id)
+        let itemVipMember = await User.findById(req.params.id).populate('address')
             .exec()
             .catch(function (err){
                 console.log(err);
@@ -22,7 +30,16 @@ const vipMembersController = {
         if (itemVipMember == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('vip_member/edit_vip_member',{itemVipMember});
+        const userName = req.user.fullName;
+        const userEmail = req.user.email;
+        res.render('vip_member/edit_vip_member',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            itemVipMember,
+            userName,
+            userEmail
+        });
     },
     postEditVipMember: async (req,res)=>{
         try {

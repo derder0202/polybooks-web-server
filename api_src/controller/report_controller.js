@@ -1,9 +1,9 @@
  // Tạo báo cáo mới
-const {Report} = require("../model/model");
+const {Report, User} = require("../model/model");
  const createReport = async (req, res) => {
   try {
-    const { userID, content, status, feedback, attachedFiles } = req.body;
      const report = new Report(req.body);
+     await User.findByIdAndUpdate(report.userId,{$push:{reports: report._id}})
      await report.save();
      res.status(200).json(report);
   } catch (error) {
@@ -14,7 +14,7 @@ const {Report} = require("../model/model");
  // Lấy tất cả báo cáo
 const getAllReports = async (req, res) => {
   try {
-    const reports = await Report.find().populate('userID', 'name email');
+    const reports = await Report.find().populate('userId', 'name email');
      res.status(200).json(reports);
   } catch (error) {
     console.log(error);
@@ -58,6 +58,7 @@ const deleteReport = async (req, res) => {
      if (!report) {
       return res.status(404).json({ success: false, message: 'Report not found' });
     }
+      await User.findByIdAndUpdate(report.userId,{$pull:{reports: report._id}})
      await report.deleteOne();
      res.status(200).json({ success: true, message: 'Report deleted successfully' });
   } catch (error) {

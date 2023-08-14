@@ -55,10 +55,10 @@
                                     Quản lý banner
                                 </h1>
                             </div>
-                            <div class="col-12 col-xl-auto mb-3">
+                           <div class="col-12 col-xl-auto mb-3">
                                 <a class="btn btn-sm btn-light text-primary" href="/AdvertisingManagement/add_new_banner">
-                                    <i class="me-1" data-feather="file-plus"></i>
-                                    Thêm Mới Banner
+                                   <img style="width: 15px;height: 15px;margin-right: 3px;" src="assets/img/illustrations/profiles/blueuser.png"></img>
+                                    Thêm Mới
                                 </a>
                             </div>
                         </div>
@@ -72,47 +72,33 @@
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Người dùng</th>
-                                <th>Nội Dung</th>
+                                <th>Người đăng</th>
+                                <th>Khách hàng</th>
+                                <th>Số điện thoại</th>
+                                <th>Giá</th>
+                                <th>Ngày hết hạn</th>
                                 <th>Banner</th>
-                                <th>Trạng thái</th>
                                 <th>Hành động</th>
                             </tr>
                             </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Người dùng</th>
-                                <th>Nội Dung</th>
-                                <th>Banner</th>
-                                <th>Trạng thái</th>
-                                <th>Hành động</th>
-                            </tr>
-                            </tfoot>
+                            
                             <tbody>
                                {{#each listBanner}}
                                    <tr>
-                                       <td>
-                                           <div class="d-flex align-items-center">
-                                                {{ this.userId}}
-                                           </div>
-                                       </td>
-                                       <td> {{this.content}}</td>
+                                       <td>{{this.createUser.fullName}}</td>
+                                       <td>{{this.name}}</td>
+                                       <td>{{this.phone}}</td>
+                                       <td>{{formatCurrency this.price}}</td>
+                                       <td>{{formatDateOfBirth this.endTime}}</td>
                                        <td>
                                            <div class=" me-2" style="width: 250px;height: 150px" >
                                                <img class="img-fluid" style="object-fit: fill" src=" {{this.image}}" /></div>
-
                                        </td>
                                        <td>
-                                           <span id="isActiveValue" class="badge bg-green-soft text-green"> {{this.isActive}}</span>
-                                       </td>
-
-                                       <td>
-                                           <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/AdvertisingManagement/edit_banner/{{this._id}}"><i data-feather="edit"></i></a>
-                                           <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" ><i data-feather="trash-2"></i></a>
+                                           <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/AdvertisingManagement/banner_details/{{this._id}}"><i data-feather="eye"></i></a> 
                                        </td>
                                    </tr>
                                {{/each}}
-
                             </tbody>
                         </table>
                     </div>

@@ -28,7 +28,20 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <script src="/js/jscustom.js"></script>
-    
+     <script src="/js/dialogautionpost.js"></script>
+    <style>
+    /* Thiết lập giao diện cho thẻ input khi có thuộc tính disabled */
+    .abc[disabled] {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 6px 12px;
+        color: #495057;
+    }
+    .error-message {
+        color: red; /* Màu chữ đỏ cho thông báo lỗi */
+    }
+    </style>
 
 </head>
 <body class="nav-fixed">
@@ -144,9 +157,19 @@
                                         <!-- Form Group (Tình trạng)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputLastName">Tình trạng</label>
-                                            <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{auctionData.bookStatus}}" disabled readonly/>
+                                            <input class="form-control" id="statussValue" type="text" placeholder="Enter your last name" value="{{auctionData.bookStatus}}" disabled readonly/>
                                         </div>
-                                       
+                                       <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            const statusInput = document.getElementById("statussValue");
+                                            const bookStatus = statusInput.value;
+                                            if (bookStatus === "0") {
+                                            statusInput.value = "Mới";
+                                            } else {
+                                            statusInput.value = "Cũ";
+                                            }
+                                        });
+                                       </script>
                                         <!-- Form Group (Giá bán)-->
                                         <div class="col-md-6">
                                             <label class="small mb-1" for="inputBirthday">Giá bán</label>
@@ -163,17 +186,24 @@
                                         <label class="small mb-1" for="inputUsername">Địa chỉ bán</label>
                                         <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="{{auctionData.address}}" disabled readonly/>
                                     </div>
-                                    
+                                    {{!-- <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Lý do không duyệt bài</label>
+                                        <input class="form-control" type="text" id="reasonInput" name="reason" value="">
+                                    </div> --}}
                                     <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Lý do không duyệt bài</label>
+                                        <input class="form-control" type="text" id="reasonInput" name="reason" value="">
+                                        <span class="error-message" id="reasonError"></span>
                                     </div>
                                     <!-- Save changes button-->
                                     {{!-- <a style="margin-top: 30px;" class="btn btn-primary" type="button" href="/AutionApproval">Duyệt bài</a> --}}
                                     <div class="card-body text-center">
-                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="duyet">Duyệt bài</button>
-                                    <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="khongduyet">Không duyệt</button>
+                                    <button style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit" name="action" value="duyet" onclick="approvePost()">Duyệt bài</button>
+                                    <button style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="submit" name="action" value="khongduyet" onclick="rejectPost()">Không duyệt</button>
                                 </div>
                                 </form>
-
+                                
+                                
                             </div>
                         </div>
                     </div>

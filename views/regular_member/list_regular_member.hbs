@@ -17,6 +17,7 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="../js/listmember.js"></script>
+    <script src="../js/dialog.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -52,19 +53,7 @@
             <div class="container-fluid px-4">
                 <div class="card">
                     <div class="card-body">
-                        <label style="font-weight: bold;margin-bottom: 10px;">Bộ Lọc Tìm Kiếm</label><br>
-                        <div class="row gx-3 mb-3">
-                                <!-- Form Group (Ngày Sinh)-->
-                            <div class="col-md-6">
-                                <select  style="width: 200px;" class="form-select" id="gender">
-                                        <option disabled selected value="" style="font-size: 15px; font-family: Arial, sans-serif;">Chọn giới tính</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Tất cả</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nam</option>
-                                        <option style="font-size: 15px; font-family: Arial, sans-serif;">Nữ</option>
-                                </select>
-                            </div>
-                        </div>
-                                <hr style="border-top: 1px solid #828080; height: 0.5px;margin-top: 20px;">
+                    
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
@@ -75,7 +64,7 @@
                                 
                                 <th>Giới tính</th>
                                 <th>Ngày sinh</th>
-                                <th>Vài trò</th>
+                                <th>Vai trò</th>
                                 <th>Hành động</th>
                             </tr>
                             </thead>
@@ -99,11 +88,14 @@
                                 </td>
                                 <td>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member/{{this._id}}"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#"><i data-feather="lock"></i></a>
                                 </td>
+                                
                             </tr>
                             {{/each}}
-                            
+                            <div class="toast" id="toast">
+                            <div class="toast__message"></div>
+                            </div>
                             
                             </tbody>
                             
@@ -127,7 +119,6 @@
     </div>
 
     <!--            End Content-->
-
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>

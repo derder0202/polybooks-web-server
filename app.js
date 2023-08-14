@@ -53,7 +53,8 @@ const admanagementRouter = require('./routes/admanagement');
 const statisticalRouter = require('./routes/statistical');
 const authenticationRouter = require('./routes/authentication');
 const autionApprovalRouter = require('./routes/autionapproval');
-
+const shopRouter = require('./routes/shop');
+const rechargeHistoryRouter = require('./routes/rechargehistory');
 
 const apiNotificationRouter =  require('./api_src/route/notification')
 const apiUserRouter = require('./api_src/route/user')
@@ -68,8 +69,10 @@ const apiReportRouter = require('./api_src/route/report')
 const apiBannerRouter = require('./api_src/route/banner')
 const apiPublisherRouter = require('./api_src/route/publisher')
 const apiBillRouter = require('./api_src/route/bill')
+const apiWithdrawRequest = require('./api_src/route/withdraw_request')
+
 const passport = require("passport");
-const {User} = require("./api_src/model/model");
+const {User, Bill, Post} = require("./api_src/model/model");
 
 
 
@@ -88,9 +91,31 @@ hbs.registerHelper('formatTime', function (date){
     const formattedDate = moment(date).format('HH:mm:ss DD-MM-YYYY ');
     return new hbs.SafeString(formattedDate);
 });
+
 hbs.registerHelper('formatDateOfBirth', function (date){
     const formattedDate = moment(date).format('DD-MM-YYYY ');
     return new hbs.SafeString(formattedDate);
+});
+hbs.registerHelper('formatCurrency', function (amount) {
+  const formatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
+  });
+  return formatter.format(amount);
+});
+hbs.registerHelper('formatTimes', function (time) {
+  let totalSeconds = time;
+  if (typeof time !== 'number') {
+    if (!(time instanceof Date)) {
+      time = new Date(time);
+    }
+    totalSeconds = Math.floor(time.getTime() / 1000);
+  }
+  const hours = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2);
+  const minutes = (totalSeconds % 60).toString().padStart(2);
+
+  return `${hours} giờ ${minutes}`;
 });
 
 
@@ -150,6 +175,8 @@ app.use('/ProcessedReport',processedreportRouter)
 app.use('/AdvertisingManagement',admanagementRouter)
 app.use('/Statistical',statisticalRouter)
 app.use('/Login',authenticationRouter)
+app.use('/Shop',shopRouter)
+app.use('/RechargeHistory',rechargeHistoryRouter)
 
 
 //API
@@ -166,14 +193,55 @@ app.use('/api/banners',apiBannerRouter)
 app.use('/api/publishers',apiPublisherRouter)
 app.use('/api/bills',apiBillRouter)
 app.use('/api/notifications',apiNotificationRouter)
+app.use('/api/withdrawRequests',apiWithdrawRequest)
 
+// async function checkEveryday(){
+//     const cutOfDate = new Date(Date.now() - 7*24*60 * 60 * 1000) // 64c7c4d93adce43a06c79732
+//     // cutOfDate.setHours(cutOfDate.getHours()+5) // mui gio
+//     await Bill.updateMany(
+//         {updatedAt:{$lte: cutOfDate}, status: 2}, // filter
+//         {status:3}
+//     )
+//     // const bill  = await Bill.findById('64c7c4d93adce43a06c79732')
+//     // console.log(new Date(bill.updatedAt))
+//     // console.log(cutOfDate)
+//     // const newDate = new Date()
+//
+// }
+// setInterval(checkEveryday,24*60*60*1000)  // 24*60*60*1000 => 1 ngay`
 
-
+function runAtMidnight(callback) {
+  const now = new Date();
+  const midnight = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1, // Next day at 00:00:00
+    0, // Hours
+    0, // Minutes
+    0 // Seconds
+  );
+  const timeUntilMidnight = midnight - now;
+   setTimeout(() => {
+    callback();
+    setInterval(callback, 24 * 60 * 60 * 1000); // Repeat every 24 hours
+  }, timeUntilMidnight);
+}
+ // Sử dụng hàm runAtMidnight để thực thi một đoạn mã vào nửa đêm
+runAtMidnight(async () => {
+    const cutOfDate = new Date(Date.now() - 7*24*60 * 60 * 1000) // 64c7c4d93adce43a06c79732
+    // cutOfDate.setHours(cutOfDate.getHours()+5) // mui gio
+    await Bill.updateMany(
+        {updatedAt:{$lte: cutOfDate}, status: 2}, // filter
+        {status:3}
+    )
+    const today = new Date()
+    Post.updateMany({endTime: {$lte: today},postStatus:"1"},{postStatus:"2"})
+    if(today.getDate() === 1){
+        User.updateMany({},{totalPost: 0})
+    }
+});
 app.use('/policy',(req,res)=>{
     res.render('policy')
-})
-app.use('/test',(req,res)=>{
-    res.render('test')
 })
 
 // catch 404 and forward to error handler
@@ -191,5 +259,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;

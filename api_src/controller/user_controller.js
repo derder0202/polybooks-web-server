@@ -2,7 +2,7 @@ const {User, Address} = require("../model/model");
 const multer = require("multer")
 const admin = require("firebase-admin");
 const upload = require("../upload_image").single("avatar");
-
+const jwt = require('jsonwebtoken');
 
 const userController = {
     getUsers : async (req, res) => {
@@ -39,12 +39,28 @@ const userController = {
             res.status(500).json({ message: 'Error getting user', error });
         }
     },
+    getAddressById:async (req, res) => {
+        const { id } = req.params;
+        try {
+            const address = await Address.findById(id)
+            if(address){
+                res.status(200).json(address);
+            } else {
+                res.status(404).json({message: "address is not exists"})
+            }
+
+        } catch (error) {
+            res.status(500).json({ message: 'Error getting user', error });
+        }
+    },
     createUser : async (req, res) => {
         try {
             const newUser = new User(req.body);
             const saveUser = await newUser.save()
-            res.status(200).json(saveUser)
-
+            const accessToken = jwt.sign({saveUser}, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: '1000 days',
+            });
+            res.status(200).json({data: saveUser,accessToken})
         } catch (error) {
             res.status(500).json({ message: 'Error creating user', error });
         }
@@ -124,7 +140,11 @@ const userController = {
 
             if(user){
                 if(btoa(password) === user.password){
-                    res.status(200).json({message:"Đăng nhập thành công", data: user})
+                    const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {
+                        expiresIn: '1000 days',
+                    });
+                    console.log(accessToken)
+                    res.status(200).json({message:"Đăng nhập thành công", data: user,accessToken})
                 } else {
                     res.status(404).json({message: "Sai mật khẩu"})
                 }
@@ -132,14 +152,17 @@ const userController = {
                 res.status(404).json({message: "Số điện thoại không tồn tại"})
             }
         } catch (error) {
+            console.log(error)
             res.status(500).json({ message: 'Server Error', error })
         }
     },
 
     changePasswordByPhone : async (req, res) => {
         const { phone, newPassword } = req.body;
-        const user = await User.findOne(phone);
-
+        const user = await User.findOne({phone});
+        if(!user){
+            return res.status(400).json({message: "user not found."})
+        }
         // Check if the current password matches the password in the database
         user.password = newPassword;
         await user.save();
@@ -474,6 +497,42 @@ const userController = {
             res.status(200).json(user.sellBills);
         } catch (error) {
             res.status(500).json({ message: 'Server Error' });
+        }
+    },
+    getWithdrawRequestsByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('withdrawRequests');
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.withdrawRequests);
+        } catch (error) {
+            throw error;
+        }
+    },
+    getDepositHistoryByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('depositHistories');
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.depositHistories);
+        } catch (error) {
+            throw error;
+        }
+    },
+    getReportsByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('reports');
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.reports);
+        } catch (error) {
+            throw error;
         }
     }
 }

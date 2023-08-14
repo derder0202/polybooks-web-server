@@ -83,7 +83,7 @@ const shopController = {
             if (!shop) {
                 return res.status(404).json({ error: 'Shop not found' });
             }
-            res.json({ shop });
+            res.json(shop);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -156,6 +156,7 @@ const shopController = {
             if (!shop) {
                 res.status(404).json({ error: 'Shop not found.' });
             } else {
+                await User.findByIdAndUpdate(shop.user,{shopId:null})
                 res.status(200).json({message: "Shop is deleted"});
             }
         } catch (error) {
@@ -172,7 +173,19 @@ const shopController = {
                     skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 10,
                 },
-                populate: 'bill'
+                populate: {
+                    path: 'bill',
+                    populate:[
+                        {
+                            path: 'buyer',
+                            select: 'fullName'
+                        },
+                        {
+                            path: 'posts',
+                            select: 'bookName price images'
+                        },
+                    ]
+                }
             });
             if (!shop) {
                 return res.status(404).json({ message: 'Shop not found' });
@@ -230,7 +243,6 @@ const shopController = {
         try {
             const shop = await Shop.findById(req.params.id).populate({
                 path: 'allDiscounts',
-                populate: 'categoryId'
             });
             if (!shop) {
                 return res.status(400).json('shop not found')
@@ -290,13 +302,17 @@ const shopController = {
             for (let i = 0; i < 7; i++) {
                 const currentDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
                 const nextDate = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i + 1);
-                let count = 0;
-                let totalPrice = 0;
+                let countSendBill = 0
+                let countDoneBill = 0
+                let totalPrice = 0
                 // Count posts for the current day
                 // const postsCount = await Post.countDocuments({ createdAt: { $gte: currentDate, $lt: nextDate } });
                 for (let bill of shop.sellBills){
                     if(bill.createdAt && bill.createdAt.getTime() > currentDate && bill.createdAt.getTime() < nextDate){
-                        count++;
+                        countSendBill++;
+                    }
+                    if(bill.updatedAt && bill.updatedAt.getTime() > currentDate && bill.updatedAt.getTime() < nextDate && bill.status === 3){
+                        countDoneBill++;
                         totalPrice+=bill.totalPrice
                     }
                 }
@@ -304,7 +320,7 @@ const shopController = {
                 const dayName = currentDate.toLocaleDateString('vi-VN')
 
                 // Save the count in the map
-                dataThisWeekRegularTemplate[`${dayName.substring(0, dayName.lastIndexOf('/'))}`] = {count,totalPrice};
+                dataThisWeekRegularTemplate[`${dayName.substring(0, dayName.lastIndexOf('/'))}`] = {countDoneBill,countSendBill,totalPrice};
             }
 
             res.json(dataThisWeekRegularTemplate)
@@ -321,16 +337,20 @@ const shopController = {
 
             const shop = await Shop.findById(req.params.id).populate('sellBills')
             // Iterate over each day of the week
-            let count = 0
+            let countSendBill = 0
+            let countDoneBill = 0
             let totalPrice = 0
 
             for(let bill of shop.sellBills){
                 if(bill.createdAt && bill.createdAt.getTime() > startDate && bill.createdAt.getTime() < endDate){
-                    count++;
+                    countSendBill++;
+                }
+                if(bill.updatedAt && bill.updatedAt.getTime() > startDate && bill.updatedAt.getTime() < endDate && bill.status === 3){
+                    countDoneBill++;
                     totalPrice+=bill.totalPrice
                 }
             }
-            res.json({count,totalPrice})
+            res.json({countSendBill,countDoneBill,totalPrice})
         } catch (e) {
             console.log(e)
         }

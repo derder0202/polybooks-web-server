@@ -35,14 +35,13 @@
                 <div class="card h-auto">
                     <div class="card-header">
                         <div class="dropdown mb-2">
-                        <button class="btn btn-light dropdown-toggle" id="dropdownButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hôm nay</button>
-                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item"  id="today-option">Hôm nay</a>
-                            <a class="dropdown-item"  id="week-option">Tuần trước</a>
-                            <a class="dropdown-item"  id="month-option">Tháng trước</a>
+                            <button class="btn btn-light dropdown-toggle" id="dropdownButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hôm nay</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" id="today-option" onclick="updateData('today')">Hôm nay</a>
+                                <a class="dropdown-item" id="week-option" onclick="updateData('week')">Một tuần</a>
+                                <a class="dropdown-item" id="month-option" onclick="updateData('month')">Một tháng</a>
                             </div>
                         </div>
-                        
                         <div class="">
                             <div class="row">
                                 <div class="col-sm  mb-2">
@@ -54,9 +53,25 @@
                                                     <div class="uppercase fw-bold text-primary mb-3">Tài khoản mới</div>
                                                     <div class="row">
                                                         <div class="col-3"><i class="fas fa-solid fa-user fa-lg text-gray-200"></i></div>
-                                                        <div  id="user-count" class="col-6 ml-1 h5 mt-1">{{statisticalMonth.userToday}}</div>
+                                                        <div id="dataDisplay" class="col-6 ml-1 h5 mt-1"></div>
                                                     </div>
-
+                                                </div>
+                                                <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm  mb-2">
+                                    <!-- Dashboard info Tai khoan moi-->
+                                    <div class="card border-start-lg border-start-primary h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <div class="uppercase fw-bold text-primary mb-3">Tổng số tiền nạp</div>
+                                                    <div class="row">
+                                                        <div class="col-3"><i class="fas fa-solid fa-money-check-dollar fa-lg text-gray-200"></i></div><br>
+                                                        <div style="margin-left: 30px;margin-top: -25px;color: black;" id="deposit-history"></div>                       
+                                                    </div>
                                                 </div>
                                                 <!--                                                <div class="ms-2"><i class="fas fa-solid fa-user fa-2x text-gray-200"></i></div>-->
                                             </div>
@@ -72,7 +87,7 @@
                                                     <div class="uppercase fw-bold text-success mb-3">Cửa hàng mới</div>
                                                     <div class="row">
                                                         <div class="col-3"><i class="fas fa-solid fa-shop fa-lg text-gray-200"></i></div>
-                                                        <div id="shop-count" class="col-6 h5 mt-1">{{statisticalToday.shopToday}}</div>
+                                                        <div id="shop-count" class="col-6 h5 mt-1"></div>
                                                     </div>
 
                                                 </div>
@@ -90,9 +105,8 @@
                                                     <div class="uppercase fw-bold text-danger mb-3">Sách mới đăng</div>
                                                     <div class="row">
                                                         <div class="col-3"><i class="fas fa-solid fa-book fa-lg text-gray-200"></i></div>
-                                                        <div id="book-count" class="col-6 h5 mt-1">{{statisticalMonth.postToday}}</div>
+                                                        <div id="post-count" class="col-6 h5 mt-1"></div>
                                                     </div>
-
                                                 </div>
                                                 <!--                                                <div class="ms-2"><i class="fas fa-solid fa-check fa-2x text-gray-200"></i></div>-->
                                             </div>
@@ -173,7 +187,6 @@
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>ID</th>
                                     <th>Tên thể loại</th>
                                     <th>Số lượng</th>
                                 </tr>
@@ -182,7 +195,6 @@
                                     {{#each categoryCounts}}
                                 <tr>
                                     <td id="index{{@index}}"></td>
-                                    <td>{{this._id}}</td>
                                     <td>{{this.name}}</td>
                                     <td>{{this.count}}</td>
                                 </tr>
@@ -206,10 +218,7 @@
                             
                             <div class="chart-pie mb-4 d-flex justify-content-center align-items-center">
                                 <canvas id="myPieChart" width="100%" height="50"></canvas>
-                            </div>
-                           
-                            
-                            
+                            </div>                                                   
                             <div class="mt-4 list-group list-group-flush">
                                 <div class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
                                     <div class="me-3">
@@ -235,85 +244,91 @@
     </div>
 </div>
 <script>
-    const todayOption = document.getElementById('today-option');
-    const weekOption = document.getElementById('week-option');
-    const monthOption = document.getElementById('month-option');
-    const userCountElement = document.getElementById('user-count');
-    const bookCountElement = document.getElementById('book-count');
-    const shopCountElement = document.getElementById('shop-count');
-    const sendBillsCountElement = document.getElementById('send-bill-count');
-    const completeBillCountElement = document.getElementById('complete-bill-count');
-    const dropdownButton = document.getElementById('dropdownButton');
-
-    // Hàm cập nhật số lượng người dùng
-    function updateUserCount(count) {
-        userCountElement.textContent = count;
-    }
-    function updateBookCount(count) {
-        bookCountElement.textContent= count;
-
-    }
-    function updateShopCount(count) {
-        shopCountElement.textContent = count;
-
-    }
-    function updateSendBillCount(count) {
-        sendBillsCountElement.textContent = count;
-    }
-    function updateCompleteBillCount(count) {
-        completeBillCountElement.textContent = count;
-
-    }
-
-    // Bắt sự kiện cho các lựa chọn trong dropdown
-    todayOption.addEventListener('click', () => {
-        updateUserCount('{{statisticalToday.userToday}}');
-        updateBookCount('{{statisticalToday.postToday}}');
-        updateShopCount('{{statisticalToday.shopToday}}');
-        updateSendBillCount('{{statisticalToday.sendBillsToday}}');
-        updateCompleteBillCount('{{statisticalToday.completeBillsToday}}');
-        dropdownButton.innerHTML = 'Hôm nay';
+    function formatCurrency(amount) {
+    const formatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
     });
+    return formatter.format(amount);
+    }
+    let dataToDisplay = "today"; // Default option is "Hôm nay"
+    async function updateData(option) {
+        dataToDisplay = option;
 
-    weekOption.addEventListener('click', () => {
-        updateUserCount('{{statisticalWeek.userWeek}}');
-        updateBookCount('{{statisticalWeek.postWeek}}')
-        updateShopCount('{{statisticalWeek.shopWeek}}');
-        updateSendBillCount('{{statisticalWeek.sendBillsWeek}}');
-        updateCompleteBillCount('{{statisticalWeek.completeBillsWeek}}');
+        const response = await fetch(`{{this.urls.ADD_USER_URL}}`);
+        
+        const data = await response.json();
+        const statisticalToday = data.statisticalToday;
+        const statisticalWeek = data.statisticalWeek;
+        const statisticalMonth = data.statisticalMonth;
 
-        dropdownButton.innerHTML = 'Tuần trước';
-    });
+        let dataToDisplayValue;
+        let DepositHistoryToDisplayValue;
+        let shopToDisplayValue;
+        let postToDisplayValue;
+        let sendBillToDisplayValue;
+        let completeBillToDisplayValue;
 
-    monthOption.addEventListener('click', () => {
-        updateUserCount('{{statisticalMonth.userMonth}}');
-        updateBookCount('{{statisticalMonth.postMonth}}')
-        updateShopCount('{{statisticalMonth.shopMonth}}');
-        updateSendBillCount('{{statisticalMonth.sendBillsMonth}}');
-        updateCompleteBillCount('{{statisticalMonth.completeBillsMonth}}');
+        if (dataToDisplay === "today") {
+            dataToDisplayValue = statisticalToday.userToday;
+            DepositHistoryToDisplayValue = statisticalToday.DepositHistoryToday;
+            shopToDisplayValue = statisticalToday.shopToday;
+            postToDisplayValue = statisticalToday.postToday;
+            sendBillToDisplayValue = statisticalToday.sendBillsToday;
+            completeBillToDisplayValue = statisticalToday.completeBillsToday;
+        } else if (dataToDisplay === "week") {
+            dataToDisplayValue = statisticalWeek.userWeek;
+            DepositHistoryToDisplayValue = statisticalWeek.DepositHistoryWeek;
+            shopToDisplayValue = statisticalWeek.shopWeek;
+            postToDisplayValue = statisticalWeek.postWeek;
+            sendBillToDisplayValue = statisticalWeek.sendBillsWeek;
+            completeBillToDisplayValue = statisticalWeek.completeBillsWeek;
+        } else if (dataToDisplay === "month") {
+            dataToDisplayValue = statisticalMonth.userMonth;
+            DepositHistoryToDisplayValue = statisticalMonth.DepositHistoryMonth;
+            shopToDisplayValue = statisticalMonth.shopMonth;
+            postToDisplayValue = statisticalMonth.postMonth;
+            sendBillToDisplayValue = statisticalMonth.sendBillsMonth;
+            completeBillToDisplayValue = statisticalMonth.completeBillsMonth;
+        } else {
+            return;
+        }
 
-        dropdownButton.innerHTML = 'Tháng trước';
-    });
+        const dataDisplay = document.getElementById('dataDisplay');
+        dataDisplay.textContent = dataToDisplayValue;
 
-    // Cập nhật nội dung ban đầu cho nút dropdown khi trang web được tải
-    document.addEventListener('DOMContentLoaded', () => {
-        dropdownButton.innerHTML = 'Hôm nay';
-        updateUserCount('{{statisticalToday.userToday}}');
-        updateBookCount('{{statisticalToday.postToday}}');
-        updateShopCount('{{statisticalToday.shopToday}}');
-        updateSendBillCount('{{statisticalToday.sendBillsToday}}');
-        updateCompleteBillCount('{{statisticalToday.completeBillsToday}}')
+        const DepositHistorycount = document.getElementById('deposit-history');
+        DepositHistorycount.textContent = formatCurrency(DepositHistoryToDisplayValue); 
+
+        const shopCount = document.getElementById('shop-count');
+        shopCount.textContent = shopToDisplayValue;
+
+        const postCount = document.getElementById('post-count');
+        postCount.textContent = postToDisplayValue;
+
+        const sendBillCount = document.getElementById('send-bill-count');
+        sendBillCount.textContent = sendBillToDisplayValue;
+
+        const completeBillCount = document.getElementById('complete-bill-count');
+        completeBillCount.textContent = completeBillToDisplayValue;
 
 
-    });
+        const dropdownButton = document.getElementById('dropdownButton');
+        dropdownButton.textContent = option === "today" ? "Hôm nay" : option === "week" ? "Một tuần" : "Một Tháng";
+        
+    }
+    updateData(dataToDisplay);
 </script>
+
 <script>
     let regularUserPercentage
     let vipUserPercentage
     let regularUsers
     let vipUsers
     async function getUserData() {
-        const response = await fetch("http://polybooks.store/Statistical/getVipUser");
+        
+        const response = await fetch(`{{this.urls.GET_USER_VIP_URL}}`);
         const data = await response.json();
         regularUserPercentage = data.regularUserPercentage
         vipUserPercentage = data.vipUserPercentage
@@ -373,12 +388,12 @@
     var GroupedbarChartData;
 
     async function getRegularAndAuctionBookData() {
-                const responseRegular = await fetch("http://polybooks.store/Statistical/getRegularBookDataChart");
+        const responseRegular = await fetch(`{{this.urls.GET_USER_CHART_DATA_URL}}`);
         const dataRegular = await responseRegular.json();
         labels = dataRegular.label;
         dataRegularBook = dataRegular.data;
 
-        const responseAuction = await fetch("http://polybooks.store/Statistical/getAuctionBookDataChart");
+        const responseAuction = await fetch(`{{this.urls.GET_AUCTION_BOOK_DATA_CHART_URL}}`);
         const dataAuction = await responseAuction.json();
         dataAuctionBook = dataAuction.data;
 
@@ -386,12 +401,12 @@
     }
 
     async function getBillData() {
-        const responseBill = await fetch("http://polybooks.store/Statistical/getBillDataChart");
+        const responseBill = await fetch(`{{this.urls.GET_BILL_USER_URL}}`);
         dataBill = await responseBill.json();
     }
 
     async function getThreeBillData() {
-        const responseThreeBill = await fetch("http://polybooks.store/Statistical/getBillThreeDataChart");
+        const responseThreeBill = await fetch(`{{this.urls.GET_BILL_THREE_USER_URL}}`);
         dataThreeBill = await responseThreeBill.json(); // Lưu dữ liệu đơn hoàn thành vào biến dataThreeBill
     }
 

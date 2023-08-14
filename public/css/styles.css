@@ -21044,3 +21044,53 @@ pre[class*=language-] {
 .token.variable {
   color: #ff6666;
 }
+/* ---------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: -100%; /* Đặt vị trí bên trái ngoài màn hình */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex; /* Sử dụng flexbox để điều chỉnh vị trí của Toast Message */
+  align-items: center;
+  z-index: 999;
+  animation: slideIn 0.5s forwards; /* Sử dụng animation slideIn để di chuyển từ trái sang */
+  }
+
+  /* CSS cho icon trong Toast Message */
+  .toast__icons {
+  display: inline-block;
+  margin-right: 10px;
+  }
+  .toast__icon {
+  display: inline-block;
+  margin-right: 10px;
+  }
+
+  /* CSS cho hiệu ứng ẩn đi của Toast */
+  .toast.hide {
+  animation: fadeOut 3s forwards;
+  }
+
+  /* Keyframes cho animation slideIn */
+  @keyframes slideIn {
+  0% {
+      right: -100%;
+  }
+  100% {
+      right: 20px; /* Hiển thị ở vị trí cần thiết */
+  }
+  }
+
+  /* Keyframes cho animation fadeOut */
+  @keyframes fadeOut {
+  0% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+      display: none; /* Ẩn đi sau khi hoàn thành animation */
+  }
+  }

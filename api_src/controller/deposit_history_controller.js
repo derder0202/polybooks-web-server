@@ -1,4 +1,4 @@
-const {DepositHistory} = require("../model/model");
+const {DepositHistory, User} = require("../model/model");
 const moment = require('moment');
 function sortObject(obj) {
     let sorted = {};
@@ -35,8 +35,10 @@ const getAllDepositHistories = async (req, res) => {
  const createDepositHistory = async (req, res) => {
   try {
     const depositHistory = await DepositHistory.create(req.body);
+    await User.findByIdAndUpdate(depositHistory.userId,{$push: {depositHistories: depositHistory._id}})
     res.status(200).json(depositHistory);
   } catch (error) {
+      console.log(error)
     res.status(400).json({ error: error.message });
   }
 };
@@ -53,10 +55,11 @@ const getAllDepositHistories = async (req, res) => {
   try {
     const depositHistory = await DepositHistory.findByIdAndDelete(req.params.id);
     if (!depositHistory) return res.status(404).json({ message: 'Lịch sử nạp tiền không tìm thấy' });
-    res.status(200).json({ message: 'Lịch sử nạp tiền đã được xóa thành công' });
+      await User.findByIdAndUpdate(depositHistory.userId,{$pull: {depositHistories: depositHistory._id}})
+      res.status(200).json({ message: 'Lịch sử nạp tiền đã được xóa thành công' });
   } catch (error) {
     res.status(500).json({ error: error.message });
-    };
+    }
  }
 const createPaymentLink = async (req, res)=>{
         var ipAddr = req.headers['x-forwarded-for'] ||
@@ -66,7 +69,7 @@ const createPaymentLink = async (req, res)=>{
         var tmnCode = process.env.TMN_CODE;
         var secretKey = process.env.SECRET_KEY
         var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        var returnUrl = "http://localhost:3000/api/depositHistory/VNPayReturn";
+        var returnUrl = "https://polybooks.store/api/depositHistory/VNPayReturn";
         var date = new Date();
         var createDate = moment(date).format("YYYYMMDDHHmmss") //dateFormat(date, 'yyyymmddHHmmss');
         var orderId = moment(date).format('HHmmss');
@@ -163,9 +166,9 @@ const VNPayReturn = async (req, res) => {
             //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
             if(vnp_Params['vnp_ResponseCode'] === '00'){
               // return  res.status(200).json({statusCode: vnp_Params['vnp_ResponseCode'], message})
-                return res.status(200).render('test',{statusCode: vnp_Params['vnp_ResponseCode'], message})
+                return res.status(200).render('payment_success_page',{statusCode: vnp_Params['vnp_ResponseCode'], message})
             }
-            return res.status(400).render('test',{statusCode: vnp_Params['vnp_ResponseCode'], message})
+            return res.status(400).render('cancel_deal_page',{statusCode: vnp_Params['vnp_ResponseCode'], message})
         } else{
             res.status(400).json({code: '97'})
         }

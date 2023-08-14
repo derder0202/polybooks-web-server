@@ -14,14 +14,21 @@ function confirmRedirectToVipMembers() {
     var confirmLeave = confirm("Bạn có chắc chắn muốn rời khỏi trang này không?"); // Hiển thị hộp thoại xác nhận
 
     if (confirmLeave) {
-        window.location.href = "/VipMembers"; // Nếu người dùng đồng ý, chuyển hướng tới "list_regular_member"
+        window.location.href = "/VipMembers"; 
     }
 }
 function confirmRedirectBookApproval() {
     var confirmLeave = confirm("Bạn có chắc chắn muốn rời khỏi trang này không?"); // Hiển thị hộp thoại xác nhận
 
     if (confirmLeave) {
-        window.location.href = "/BookApproval"; // Nếu người dùng đồng ý, chuyển hướng tới "list_regular_member"
+        window.location.href = "/BookApproval"; 
+    }
+}
+function confirmRedirectShop() {
+    var confirmLeave = confirm("Bạn có chắc chắn muốn rời khỏi trang này không?"); // Hiển thị hộp thoại xác nhận
+
+    if (confirmLeave) {
+        window.location.href = "/Shop"; 
     }
 }
 function clearInputs() {
@@ -50,12 +57,9 @@ function validateForm() {
     var email = document.getElementById('email').value;
     // var address = document.getElementById('address').value;
     var gender = document.getElementById('gender').value;
-    // var birthday = document.getElementById('inputBirthday').value;
+    var birthday = document.getElementById('inputBirthday').value;
     var role = document.getElementById('role').value;
-    var phone = document.getElementById('phoneNumber').value;
-
     
-
     // Xóa thông báo lỗi trước đó
     clearErrorMessages();
 
@@ -69,6 +73,7 @@ function validateForm() {
         displayErrorMessage('emailError', 'Vui lòng nhập email');
         isValid = false;
     }
+    
     // if (address === '') {
     //     displayErrorMessage('addressError', 'Vui lòng nhập địa chỉ');
     //     isValid = false;
@@ -77,18 +82,15 @@ function validateForm() {
         displayErrorMessage('genderError', 'Vui lòng nhập giới tính');
         isValid = false;
     }
-    // if (birthday === '') {
-    //     displayErrorMessage('birthdayError', 'Vui lòng nhập ngày sinh');
-    //     isValid = false;
-    // }
+    if (birthday === '') {
+        displayErrorMessage('birthdayError', 'Vui lòng nhập ngày sinh');
+        isValid = false;
+    }
     if (role === 'Mời bạn chọn vai trò') {
         displayErrorMessage('roleError', 'Vui lòng chọn vai trò');
         isValid = false;
     }
-    if (phone === '') {
-        displayErrorMessage('phoneError', 'Vui lòng nhập số điện thoại');
-        isValid = false;
-    }
+   
     return isValid;
 }
 

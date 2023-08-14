@@ -1,113 +1,78 @@
-const {User} = require("../api_src/model/model");
 const multer = require("multer");
 const admin = require("firebase-admin");
-const Banner = require("../api_src/model/model").Banner;
+const upload = require("../api_src/upload_image").single("image");
+const {Banner,User} = require("../api_src/model/model");
 
 const adManagementController = {
     //lay ra list banner
     listBannerManagement: async (req,res)=>{
         try {
-            const listBanner = await Banner.find();
-            res.render('advertisement/ad_management',{listBanner})
-
+            const listBanner = await Banner.find({isActive:true}).populate('createUser');
+            const userName = req.user.fullName;
+            const userEmail = req.user.email
+            res.render('advertisement/ad_management',
+            {
+                partials: {
+                    nav_header: 'partials/nav_header'
+                },
+                listBanner,
+                userName,
+                userEmail
+            })
         } catch (e) {
             console.error(e);
             res.status(500).send('Lỗi khi lấy danh sách banner');
 
         }
     },
-
-    //sưa thong tin banner
-    editBannerManagement: async (req,res) =>{
-        let editBanner = await Banner.findById(req.params.id)
+    detailBanner: async (req,res)=>{
+        let detailBanners = await Banner.findById(req.params.id).populate('createUser')
             .exec()
             .catch(function (err) {
                 console.log(err)
             });
-        console.log(editBanner)
-        if (editBanner == null){
+        console.log(detailBanners)
+        if (detailBanners == null){
             res.send('Không tìm thấy bản ghi');
         }
-        res.render('advertisement/edit_banner',{editBanner})
-
-        // res.render('advertisement/edit_banner')
-
-    },
-    postEditBanner: async (req,res)=>{
-        try {
-            console.log(req.body);
-            const dieu_kien = {
-                _id: req.params.id
-            };
-            const du_lieu = {
-                userId: req.body.userId_banner,
-                content: req.body.content_banner,
-                isActive: Boolean(req.body.isActive_banner),
-                image: req.body.image_gender,
-
-            };
-
-            await Banner.updateOne(dieu_kien, du_lieu);
-            res.redirect('/AdvertisingManagement');
-        } catch (error) {
-            res.send("Lỗi cập nhật: " + error.message);
-        }
-    },
-
-    // Them moi banner
-    formAddNewBanner: async (req,res)=>{
-        res.render('advertisement/add_new_banner')
-    },
-    // addNewBannerManagement:async (req,res) =>{
-    //     // try {
-    //     //     const dieu_kien = {
-    //     //         _id: req.params.id
-    //     //     };
-    //     //     const du_lieu = {
-    //     //         userId: req.body.userId_banner,
-    //     //         content: req.body.content_banner,
-    //     //         isActive: Boolean(req.body.isActive_banner),
-    //     //         image: req.body.image_banner,
-    //     //
-    //     //     };
-    //     //     await Banner.create(dieu_kien,du_lieu);
-    //     //     res.redirect('/AdvertisingManagement');
-    //     // }catch (error) {
-    //     //     res.send("Lỗi tạo mới banner: " + error.message);
-    //     // }
-    //
-    //     const {userId_banner,isActive_banner,content_banner,image_banner} = await req.body;
-    //
-    //    await Banner.create({
-    //         userId: userId_banner,
-    //         isActive: Boolean(isActive_banner),
-    //         content : content_banner,
-    //         image : image_banner,
-    //     }).catch(error => console.log(error) );
-    //
-    //     res.redirect('/AdvertisingManagement');
-    //
-    //
-    // }
-
-    postAddNewBanner : async (req,res) =>{
-        console.log(req.body);
-        const banner = new Banner({
-            // userId: req.body.userId_banner,
-            content: req.body.content_banner,
-            isActive: Boolean(req.body.isActive_banner),
-            // image: req.body.image_banner,
+        const userName = req.user.fullName;
+        const userEmail = req.user.email
+        res.render('advertisement/banner_details',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            detailBanners,
+            userName,
+            userEmail
         });
-        banner.save(function (err) {
-            if(err){
-                console.log(err)
-            }else {
-                console.log("Them thanh cong")
-            }
-        });
-        res.redirect('/AdvertisingManagement')
     },
-    createBanner: async (req, res) => {
+    getformbanner: async (req,res)=>{
+        const userId = req.user._id;
+        const userName = req.user.fullName;
+        const userEmail = req.user.email
+        res.render('advertisement/add_new_banner',{
+            partials: {
+                nav_header: 'partials/nav_header'
+            },
+            userId,
+            userName,
+            userEmail
+        })
+    },
+    postAddBanner: async (req,res)=>{
+        const { name, phone, address,image,isActive, link, description, endTime, price} = req.body;
+            const newBanner = new Banner({
+                name,
+                phone,
+                address,
+                link,
+                image,
+                isActive,
+                description,
+                endTime,
+                price,
+                createUser:req.user._id,
+            });
         try {
             upload(req, res, async function (err) {
                 if (err instanceof multer.MulterError) {
@@ -115,7 +80,6 @@ const adManagementController = {
                 } else if (err) {
                     // An unknown error occurred when uploading.
                 }
-                const newBanner = new Banner(req.body);
                 const file = req.file;
                 if (file){
                     const bucket = admin.storage().bucket()
@@ -135,25 +99,20 @@ const adManagementController = {
                             resolve(publicUrl);
                             newBanner.image = publicUrl
                             await newBanner.save()
-                            res.status(200).json(newBanner);
+                            res.redirect('/AdvertisingManagement');
                         });
                         blobStream.on('error', reject);
                     });
                 } else {
-                    res.redirect('/AdvertisingManagement');
+                    res.status(404).json({ message: 'file not found' });
                 }
+                
                 // Everything went fine.
-            })
+            });
         } catch (error) {
             res.status(500).json({ message: 'Error creating banner', error });
         }
-    },
-
-
-    detailManagement: async (req,res)=>{
-        // cần list đầy đủ của member thường
-        res.render('advertisement/banner_details');
-    },
+    }
 }
 
-module.exports = adManagementController
+module.exports = {adManagementController,upload}

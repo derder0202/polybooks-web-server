@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Poly Books</title>
+    <link rel="icon" type="image/x-icon" href="/assets/img/polyBooks.png" />
+
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
+
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src="/js/jscustom.js"></script>
+    <script src="/js/validateshop.js"></script>
+    <script src="/js/dialogshop.js"></script>
+</head>
+<body class="nav-fixed">
+{{> nav_header}}
+<div id="layoutSidenav">
+    <!--            Sidebar-->
+    {{> sidebar}}
+    <!--            End Sidebar-->
+
+    <!--          Start Content-->
+ <div id="layoutSidenav_content">
+        <main>
+            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                <div class="container-xl px-4">
+                    <div class="page-header-content">
+                        <div class="row align-items-center justify-content-between pt-3">
+                            <div class="col-auto mb-3">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="user"></i></div>
+                                    Thông Tin Của Hàng
+                                </h1>
+                            </div>
+                            <div class="col-12 col-xl-auto mb-3">
+                                <a onclick="confirmRedirectShop()" class="btn btn-sm btn-light text-primary">
+                                    <i class="me-1" data-feather="arrow-left"></i>
+                                    Quay lại
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-xl px-4 mt-4">
+                <!-- Account page navigation-->
+                
+                
+                <div class="row">
+                    <div class="col-xl-4">
+                        <!-- Profile picture card-->
+                        <div class="card mb-4 mb-xl-0">
+                            <div class="card-header">Chi Tiết Cửa Hàng</div>
+                            <div class="card-body text-center">
+                                <!-- Profile picture image-->
+                                <img  class="mb-3" src="{{itemShop.shopImage}}" alt="" style="width: 150px; height: 150px; border-radius: 50%;">
+                                <!-- Profile picture help block-->
+                                <div class="mb-2" style="font-weight: bold;font-size: 20px;">{{itemShop.name}}</div>
+                                <!-- Profile picture upload button-->
+                                <span id="roleValue" class="badge bg-green-soft text-green">{{itemShop.rating}} Sao</span>
+                                <hr style="border-top: 1px solid #000;">
+                                
+                                <div style="text-align: left">
+                                    <label class="small text-muted mb-3">Chi Tiết</label><br>
+                                    
+                                    <label style="font-weight: bold;" class="small mb-1">Số điện thoại 1:</label>
+                                    <span class="small mb-1">{{itemShop.phone1}}</span><br>
+                                    <label style="font-weight: bold;" class="small mb-1">Số điện thoại 2:</label>
+                                    <span class="small mb-1">{{itemShop.phone2}}</span><br>
+                                    <label style="font-weight: bold;" class="small mb-1">Mô tả:</label>
+                                    <label id="genderValue" class="small mb-1">{{itemShop.description}}</label><br>
+                                    <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
+                                    <label class="small mb-1">{{itemShop.address}}</label><br>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <!-- Account details card-->
+                        <div class="card mb-4">
+                            <div class="card-header">Sửa thông tin cửa hàng</div>
+                            <div class="card-body">
+                                <form action="" method="post" onsubmit="return validateFormShop()">
+                                <!-- Form Group (Họ Tên)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="inputUsername">Tên cửa hàng</label>
+                                    <input value="{{itemShop.name}}" name="shop_name" class="form-control" id="shop" type="text" placeholder="Nhập tên cửa hàng"/>
+                                    <div id="nameshopError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                </div>
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+
+                                    <!-- Form Group (email address)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="email">Số điện thoại 1</label>
+                                        <input value="{{itemShop.phone1}}" name="shop_phone" class="form-control" id="phoneshop1" type="number" placeholder="Nhập số điện thoại của bạn"/>
+                                        <div id="phone1Error" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+
+                                    <!-- Form Group (Ngày Sinh)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputBirthday">Số điện thoại 2</label>
+                                        <input value="{{itemShop.phone2}}" name="phone_shop" class="form-control" id="phoneshop2" type="number"  placeholder="Nhập số điện thoại của bạn"/>
+                                        <div id="phone2Error" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+                                </div>
+                                <!-- Form Group (Địa chỉ)-->
+                               <div class="row gx-3 mb-3">
+
+                                    <!-- Form Group (email address)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="email">Mô tả</label>
+                                        <input value="{{itemShop.description}}" name="shop_description" class="form-control" id="motashop" type="text" placeholder="Nhập mô tả của bạn"/>
+                                        <div id="motaError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+
+                                    <!-- Form Group (Ngày Sinh)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputBirthday">Địa chỉ</label>
+                                        <input value="{{itemShop.address}}" name="shop_address" class="form-control" id="shopdiachi" type="text"  placeholder="Nhập địa chỉ cửa hàng của bạn"/>
+                                        <div id="diachishopError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Save changes button-->
+                                <div class="card-body text-center">
+                                    <button id="editshop" style="font-weight: bold;margin-right: 15px;" class="btn btn-primary" type="submit">Lưu thông tin</button>
+                                    <button id="cancelButton" style="background: rgb(211, 211, 211); color: #949292; font-weight: bold; border: solid 1px rgb(199, 198, 198);" class="btn btn-primary" type="button">Hủy</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer-admin mt-auto footer-light">
+            <div class="container-xl px-4">
+                <div class="row">
+                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
+                    <div class="col-md-6 text-md-end small">
+                        <a href="#!">Privacy Policy</a>
+                        &middot;
+                        <a href="#!">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!--            End Content-->
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+<script src="assets/demo/chart-area-demo.js"></script>
+<script src="assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables/datatables-simple-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
+<script src="js/litepicker.js"></script>
+</body>
+</html>

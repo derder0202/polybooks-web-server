@@ -11,8 +11,6 @@ router.post('/login',
     passport.authenticate('local', { successRedirect: '/Statistical',
       failureRedirect: '/Login' ,
     }));
-
-
 router.post('/logout', (req, res)=> {
     req.session.destroy(function (err) {
         res.redirect('/Login'); //Inside a callback… bulletproof!
