@@ -119,18 +119,6 @@ const userController = {
         }
     },
 
-    banAccount:async (req, res) => {
-        try {
-            const unActiveAccount = await  User.findByIdAndUpdate(req.params.id,{isActive:false},{new:true})
-            if(!unActiveAccount){
-                return res.status(400).json({message: "User not found"})
-            }
-            res.status(200).json({message:"account banned",bannedAccount:unActiveAccount})
-        } catch (error) {
-            res.status(500).json({ message: 'Server Error', error })
-        }
-    },
-
     login : async (req, res) => {
         try {
             const {phone,password} = req.body
@@ -185,21 +173,21 @@ const userController = {
         }
     },
 
-    // //disable account
-    // deleteUser : async (req, res) => {
-    //     const { id } = req.params;
-    //     try {
-    //         const user = User.findById(id)
-    //         await admin.auth().updateUser(user.uid,{
-    //             disabled:true
-    //         })
-    //         res.status(200).json({
-    //             message: `account with uid(${user.uid}) is disabled`
-    //         })
-    //     } catch (error) {
-    //         res.status(500).json({ message: 'Error deleting user', error })
-    //     }
-    // },
+    //disable account
+    deleteUser : async (req, res) => {
+        const { id } = req.params;
+        try {
+            const user = User.findById(id)
+            await admin.auth().updateUser(user.uid,{
+                disabled:true
+            })
+            res.status(200).json({
+                message: `account with uid(${user.uid}) is disabled`
+            })
+        } catch (error) {
+            res.status(500).json({ message: 'Error deleting user', error })
+        }
+    },
     addToFavorite: async function(req, res) {
         const postId = req.body.postId;
         const userId = req.params.id;
@@ -357,8 +345,8 @@ const userController = {
     getNotificationsByUser : async (req, res) => {
         try {
             const userId = req.params.id;
-            const {startIndex = 0,limit = 20} = req.query
-            const user = await User.findById(userId).populate('notifications').skip(Number(startIndex)).limit(Number(limit));;
+            const user = await User.findById(userId).populate('notifications');
+            console.log(user)
             return res.status(200).json(user.notifications);
         } catch (error) {
             console.error(error);
@@ -366,7 +354,9 @@ const userController = {
         }
     },
     addAddress : async (req, res) => {
+        const { name,phone,address } = req.body;
         const userId = req.params.id;
+
         try {
             const user = await User.findById(userId);
             if(!user){
