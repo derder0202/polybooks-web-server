@@ -21,7 +21,7 @@ router.post('/', userController.createUser);
 // PUT /users/:id
 router.put('/:id', userController.updateUser);
 // DELETE /users/:id
-router.delete('/:id', userController.banAccount);
+router.delete('/:id', userController.deleteUser);
 
 router.post('/checkPhoneNumber', userController.checkPhoneNumber);
 router.post('/changePasswordByPhone', userController.changePasswordByPhone);

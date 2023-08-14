@@ -54,26 +54,22 @@ const statisticalController = {
         // console.log(`New shops for the past 30 days: ${thirtyDaysCountShop}`);
 //
         //Send Bill
-        const todaySendBills = await Bill.countDocuments({ createdAt: { $gte: today }, });
+        const todaySendBills = await Bill.countDocuments({ createdAt: { $gte: today }, status:{ $in: [0, 1, 2 ] } });
         statisticalToday.sendBillsToday = todaySendBills;
-        const sevenDaysAgoSendBills = await Bill.countDocuments({ createdAt: { $gte: sevenDaysAgo },});
+        const sevenDaysAgoSendBills = await Bill.countDocuments({ createdAt: { $gte: sevenDaysAgo },status:{ $in: [0, 1, 2] } });
         statisticalWeek.sendBillsWeek = sevenDaysAgoSendBills;
-        const thirtyDaysAgoSendBills = await Bill.countDocuments({ createdAt: { $gte: thirtyDaysAgo },});
+        const thirtyDaysAgoSendBills = await Bill.countDocuments({ createdAt: { $gte: thirtyDaysAgo },status:{ $in: [0, 1, 2] } });
         statisticalMonth.sendBillsMonth = thirtyDaysAgoSendBills;
         // console.log(`New send bills for today: ${todaySendBills}`);
         // console.log(`New send bills for the past 7 days: ${sevenDaysAgoSendBills}`);
         // console.log(`New send bills for the past 30 days: ${thirtyDaysAgoSendBills}`);
 
         //Complete Bill
-        //thu 2 gui don đi thì đến thứ 7 chưa check hoàn thành thì
-        const todayCompleteBills = await Bill.countDocuments({ updatedAt: { $gte: today }, status:{ $in: [3] } });
-        const todayCompleteBills2 = await Bill.countDocuments({ updatedAt: { $lte : today-7 }, status:{ $in: [2] } });
-
-        // them updatedAt today-5
+        const todayCompleteBills = await Bill.countDocuments({ createdAt: { $gte: today }, status:{ $in: [3 ] } });
         statisticalToday.completeBillsToday = todayCompleteBills;
-        const sevenDaysAgoCompleteBills = await Bill.countDocuments({ updatedAt: { $gte: sevenDaysAgo },status:{ $in: [3] } });
+        const sevenDaysAgoCompleteBills = await Bill.countDocuments({ createdAt: { $gte: sevenDaysAgo },status:{ $in: [3] } });
         statisticalWeek.completeBillsWeek = sevenDaysAgoCompleteBills;
-        const thirtyDaysAgoCompleteBills = await Bill.countDocuments({ updatedAt: { $gte: thirtyDaysAgo },status:{ $in: [3] } });
+        const thirtyDaysAgoCompleteBills = await Bill.countDocuments({ createdAt: { $gte: thirtyDaysAgo },status:{ $in: [3] } });
         statisticalMonth.completeBillsMonth = thirtyDaysAgoCompleteBills;
         // console.log(`New complete bills for today: ${todayCompleteBills}`);
         // console.log(`New complete bills for the past 7 days: ${sevenDaysAgoCompleteBills}`);
