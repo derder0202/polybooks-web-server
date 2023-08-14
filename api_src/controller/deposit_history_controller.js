@@ -55,10 +55,11 @@ const getAllDepositHistories = async (req, res) => {
   try {
     const depositHistory = await DepositHistory.findByIdAndDelete(req.params.id);
     if (!depositHistory) return res.status(404).json({ message: 'Lịch sử nạp tiền không tìm thấy' });
-    res.status(200).json({ message: 'Lịch sử nạp tiền đã được xóa thành công' });
+      await User.findByIdAndUpdate(depositHistory.userId,{$pull: {depositHistories: depositHistory._id}})
+      res.status(200).json({ message: 'Lịch sử nạp tiền đã được xóa thành công' });
   } catch (error) {
     res.status(500).json({ error: error.message });
-    };
+    }
  }
 const createPaymentLink = async (req, res)=>{
         var ipAddr = req.headers['x-forwarded-for'] ||

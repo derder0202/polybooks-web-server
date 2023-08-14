@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String , default:"" },
     address: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
     avatar: { type: String },
+    imageCover: { type: String },
     gender: { type: String, default: 'male'},//enum: ['male', 'female', 'other'] ,
     birthday: { type: Date , default:"" },
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
@@ -166,7 +167,6 @@ PostSchema.pre('save'||'updateMany'||'updateOne',async function (next) {
         await this.populate('allDiscounts')
         let latestUpdatedAt = null;
         let latestDiscount = null;
-
         if((this.get('allDiscounts') && this.get('allDiscounts').length > 0)){
             for(let discount of this.get('allDiscounts')){
                 if(discount.isActive === true){
@@ -244,6 +244,7 @@ const BillSchema = new mongoose.Schema({
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
     reviewBuyer: {type: Number, default:0},
     reviewSeller: {type: Number, default:0},
+    payment:{type:Number,default:0}
 },{timestamps:true});
 
 BillSchema.pre('save',async function (next) {
@@ -311,45 +312,45 @@ BillSchema.statics.countByCategory = function() {
     ],);
 };
 
-ShopSchema.pre('save',async function (next) {
-    try {
-        //if(this.isModified("reviews")){
-            await this.populate('reviews','rating')
-            const reviews = this.reviews
-            if (reviews.length === 0) {
-                this.rating = 0;
-            } else {
-                const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                this.rating = totalRating / reviews.length;
-            }
-            next();
-       // }
-    } catch (err) {
-        next(err);
-    }
-})
+// ShopSchema.pre('save',async function (next) {
+//     try {
+//         //if(this.isModified("reviews")){
+//             await this.populate('reviews','rating')
+//             const reviews = this.reviews
+//             if (reviews.length === 0) {
+//                 this.rating = 0;
+//             } else {
+//                 const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+//                 this.rating = totalRating / reviews.length;
+//             }
+//             next();
+//        // }
+//     } catch (err) {
+//         next(err);
+//     }
+// })
 
 
-UserSchema.pre('save',async function (next) {
-    try {
-        //if(this.isModified("reviews")){
-        await this.populate('sellerReviews','rating')
-        await this.populate('buyerReviews','rating')
-            //await this.populate({path:'reviews',select:'rating',strictPopulate:false})
-            const reviews = [...this.sellerReviews,...this.buyerReviews]
-                if (reviews.length === 0) {
-                    this.rating = 0;
-                } else {
-                    const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
-                    this.rating = totalRating / reviews.length;
-                }
-
-            next();
-        //}
-    } catch (err) {
-        next(err);
-    }
-})
+// UserSchema.pre('save',async function (next) {
+//     try {
+//         //if(this.isModified("reviews")){
+//         await this.populate('sellerReviews','rating')
+//         await this.populate('buyerReviews','rating')
+//             //await this.populate({path:'reviews',select:'rating',strictPopulate:false})
+//             const reviews = [...this.sellerReviews,...this.buyerReviews]
+//                 if (reviews.length === 0) {
+//                     this.rating = 0;
+//                 } else {
+//                     const totalRating = reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+//                     this.rating = totalRating / reviews.length;
+//                 }
+//
+//             next();
+//         //}
+//     } catch (err) {
+//         next(err);
+//     }
+// })
 
 const reportSchema = new mongoose.Schema({
     userId: {
@@ -393,9 +394,11 @@ const discountSchema = new mongoose.Schema({
     },//neu co cai nay thi sach giam gia
     title: {
         type: String,
+        default: ""
     },
     description: {
         type: String,
+        default: ""
     },
     forAll: {
         type: Boolean,
@@ -407,7 +410,7 @@ const discountSchema = new mongoose.Schema({
     }, // theo %
     isActive: {
         type: Boolean,
-        default: true
+        default: false
     }
 },{timestamps:true});
 // Schema cho lịch sử đặt cọc

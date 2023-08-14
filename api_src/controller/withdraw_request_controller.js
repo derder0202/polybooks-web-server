@@ -52,7 +52,7 @@ const {User, WithdrawRequest} = require("../model/model");
   deleteWithdrawRequest: async (req, res) => {
     try {
       const withdrawRequestId = req.params.id;
-      const deletedWithdrawRequest = await WithdrawRequest.findByIdAndDelete(withdrawRequestId);
+      const deletedWithdrawRequest = await WithdrawRequest.findByIdAndDelete(withdrawRequestId,{new : true});
       if (!deletedWithdrawRequest) {
         return res.status(404).json({ error: 'Withdraw request not found' });
       }

@@ -12,8 +12,13 @@ function authenToken(req, res, next) {
     if (!idToken) return res.sendStatus(401)
 
     try {
-        jwt.verify(idToken, process.env.ACCESS_TOKEN_SECRET)
-        next();
+        const user = jwt.verify(idToken, process.env.ACCESS_TOKEN_SECRET)
+        if(user.active === false){
+            return res.status(400).json("Tai khoan da bi khoa")
+        } else {
+            req.user = user
+            next();
+        }
     } catch (e) {
         return res.sendStatus(403)
     }

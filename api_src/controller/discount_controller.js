@@ -77,7 +77,6 @@ const {Discount, Shop, Post} = require("../model/model");
     updateDiscountById : async (req, res) => {
         try {
             const discount = await Discount.findByIdAndUpdate(req.params.id, {isActive: req.body.isActive}, { new: true })
-
             if (!discount) {
                 return res.status(404).json({ message: 'Discount not found' })
             }
@@ -90,13 +89,19 @@ const {Discount, Shop, Post} = require("../model/model");
                     // await Post.findByIdAndUpdate(post,{$push:{allDiscounts: }})
                 }
             } else {
-                if(discount.postId){
-                    const postTemp = await Post.findById(discount.postId)
-                    //postTemp.allDiscounts.push(discount._id)
-                    await postTemp.save()
+                if(discount.postId.length !== 0){
+                    for (let post of discount.postId){
+                        const postTemp = await Post.findById(post)
+                        //postTemp.allDiscounts.push(discount._id)
+                        await postTemp.save()
+                        // await Post.findByIdAndUpdate(post,{$push:{allDiscounts: }})
+                    }
                 } else {
                     if(discount.categoryId){
-                        await Post.updateMany({category:discount.categoryId,shopId:discount.shopId},{$push:{allDiscounts: discount._id}})
+                        for (let post of shop.posts){
+                            const postTemp = await Post.findOne({category:discount.categoryId,_id:post})
+                            await postTemp.save()
+                        }
                     }
                 }
             }
@@ -118,23 +123,27 @@ const {Discount, Shop, Post} = require("../model/model");
             if(discount.forAll){
                 for (let post of shop.posts){
                     const postTemp = await Post.findById(post)
-                    //postTemp.allDiscounts.push(discount._id)
-                    //await postTemp.save()
-                    await postTemp.updateOne({$pull:{allDiscounts: discount._id}})
+                    postTemp.allDiscounts.pull(discount._id)
+                    await  postTemp.save()
                 }
             } else {
-                if(discount.postId){
-                    const postTemp = await Post.findById(discount.postId)
-                    //postTemp.allDiscounts.push(discount._id)
-                    await postTemp.updateOne({$pull:{allDiscounts: discount._id}})
+                if(discount.postId.length !== 0){
+                    for (let post of discount.postId){
+                        const postTemp = await Post.findById(post)
+                        postTemp.allDiscounts.pull(discount._id)
+                        await  postTemp.save()
+                    }
                 } else {
                     if(discount.categoryId){
-                        await Post.updateMany({category:discount.categoryId},{$pull:{allDiscounts: discount._id}})
+                        for (let post of shop.posts){
+                            const postTemp = await Post.findOne({category:discount.categoryId,_id:post})
+                            await postTemp.save()
+                        }
                     }
                 }
             }
-
-
+            shop.allDiscounts.pull(discount._id)
+            await shop.save()
             res.status(200).json({ message: 'Discount deleted successfully' })
         } catch (error) {
             res.status(500).json({ error: error.message })

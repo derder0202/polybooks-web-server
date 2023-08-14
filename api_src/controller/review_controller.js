@@ -18,6 +18,15 @@ const reviewController = {
       res.status(500).json({error: 'Error getting authors from database.'});
     }
   },
+  getReviewById: async (req,res)=>{
+    try {
+      const review = await Review.findById(req.params.id)
+      res.status(200).json(review);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({error: 'Error getting authors from database.'});
+    }
+  },
   createReview: async (req, res) => {
     try {
       const review = new Review(req.body)
@@ -31,17 +40,28 @@ const reviewController = {
             }
           }
           if(billTemp.shopId){
-            console.log("hehe")
-            const shop = await Shop.findById(billTemp.shopId)
+            const shop = await Shop.findById(billTemp.shopId).populate('reviews','rating')
             if(shop){
-              shop.reviews.push(review._id)
+              shop.reviews.push(review)
+              if (shop.reviews.length === 0) {
+                shop.rating = 0;
+              } else {
+                const totalRating = shop.reviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+                shop.rating = totalRating / shop.reviews.length;
+              }
               await shop.save()
             }
           } else {
             if(billTemp.seller){
-              const user = await User.findById(billTemp.seller)
+              const user = await User.findById(billTemp.seller).populate('sellerReviews','rating')
               if(user){
-                user.sellerReviews.push(review._id)
+                user.sellerReviews.push(review)
+                if (user.sellerReviews.length === 0) {
+                  user.rating = 0;
+                } else {
+                  const totalRating = user.sellerReviews.reduce((sum, review) => sum + parseInt(review.rating), 0);
+                  user.rating = totalRating / user.sellerReviews.length;
+                }
                 await user.save()
               }
             }

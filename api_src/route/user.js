@@ -13,7 +13,7 @@ router.post('/filter', userController.getUsers);
 router.post('/login', userController.login);
 
 router.get('/test',authenToken,async (req,res)=>{
-  res.json('blabla')
+  res.json(req.user)
 });
 // GET /users/:id
 router.get('/:id', userController.getUserById);
@@ -47,5 +47,6 @@ router.get('/:id/buyBills', userController.getBuyBillsByUser);
 router.get('/:id/sellBills', userController.getSellBillsByUser);
 router.get('/:id/withdrawRequests', userController.getWithdrawRequestsByUser);
 router.get('/:id/depositHistories', userController.getDepositHistoryByUser);
+router.get('/:id/reports', userController.getReportsByUser);
 
 module.exports = router;
