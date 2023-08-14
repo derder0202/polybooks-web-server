@@ -237,6 +237,16 @@ const BillSchema = new mongoose.Schema({
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
 },{timestamps:true});
 
+async function updateBillStatus() {
+    const cutoffDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    await Bill.updateMany(
+        { updatedAt: { $lt: cutoffDate }, status: 2 },
+        { status: 3 }
+    );
+}
+// Run the updateBillStatus function once a day
+setInterval(updateBillStatus, 24 * 60 * 60 * 1000);
+
 BillSchema.pre('save',async function (next) {
     try {
         await this.populate('posts','price')
@@ -401,6 +411,27 @@ const discountSchema = new mongoose.Schema({
         default: true
     }
 },{timestamps:true});
+
+const coinChangeHistory = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    money: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: Number,
+        default:0
+    },
+    description: {
+        type: String,
+        required: true
+    },
+},{timestamps: true});
+
 // Schema cho lịch sử đặt cọc
 const depositHistorySchema = new mongoose.Schema({
     userId: {
@@ -465,10 +496,11 @@ const Bill = mongoose.model('Bill', BillSchema);
 const Report= mongoose.model('Report', reportSchema)
 const Discount = mongoose.model('Discount', discountSchema)
 const DepositHistory = mongoose.model('DepositHistory', depositHistorySchema)
-
+const CoinChangeHistory = mongoose.model('CoinChangeHistory', coinChangeHistory)
 //const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = {
+    CoinChangeHistory,
     Address,
     Banner,
     Report,
