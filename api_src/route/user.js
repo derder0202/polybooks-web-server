@@ -22,7 +22,7 @@ router.post('/', userController.createUser);
 // PUT /users/:id
 router.put('/:id', userController.updateUser);
 // DELETE /users/:id
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', userController.banAccount);
 
 router.get('/address/:id', userController.getAddressById);
 
