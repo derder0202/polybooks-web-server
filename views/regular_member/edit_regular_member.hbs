@@ -62,7 +62,8 @@
                             <div class="card-header">Chi Tiết Tài Khoản</div>
                             <div class="card-body text-center">
                                 <!-- Profile picture image-->
-                                <img  class="mb-3" src="{{itemMember.avatar}}" alt="" style="width: 150px; height: 150px; border-radius: 50%;">
+                                
+                                <img style="width: 150px; height: 150px; border-radius: 50%;" class="mb-3" src="{{itemMember.avatar}}" onerror="this.onerror=null; this.src='/assets/img/illustrations/profiles/profile-1.png';" />
                                 <!-- Profile picture help block-->
                                 <div class="mb-2" style="font-weight: bold;font-size: 20px;">{{itemMember.fullName}}</div>
                                 <!-- Profile picture upload button-->
@@ -76,7 +77,7 @@
                                     <label style="font-weight: bold;" class="small mb-1">Email:</label>
                                     <span id="emailField" class="small mb-1">{{itemMember.email}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Số điện thoại:</label>
-                                    <span class="small mb-1">{{itemMember.phone}}</span><br>
+                                    <span id="phone" class="small mb-1">{{itemMember.phone}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
                                     <span id="addressField" class="small mb-1">{{itemMember.address.[0].address}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Giới tính:</label>
@@ -211,6 +212,15 @@ var addressElement = document.getElementById("addressField");
     if (formattedBirthday === "Invalid date" || formattedBirthday === "null") {
         birthdayElement.textContent = "<trống>";
     }
+</script>
+<script>
+    // Giả sử this.phone chứa số điện thoại từ API
+    var phoneElement = document.getElementById('phone');
+    var phoneNumber = phoneElement.textContent;
+    var maskedPhoneNumber = phoneNumber.substring(0, 3) + '*'.repeat(phoneNumber.length - 4) + phoneNumber.substring(phoneNumber.length - 1);
+
+    // Sau đó, bạn có thể sử dụng biến maskedPhoneNumber để cập nhật nội dung của thẻ td
+    phoneElement.textContent = maskedPhoneNumber;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
