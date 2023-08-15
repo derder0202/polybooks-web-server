@@ -1,19 +1,32 @@
-const Post = require("../api_src/model/model").Post;
-
+const {Post,Report,WithdrawRequest} = require("../api_src/model/model");
+const admin = require('firebase-admin');
 const contentController = {
     //list duyệt bài đăng bán
     listContent: async (req,res)=>{
         try {
             const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
+            const listReport = await Report.find({status : 0});
+            const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('content_approval/book_approval',{
               partials: {
                 nav_header: 'partials/nav_header'
-            },
+              },
               listBook,
+              documentList,
               userName,
-              userEmail
+              userEmail,
+              totalItemCount,
+              listBrowsewithdrawals,
+              listReport
             });
         }catch (e) {
             console.error(error);
@@ -29,6 +42,16 @@ const contentController = {
         if (detailAution == null){
             res.send('Không tìm thấy bản ghi');
         }
+        const listBook = await Post.find({postStatus : 0}).populate("seller", "fullName").populate("category","name");
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('content_approval/detail_aution_approval',{
@@ -37,7 +60,12 @@ const contentController = {
           },
           detailAution,
           userName,
-          userEmail
+          documentList,
+          userEmail,
+          listBook,
+          totalItemCount,
+          listBrowsewithdrawals,
+          listReport,
         })
     },
     approveAution : async (req, res) => {

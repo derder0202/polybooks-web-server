@@ -1,13 +1,23 @@
 const multer = require("multer");
 const admin = require("firebase-admin");
 const upload = require("../api_src/upload_image").single("image");
-const {Banner,User} = require("../api_src/model/model");
+const {Banner,User,Post,Report,WithdrawRequest} = require("../api_src/model/model");
 
 const adManagementController = {
     //lay ra list banner
     listBannerManagement: async (req,res)=>{
         try {
             const listBanner = await Banner.find({isActive:true}).populate('createUser');
+            const listBook = await Post.find({postStatus : 0});
+            const listReport = await Report.find({status : 0});
+            const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email
             res.render('advertisement/ad_management',
@@ -17,7 +27,13 @@ const adManagementController = {
                 },
                 listBanner,
                 userName,
-                userEmail
+                userEmail,
+                documentList,
+                listBook,
+                totalItemCount,
+                listBrowsewithdrawals,
+                listReport,
+
             })
         } catch (e) {
             console.error(e);
@@ -36,27 +52,57 @@ const adManagementController = {
             res.send('Không tìm thấy bản ghi');
         }
         const userName = req.user.fullName;
-        const userEmail = req.user.email
+        const userEmail = req.user.email;
+        const listBook = await Post.find({postStatus : 0});
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         res.render('advertisement/banner_details',{
             partials: {
                 nav_header: 'partials/nav_header'
             },
             detailBanners,
             userName,
-            userEmail
+            userEmail,
+            documentList,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
         });
     },
     getformbanner: async (req,res)=>{
         const userId = req.user._id;
         const userName = req.user.fullName;
         const userEmail = req.user.email
+        const listBook = await Post.find({postStatus : 0});
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         res.render('advertisement/add_new_banner',{
             partials: {
                 nav_header: 'partials/nav_header'
             },
             userId,
             userName,
-            userEmail
+            userEmail,
+            documentList,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
         })
     },
     postAddBanner: async (req,res)=>{

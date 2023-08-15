@@ -91,8 +91,8 @@
                             <tr>
                                 <th>Người đăng</th>
                                 <th>Tên sách</th>
-                                <th>Thể loại</th>
-                                <th>Bán/Miễn phí</th>
+                                {{!-- <th>Thể loại</th> --}}
+                                <th>Ngôn ngữ</th>
                                 <th>Thời gian đăng</th>
                                 <th>Xem tin</th>
                             </tr>
@@ -105,10 +105,10 @@
                                         {{this.seller.fullName}}
                                     </td>
                                     <td>{{this.bookName}}</td>
-                                    <td>{{this.category.name}}</td>
+                                    {{!-- <td>{{this.category.name}}</td> --}}
                                     
                                     <td>
-                                        <span id="salesType" class="badge bg-green-soft text-green">{{this.salesType}}</span>
+                                        {{this.language}}
                                     </td>
                                     <td>{{formatTime this.createdAt}}</td>
                                     <td>

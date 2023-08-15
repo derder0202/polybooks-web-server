@@ -51,9 +51,7 @@
                             <thead>
                             <tr>
                                 <th>Người báo cáo</th>
-                                <th>Nhận xét</th>
                                 <th>Nội dung</th>
-                                <th>Trả lời report</th>
                                 <th>Thời gian</th>
                             </tr>
                             </thead>
@@ -64,12 +62,8 @@
                                 <td>
                                     {{this.userId.fullName}}
                                 </td>
-                                <td>        
-                                    {{this.feedback}}
-                                </td>
-                                <td>{{this.content}}</td>
-                                <td>{{this.replyReport}}</td>
-                                <td>{{formatTime this.createdAt}}</td>
+                                <td><span id="truncated-content">{{this.content}}</span></td>
+                                <td>{{formatTime this.updatedAt}}</td>
                             </tr>
                             {{/each}}
                             </tbody>
@@ -84,6 +78,16 @@
     <!--            End Content-->
 
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var contentElements = document.querySelectorAll("td span#truncated-content");
+  contentElements.forEach(function(contentElement) {
+    var content = contentElement.textContent.trim();
+    var truncatedContent = content.substring(0, 25) + (content.length > 25 ? '...' : '');
+    contentElement.textContent = truncatedContent;
+  });
+});
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
