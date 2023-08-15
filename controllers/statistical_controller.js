@@ -1,3 +1,4 @@
+
 const { config } = require("dotenv");
 const {User, Post, Bill, Shop,Report,WithdrawRequest} = require("../api_src/model/model");
 const admin = require('firebase-admin');
@@ -37,5 +38,6 @@ const statisticalController = {
         userEmail
     });   
 },
+
 }
 module.exports = statisticalController

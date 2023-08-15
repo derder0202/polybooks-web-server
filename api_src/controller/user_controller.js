@@ -174,18 +174,15 @@ const userController = {
     },
 
     //disable account
-    deleteUser : async (req, res) => {
-        const { id } = req.params;
+    banAccount:async (req, res) => {
         try {
-            const user = User.findById(id)
-            await admin.auth().updateUser(user.uid,{
-                disabled:true
-            })
-            res.status(200).json({
-                message: `account with uid(${user.uid}) is disabled`
-            })
+            const unActiveAccount = await  User.findByIdAndUpdate(req.params.id,{isActive:false},{new:true})
+            if(!unActiveAccount){
+                return res.status(400).json({message: "User not found"})
+            }
+            res.status(200).json({message:"account banned",bannedAccount:unActiveAccount})
         } catch (error) {
-            res.status(500).json({ message: 'Error deleting user', error })
+            res.status(500).json({ message: 'Server Error', error })
         }
     },
     addToFavorite: async function(req, res) {
@@ -524,7 +521,20 @@ const userController = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    getCoinchangeHistoryByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('coinChangeHistories')
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.coinChangeHistories);
+        } catch (error) {
+            throw error;
+        }
+    },
 }
 //for nothing just test gitxx
 

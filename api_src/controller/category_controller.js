@@ -110,6 +110,7 @@ const categoryController = {
             const category = await Category.findById(categoryId).populate(
                 {
                     path: 'posts',
+                    match: {postStatus: "1"},
                     options: { skip: parseInt(startIndex) || 0,
                         limit: parseInt(limit) || 20
                     },

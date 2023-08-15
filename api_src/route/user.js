@@ -22,7 +22,7 @@ router.post('/', userController.createUser);
 // PUT /users/:id
 router.put('/:id', userController.updateUser);
 // DELETE /users/:id
-router.delete('/:id', userController.deleteUser);
+router.delete('/:id', userController.banAccount);
 
 router.get('/address/:id', userController.getAddressById);
 
@@ -48,5 +48,6 @@ router.get('/:id/sellBills', userController.getSellBillsByUser);
 router.get('/:id/withdrawRequests', userController.getWithdrawRequestsByUser);
 router.get('/:id/depositHistories', userController.getDepositHistoryByUser);
 router.get('/:id/reports', userController.getReportsByUser);
+router.get('/:id/coinChangeHistories', userController.getCoinchangeHistoryByUser);
 
 module.exports = router;
