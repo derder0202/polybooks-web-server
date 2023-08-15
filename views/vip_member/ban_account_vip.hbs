@@ -1,0 +1,164 @@
+<style>
+    body {
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .buttonone {
+        background-color: #111827;
+        width: 150px;
+        height: 35px;
+        margin-top: -51px;
+        color: #FFFFFF;
+        cursor: pointer;
+        margin-left: 170px;
+        font-weight: 600;
+        line-height: 1.5rem;
+        text-align: center;
+        text-decoration: none #6B7280 solid;
+    }
+
+    .buttonone:hover {
+        background-color: #374151;
+    }
+
+    .buttonone:focus {
+        box-shadow: none;
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
+
+
+    .button {
+        position: relative;
+        width: 150px;
+        height: 35px;
+        cursor: pointer;
+        display: flex;
+       
+        align-items: center;
+        border: 1px solid #cc0000;
+        background-color: #e50000;
+        overflow: hidden;
+    }
+
+    .button, .button__icon, .button__text {
+        transition: all 0.3s;
+    }
+
+    .button .button__text {
+        transform: translateX(35px);
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .button .button__icon {
+        position: absolute;
+        transform: translateX(109px);
+        height: 100%;
+        width: 39px;
+        background-color: #cc0000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .button .svg {
+        width: 20px;
+    }
+
+    .button:hover {
+        background: #cc0000;
+    }
+
+    .button:hover .button__text {
+        color: transparent;
+    }
+
+    .button:hover .button__icon {
+        width: 148px;
+        transform: translateX(0);
+    }
+
+    .button:active .button__icon {
+        background-color: #b20000;
+    }
+
+    .button:active {
+        border: 1px solid #b20000;
+    }
+    
+    .buttonaaa {
+        display: flex;
+        width: 150px;
+        height: 35px;
+        align-items: center;
+        justify-content: center;
+        background-color: #f3f3f3f8;
+        border-radius: 3px;
+        margin-left: 170px;
+        letter-spacing: 1px;
+        transition: all 0.2s linear;
+        cursor: pointer;
+        border: none;
+        background: #4d3bc7;
+    }
+
+    .buttonaaa > svg {
+        margin-right: 5px;
+        margin-left: 5px;
+        font-size: 20px;
+        transition: all 0.4s ease-in;
+    }
+
+    .buttonaaa:hover > svg {
+        font-size: 1.2em;
+        transform: translateX(-5px);
+    }
+
+    .buttonaaa:hover {
+        box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="fw-bold mb-5 mt-4">Khóa tài khoản</h1>
+            <p>Bạn có đồng ý khóa? <b>{{itemUser.fullName}}</b></p>
+            <form action="" method="post" class="d-inline-block">
+                <!-- Add your action URL in the "action" attribute of the form above (e.g., action="/delete") -->
+                {{!-- <button class="btn btn-primary" type="submit">Đồng ý xóa</button> --}}
+                <button id="deleteshop" class="button" type="submit">
+                    <span class="button__text">Khóa</span>
+                <span class="button__icon">
+                    🔒
+                </span></button>
+            </form>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const saveButton = document.getElementById("deleteshop");
+                        saveButton.addEventListener("click", function () {
+                            document.cookie = "toastMessage=🔒 Khóa tài khoản thành công!; expires=; path=/";
+                    });
+                });
+            </script>
+            <button id="backToShopButton" class="buttonone">Không khóa</button>
+        </div>
+    </div>
+</div>
+<script>
+  document.getElementById("backToShopButton").addEventListener("click", function() {
+    window.location.href = "/VipMembers";
+  });
+</script>

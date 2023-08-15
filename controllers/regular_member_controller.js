@@ -161,7 +161,31 @@ const memberController = {
     } catch (error) {
         res.send("Lỗi khi thêm người dùng: " + error.message);
         }
-    }
+    },
+    formbanAcc: async (req,res)=>{
+        let itemUser = await User.findById(req.params.id)
+                .exec()
+                .catch(function (err){
+                    console.log(err);
+                });
+            if (itemUser == null){
+                res.send('Không tìm thấy bản ghi');
+        }
+            res.render('regular_member/banAccount_member',{itemUser})
+    },
+    banAccountMember:async (req, res) => {
+        try {
+            const unActiveAccount = await User.findByIdAndUpdate(req.params.id,{active:false},{new:true})
+            if(!unActiveAccount){
+                return res.status(400).json({message: "User not found"})
+            }
+            await Post.updateMany({seller:unActiveAccount._id},{postStatus:"11"})
+            res.redirect('/RegularMembers');
+        } catch (error) {
+            res.status(500).json({ message: 'Server Error', error })
+        }
+    },
+    
 }
 
 module.exports = memberController

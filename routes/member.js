@@ -15,10 +15,9 @@ router.post('/edit_regular_member/:id',checkAuth,memberController.postEditRegula
 router.get('/add_regular_member',checkAuth,memberController.formAddRegularMember)
 router.post('/add_regular_member',checkAuth,memberController.addRegularMember)
 
-// router.delete('/:id',checkAuth,memberController.addRegularMember)
+router.get('/banaccount_member/:id',checkAuth,memberController.formbanAcc)
+router.post('/banaccount_member/:id',checkAuth,memberController.banAccountMember)
 
 
-// router.get('/change_password',memberController.formChangePassword)
 
-// polybooks.store/members/regular
 module.exports = router;
