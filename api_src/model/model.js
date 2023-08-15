@@ -34,6 +34,7 @@ const UserSchema = new mongoose.Schema({
     rating:{type: Number,default: 0},
     coin:{type:Number,default: 0},
     depositHistories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DepositHistory'}],
+    coinChangeHistories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CoinChangeHistory'}],
 }, {timestamps: true});
 
 UserSchema.statics.calculateRolePercentage = function(callback) {
@@ -53,6 +54,26 @@ UserSchema.statics.calculateRolePercentage = function(callback) {
         }
     ],);
 }
+
+const CoinChangeHistorySchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    money: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: Number,
+        default:0
+    },
+    description: {
+        type: String,
+        required: true
+    },
+},{timestamps: true});
 
 const CategorySchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -532,11 +553,13 @@ const Report= mongoose.model('Report', reportSchema)
 const Discount = mongoose.model('Discount', discountSchema)
 const DepositHistory = mongoose.model('DepositHistory', depositHistorySchema)
 const WithdrawRequest = mongoose.model('WithdrawRequest', withdrawRequestSchema);
+const CoinChangeHistory = mongoose.model('CoinChangeHistory', CoinChangeHistorySchema);
 
 
 //const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = {
+    CoinChangeHistory,
     WithdrawRequest,
     Address,
     Banner,

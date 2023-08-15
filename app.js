@@ -70,6 +70,7 @@ const apiBannerRouter = require('./api_src/route/banner')
 const apiPublisherRouter = require('./api_src/route/publisher')
 const apiBillRouter = require('./api_src/route/bill')
 const apiWithdrawRequest = require('./api_src/route/withdraw_request')
+const apiCoinChangeHistory = require('./api_src/route/coin_change_history')
 
 const passport = require("passport");
 const {User, Bill, Post} = require("./api_src/model/model");
@@ -194,6 +195,7 @@ app.use('/api/publishers',apiPublisherRouter)
 app.use('/api/bills',apiBillRouter)
 app.use('/api/notifications',apiNotificationRouter)
 app.use('/api/withdrawRequests',apiWithdrawRequest)
+app.use('/api/coinChangeHistories',apiCoinChangeHistory)
 
 // async function checkEveryday(){
 //     const cutOfDate = new Date(Date.now() - 7*24*60 * 60 * 1000) // 64c7c4d93adce43a06c79732

@@ -48,5 +48,6 @@ router.get('/:id/sellBills', userController.getSellBillsByUser);
 router.get('/:id/withdrawRequests', userController.getWithdrawRequestsByUser);
 router.get('/:id/depositHistories', userController.getDepositHistoryByUser);
 router.get('/:id/reports', userController.getReportsByUser);
+router.get('/:id/coinChangeHistories', userController.getCoinchangeHistoryByUser);
 
 module.exports = router;

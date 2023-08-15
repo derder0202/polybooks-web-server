@@ -521,7 +521,20 @@ const userController = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    getCoinchangeHistoryByUser :  async (req,res) => {
+        try {
+            let userId = req.params.id;
+            const user = await User.findById(userId).populate('coinChangeHistories')
+            if (!user) {
+                return res.status(400).json('User not found');
+            }
+            return res.status(200).json(user.coinChangeHistories);
+        } catch (error) {
+            throw error;
+        }
+    },
 }
 //for nothing just test gitxx
 
