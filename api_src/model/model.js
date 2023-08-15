@@ -484,9 +484,6 @@ const withdrawRequestSchema = new mongoose.Schema({
     },//VCB
     bankName:{
         type:String
-    },
-    replywithdraw:{
-        type:String
     }
 }, { timestamps: true });
 
@@ -505,7 +502,7 @@ const bannerSchema = new mongoose.Schema({
     },
     link: {
         type: String, 
-        // required: true
+        required: true
     },
     description: {
         type: String,

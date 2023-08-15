@@ -10,10 +10,11 @@ const shopController = {
         try {
             const startIndex = parseInt(req.query.startIndex) || 0;
             const limit = parseInt(req.query.limit) || 20;
-            const shops = await Shop.find({})
+            const shops = await Shop.find({}).populate({path: 'user',select:'_id',match: { active: true }})
                 .skip(startIndex)
                 .limit(limit);
-            res.status(200).json(shops);
+            const filteredShops = shops.filter(shop => shop.user !== null).map(shop => ({...shop.toObject(),user: shop.user._id.toString()})); // Filter out shops with banned users
+            res.status(200).json(filteredShops);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Error getting categories from database.' });
@@ -206,6 +207,7 @@ const shopController = {
                     skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 20,
                 },
+                //match:{postStatus:"1"},
                 populate:[
                     {
                         path:"seller",

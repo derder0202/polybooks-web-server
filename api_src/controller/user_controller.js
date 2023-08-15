@@ -1,4 +1,4 @@
-const {User, Address} = require("../model/model");
+const {User, Address, Post} = require("../model/model");
 const multer = require("multer")
 const admin = require("firebase-admin");
 const upload = require("../upload_image").single("avatar");
@@ -173,18 +173,34 @@ const userController = {
         }
     },
 
-    //disable account
     banAccount:async (req, res) => {
         try {
-            const unActiveAccount = await  User.findByIdAndUpdate(req.params.id,{isActive:false},{new:true})
+            const unActiveAccount = await  User.findByIdAndUpdate(req.params.id,{active:false},{new:true})
             if(!unActiveAccount){
                 return res.status(400).json({message: "User not found"})
             }
+            await Post.updateMany({seller:unActiveAccount._id},{postStatus:"11"})
             res.status(200).json({message:"account banned",bannedAccount:unActiveAccount})
         } catch (error) {
             res.status(500).json({ message: 'Server Error', error })
         }
     },
+
+    //disable account
+    // deleteUser : async (req, res) => {
+    //     const { id } = req.params;
+    //     try {
+    //         const user = User.findById(id)
+    //         await admin.auth().updateUser(user.uid,{
+    //             disabled:true
+    //         })
+    //         res.status(200).json({
+    //             message: `account with uid(${user.uid}) is disabled`
+    //         })
+    //     } catch (error) {
+    //         res.status(500).json({ message: 'Error deleting user', error })
+    //     }
+    // },
     addToFavorite: async function(req, res) {
         const postId = req.body.postId;
         const userId = req.params.id;
@@ -231,6 +247,7 @@ const userController = {
             const user = await User.findById(req.params.id).populate({
                 path: 'posts',
                 options: { skip: parseInt(startIndex) || 0, limit: parseInt(limit) ||20},
+                //match:{postStatus:"1"},
                 populate:[
                     {
                         path:"seller",
@@ -522,7 +539,6 @@ const userController = {
             throw error;
         }
     },
-
     getCoinchangeHistoryByUser :  async (req,res) => {
         try {
             let userId = req.params.id;
@@ -536,6 +552,5 @@ const userController = {
         }
     },
 }
-//for nothing just test gitxx
 
 module.exports = userController
