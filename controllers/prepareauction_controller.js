@@ -1,10 +1,22 @@
 const admin = require('firebase-admin');
+const {Post,Report,WithdrawRequest} = require("../api_src/model/model");
 
 const endAuctionController = {
     listPrepareAuction: async (req, res) => {
+    const listBook = await Post.find({postStatus : 0});
+    const listReport = await Report.find({status : 0});
+    const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+    const db = admin.firestore();
+    const documentList = [];
+    const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+    snapshot.forEach((doc) => {
+    documentList.push({_id:doc.id,...doc.data()});
+    });
+    const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
+
     try {
       const db = admin.firestore();
-      const documentList = [];
+      const documentLists = [];
 
       const currentDate = new Date(); // Lấy thời gian hiện tại
 
@@ -29,7 +41,7 @@ const endAuctionController = {
           // Thêm khoảng thời gian vào object data
           data.roundedTimeDifference  = roundedTimeDifference;
           
-          documentList.push(data);
+          documentLists.push(data);
         }
       });
       const userName = req.user.fullName;
@@ -38,9 +50,14 @@ const endAuctionController = {
         partials: {
           nav_header: 'partials/nav_header'
         },
+        documentLists,
         documentList,
         userName,
-        userEmail 
+        userEmail,
+        listBook,
+        totalItemCount,
+        listBrowsewithdrawals,
+        listReport, 
         });
     } catch (e) {
       console.error(e);

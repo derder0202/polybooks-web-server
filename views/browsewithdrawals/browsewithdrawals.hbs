@@ -17,7 +17,7 @@
     <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-    <script src="../js/listmember.js"></script>
+    <script src="../js/dialog.js"></script>
 </head>
 <body class="nav-fixed">
 {{> nav_header}}
@@ -35,11 +35,10 @@
                         <div class="row align-items-center justify-content-between pt-3">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon"><img style="width: 17px;height: 17px;" src="assets/img/illustrations/profiles/clipboard.png"></img></div>
-                                    Đấu giá
+                                    <div class="page-header-icon"><img style="width: 20px;height: 20px;" src="assets/img/illustrations/profiles/credit.png"></img></div>
+                                    Danh Sách Lịch Sử Rút Tiền
                                 </h1>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -51,42 +50,33 @@
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Người bán</th>
-                                <th>Tên sách</th>
-                                <th>Trạng thái</th>
-                                <th>Giá khởi điểm</th>
-                                <th>Bắt đầu</th>
-                                {{!-- <th>Actions</th> --}}
+                                <th>Người dùng</th>
+                                <th>Số tiền rút</th>
+                                <th>Chủ tài khoản</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each documentLists}}
+                                {{#each listBrowsewithdrawals}} 
                             <tr>
-                                <td>{{this.seller.fullName}}</td>
+                                <td>{{this.userId.fullName}}</td>
+                                <td>{{formatCurrency this.withdrawAmount}}</td>                  
+                                <td>{{this.bankName}}</td>
                                 <td>
-                                    {{this.bookName}}
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/BrowseWithdrawals/detailbrowsewithdrawals/{{this._id}}"><i data-feather="eye"></i></a>
                                 </td>
-                                <td>
-                                    <span id="statussValue">
-                                        {{this.bookStatus}}
-                                    </span>
-                                </td>
-                                <td><h4 class="text-danger">{{formatCurrency this.startPrice}}</h4></td>
-                                <td><h4 class="text-primary">{{formatTime this.createdAt}}</h4></td>
-                                {{!-- <td>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="editUser"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                                </td> --}}
                             </tr>
                             {{/each}}
+                            <div class="toast" id="toast">
+                            <div class="toast__message"></div>
+                            </div>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </main>
-        
+      
     </div>
 
     <!--            End Content-->

@@ -1,18 +1,33 @@
-const {Shop,User} = require("../api_src/model/model");
-
+const {Shop,User,Report,WithdrawRequest,Post} = require("../api_src/model/model");
+const admin = require('firebase-admin');
 const shopController = {
     listShop : async (req,res)=>{
         try {
             const listShops = await Shop.find();
             const userName = req.user.fullName;
             const userEmail = req.user.email;
+            const listBook = await Post.find({postStatus : 0});
+            const listReport = await Report.find({status : 0});
+            const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             res.render('shop/list_shop', {
                 partials: {
                     nav_header: 'partials/nav_header'
                 },
                 listShops,
+                documentList,
                 userName,
-                userEmail
+                userEmail,
+                listBook,
+                totalItemCount,
+                listBrowsewithdrawals,
+                listReport,
             });
         } catch (error) {
             console.error(error);
@@ -39,6 +54,16 @@ const shopController = {
         if (itemShop == null){
             res.send('Không tìm thấy bản ghi');
         }
+        const listBook = await Post.find({postStatus : 0});
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('shop/edit_shop',{
@@ -47,7 +72,12 @@ const shopController = {
             },
             itemShop,
             userName,
-            userEmail
+            documentList,
+            userEmail,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
         });
     },
     postEditShop: async (req,res)=>{
@@ -71,7 +101,6 @@ const shopController = {
           }
     },
     formDeletaShop: async (req,res)=>{
-    console.log(req.params)
     let itemShop = await Shop.findById(req.params.id)
             .exec()
             .catch(function (err){
@@ -97,7 +126,7 @@ const shopController = {
       
         res.redirect('/Shop');
     },
-    formAddShop: async (req,res)=>{
+    formAddShop: async (req,res)=> {
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('shop/add_shop',{ 
@@ -105,7 +134,7 @@ const shopController = {
                 nav_header: 'partials/nav_header'
             },
             userName,
-            userEmail
+            userEmail,
         });
     },
     addShop: async (req,res)=>{

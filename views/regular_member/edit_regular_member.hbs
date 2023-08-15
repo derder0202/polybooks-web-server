@@ -41,7 +41,7 @@
                                 </h1>
                             </div>
                             <div class="col-12 col-xl-auto mb-3">
-                                <a onclick="confirmRedirectToRegularMembers()" class="btn btn-sm btn-light text-primary">
+                                <a href="/RegularMembers" class="btn btn-sm btn-light text-primary">
                                     <i class="me-1" data-feather="arrow-left"></i>
                                     Quay lại
                                 </a>
@@ -62,31 +62,33 @@
                             <div class="card-header">Chi Tiết Tài Khoản</div>
                             <div class="card-body text-center">
                                 <!-- Profile picture image-->
-                                <img  class="mb-3" src="/assets/img/illustrations/profiles/profile-3.png" alt="" style="width: 150px; height: 150px; border-radius: 50%;">
+                                <img  class="mb-3" src="{{itemMember.avatar}}" alt="" style="width: 150px; height: 150px; border-radius: 50%;">
                                 <!-- Profile picture help block-->
                                 <div class="mb-2" style="font-weight: bold;font-size: 20px;">{{itemMember.fullName}}</div>
                                 <!-- Profile picture upload button-->
                                 <span id="roleValue" class="badge bg-green-soft text-green">{{itemMember.role}}</span>
                                 <hr style="border-top: 1px solid #000;">
-                                
+
                                 <div style="text-align: left">
                                     <label class="small text-muted mb-3">Chi Tiết</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Họ tên:</label>
                                     <span class="small mb-1">{{itemMember.fullName}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Email:</label>
-                                    <span class="small mb-1">{{itemMember.email}}</span><br>
+                                    <span id="emailField" class="small mb-1">{{itemMember.email}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Số điện thoại:</label>
                                     <span class="small mb-1">{{itemMember.phone}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Địa chỉ:</label>
-                                    <label class="small mb-1">{{itemMember.address.[0].address}}</label><br>
+                                    <span id="addressField" class="small mb-1">{{itemMember.address.[0].address}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Giới tính:</label>
                                     <label id="genderValue" class="small mb-1">{{itemMember.gender}}</label><br>
                                     <label style="font-weight: bold;" class="small mb-1">Ngày sinh:</label>
-                                    <label class="small mb-1">{{formatDateOfBirth itemMember.birthday}}</label><br>
+                                    <span id="birthdayField" class="small mb-1">{{formatDateOfBirth itemMember.birthday}}</span><br>
                                     <label style="font-weight: bold;" class="small mb-1">Vai trò:</label>
                                     <label id="roleValue" class="small mb-1">{{itemMember.role}}</label><br>
+                                    <label style="font-weight: bold;" class="small mb-1">Ngày tạo tài khoản:</label>
+                                    <label class="small mb-1">{{formatDateOfBirth itemMember.createdAt}}</label><br>
                                 </div>
-
+                            
                             </div>
                         </div>
                     </div>
@@ -108,7 +110,7 @@
                                     <!-- Form Group (email address)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="email">Email</label>
-                                        <input value="{{itemMember.email}}" name="member_email" class="form-control" id="email" type="email" placeholder="Nhập email của bạn"/>
+                                        <input value="{{itemMember.email}}" name="member_email" class="form-control" id="inputEmail" type="email" placeholder="Nhập email của bạn"/>
                                         <div id="emailError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
 
@@ -185,23 +187,31 @@
                 </div>
             </div>
         </main>
-        <footer class="footer-admin mt-auto footer-light">
-            <div class="container-xl px-4">
-                <div class="row">
-                    <div class="col-md-6 small">Copyright &copy; Your Website 2021</div>
-                    <div class="col-md-6 text-md-end small">
-                        <a href="#!">Privacy Policy</a>
-                        &middot;
-                        <a href="#!">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        
     </div>
 
     <!--            End Content-->
 
 </div>
+<script>
+var emailElement = document.getElementById("emailField");
+    if ("{{itemMember.email}}" === "") {
+        emailElement.textContent = "<trống>";
+    } 
+</script>
+<script>
+var addressElement = document.getElementById("addressField");
+    if ("{{itemMember.address}}" === "") {
+        addressElement.textContent = "<trống>";
+    } 
+</script>
+<script>
+    var birthdayElement = document.getElementById("birthdayField");
+    var formattedBirthday = "{{formatDateOfBirth itemMember.birthday}}";
+    if (formattedBirthday === "Invalid date" || formattedBirthday === "null") {
+        birthdayElement.textContent = "<trống>";
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>

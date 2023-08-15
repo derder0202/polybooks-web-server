@@ -1,12 +1,10 @@
-const {Report,Post,WithdrawRequest} = require("../api_src/model/model");
+const {WithdrawRequest,Post,Report} = require("../api_src/model/model");
 const User = require("../api_src/model/model").User;
 const admin = require('firebase-admin');
-const processedReportController = {
-    listprocessedReport: async (req,res)=>{
+const withdrawRequestsController = {
+    listWithdrawRequest : async (req,res)=>{
         try {
-            const listprocessedReport = await Report.find({status : 1}).populate('userId');
-            const userName = req.user.fullName;
-            const userEmail = req.user.email;
+            const listWithdrawRequests = await WithdrawRequest.find({status : 1}).populate('userId');
             const listBook = await Post.find({postStatus : 0});
             const listReport = await Report.find({status : 0});
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
@@ -17,11 +15,13 @@ const processedReportController = {
             documentList.push({_id:doc.id,...doc.data()});
             });
             const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
-            res.render('report/processed_report',{
+            const userName = req.user.fullName;
+            const userEmail = req.user.email;
+            res.render('withdrawrequests/withdrawrequests',{
                 partials: {
                     nav_header: 'partials/nav_header'
                 },
-                listprocessedReport,
+                listWithdrawRequests,
                 userName,
                 documentList,
                 userEmail,
@@ -30,10 +30,10 @@ const processedReportController = {
                 listBrowsewithdrawals,
                 listReport,
             });
-        }catch (e) {
+        } catch (error) {
             console.error(error);
-            res.status(500).send('Lỗi khi lấy danh sách report');
+            res.status(500).send('Lỗi khi lấy danh sách shop');
         }
     },
 }
-module.exports = processedReportController
+module.exports = withdrawRequestsController

@@ -1,9 +1,20 @@
-const User = require("../api_src/model/model").User;
+const {User,Post,WithdrawRequest,Report} = require("../api_src/model/model");
+const admin = require('firebase-admin');
 const memberController = {
     //Hiển thị toàn bộ list user
     listRegularMember: async (req,res)=>{
         try {
             const listUsers = await User.find({role : 0}).populate('address');
+            const listBook = await Post.find({postStatus : 0});
+            const listReport = await Report.find({status : 0});
+            const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+            const db = admin.firestore();
+            const documentList = [];
+            const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+            snapshot.forEach((doc) => {
+            documentList.push({_id:doc.id,...doc.data()});
+            });
+            const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             res.render('regular_member/list_regular_member', {
@@ -11,8 +22,13 @@ const memberController = {
                     nav_header: 'partials/nav_header'
                 },
                 listUsers,
+                documentList,
                 userName,
-                userEmail
+                userEmail,
+                listBook,
+                totalItemCount,
+                listBrowsewithdrawals,
+                listReport,
                 });
         } catch (error) {
             console.error(error);
@@ -20,6 +36,16 @@ const memberController = {
         }
     },
     formAddRegularMember: async (req,res)=>{
+        const listBook = await Post.find({postStatus : 0});
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('regular_member/add_regular_member',{
@@ -27,7 +53,12 @@ const memberController = {
                 nav_header: 'partials/nav_header'
             },
             userName,
-            userEmail
+            documentList,
+            userEmail,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
         });
     },
     //hiển thị thông tin theo user
@@ -41,6 +72,16 @@ const memberController = {
         if (itemMember == null){
             res.send('Không tìm thấy bản ghi');
         }
+        const listBook = await Post.find({postStatus : 0});
+        const listReport = await Report.find({status : 0});
+        const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
+        const db = admin.firestore();
+        const documentList = [];
+        const snapshot = await db.collection("PostAuction").where("auctionType","==",0).get();
+        snapshot.forEach((doc) => {
+        documentList.push({_id:doc.id,...doc.data()});
+        });
+        const totalItemCount = listBook.length + listReport.length + listBrowsewithdrawals.length + documentList.length;
         const userName = req.user.fullName;
         const userEmail = req.user.email;
         res.render('regular_member/edit_regular_member',{
@@ -49,7 +90,12 @@ const memberController = {
             },
             itemMember,
             userName,
-            userEmail
+            documentList,
+            userEmail,
+            listBook,
+            totalItemCount,
+            listBrowsewithdrawals,
+            listReport,
         });
     },
     //logic post sửa thông tin user
