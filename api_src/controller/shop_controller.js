@@ -10,7 +10,7 @@ const shopController = {
         try {
             const startIndex = parseInt(req.query.startIndex) || 0;
             const limit = parseInt(req.query.limit) || 20;
-            const shops = await Shop.find({})
+            const shops = await Shop.find({'user.active': false})
                 .skip(startIndex)
                 .limit(limit);
             res.status(200).json(shops);
@@ -206,6 +206,7 @@ const shopController = {
                     skip: parseInt(startIndex) || 0,
                     limit: parseInt(limit) || 20,
                 },
+                //match:{postStatus:"1"},
                 populate:[
                     {
                         path:"seller",
