@@ -14,18 +14,18 @@ const coinChangeHistoryController = {
     removeCoinChangeHistory : async (req, res) => {
         try {
             const { coinChangeHistoryId } = req.params;
-
             const removedCoinChangeHistory = await CoinChangeHistory.findByIdAndRemove(coinChangeHistoryId,{new:true});
-
             if (!removedCoinChangeHistory) {
                 return res.status(404).json({ error: 'CoinChangeHistory not found' });
             }
+
             await User.findByIdAndUpdate(removedCoinChangeHistory.userId,{$pull: {coinChangeHistories: removedCoinChangeHistory._id}})
 
             res.status(200).json({ message: 'CoinChangeHistory removed successfully' });
         } catch (error) {
             res.status(500).json({ error: 'An error occurred while removing the coinChangeHistory' });
         }
+
     },
     getCoinChangeHistoryById: async (req, res) => {
         try {
