@@ -173,21 +173,33 @@ const userController = {
         }
     },
 
-    //disable account
-    deleteUser : async (req, res) => {
-        const { id } = req.params;
+    banAccount:async (req, res) => {
         try {
-            const user = User.findById(id)
-            await admin.auth().updateUser(user.uid,{
-                disabled:true
-            })
-            res.status(200).json({
-                message: `account with uid(${user.uid}) is disabled`
-            })
+            const unActiveAccount = await  User.findByIdAndUpdate(req.params.id,{isActive:false},{new:true})
+            if(!unActiveAccount){
+                return res.status(400).json({message: "User not found"})
+            }
+            res.status(200).json({message:"account banned",bannedAccount:unActiveAccount})
         } catch (error) {
-            res.status(500).json({ message: 'Error deleting user', error })
+            res.status(500).json({ message: 'Server Error', error })
         }
     },
+
+    //disable account
+    // deleteUser : async (req, res) => {
+    //     const { id } = req.params;
+    //     try {
+    //         const user = User.findById(id)
+    //         await admin.auth().updateUser(user.uid,{
+    //             disabled:true
+    //         })
+    //         res.status(200).json({
+    //             message: `account with uid(${user.uid}) is disabled`
+    //         })
+    //     } catch (error) {
+    //         res.status(500).json({ message: 'Error deleting user', error })
+    //     }
+    // },
     addToFavorite: async function(req, res) {
         const postId = req.body.postId;
         const userId = req.params.id;
