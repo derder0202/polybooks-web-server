@@ -246,8 +246,6 @@ runAtMidnight(async () => {
     if(today.getDate() === 1){
         User.updateMany({},{totalPost: 0})
     }
-
-    await User.updateMany({active:false},{postStatus:"11"})
 });
 app.use('/policy',(req,res)=>{
     res.render('policy')
