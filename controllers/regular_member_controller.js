@@ -4,7 +4,7 @@ const memberController = {
     //Hiển thị toàn bộ list user
     listRegularMember: async (req,res)=>{
         try {
-            const listUsers = await User.find({role : 0}).populate('address');
+            const listUsers = await User.find({role : 0, active: true}).populate('address');
             const listBook = await Post.find({postStatus : 0});
             const listReport = await Report.find({status : 0});
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});
@@ -185,7 +185,6 @@ const memberController = {
             res.status(500).json({ message: 'Server Error', error })
         }
     },
-    
 }
 
 module.exports = memberController
