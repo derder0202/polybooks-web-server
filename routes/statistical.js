@@ -36,6 +36,7 @@ router.get('/newUser',async(req,res)=>{
     const thirtyDaysCountUser = await User.countDocuments({ createdAt: { $gte: thirtyDaysAgo } });
     statisticalMonth.userMonth = thirtyDaysCountUser
 
+    //Shop
     const todayCountShop = await Shop.countDocuments({createdAt: { $gte: today } });
     statisticalToday.shopToday = todayCountShop;
 
@@ -45,7 +46,7 @@ router.get('/newUser',async(req,res)=>{
     const thirtyDaysCountShop = await Shop.countDocuments({ createdAt: { $gte: thirtyDaysAgo } }); 
     statisticalMonth.shopMonth = thirtyDaysCountShop;
 
-    //DepositHistory
+    //Tiền nạp
     const todayTotalDepositAmount = await DepositHistory.aggregate([
         {
           $match: { createdAt: { $gte: today } }
@@ -119,6 +120,7 @@ router.get('/newUser',async(req,res)=>{
 })
 
 router.get('/getRegularBookDataChart', async (req, res) => {
+  //Đây là lấy list sách đăng bán
     const today = new Date();
     const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6); // Ngày bắt đầu là 6 ngày trước hôm nay
 
@@ -140,8 +142,7 @@ router.get('/getRegularBookDataChart', async (req, res) => {
         dataThisWeekRegularTemplate[`${dayName}`] = postsCount;
     }
 
-    // đây là mẫu lấy data cột regular. đổi lại tên biến thành dataThisWeekRegularTemplate.
-    // bên dưới khai báo mới lại và lấy keys values từ Object
+    
     let dataThisWeekRegular = {};
     dataThisWeekRegular.label = Object.keys(dataThisWeekRegularTemplate);
     dataThisWeekRegular.data = Object.values(dataThisWeekRegularTemplate);
@@ -149,6 +150,7 @@ router.get('/getRegularBookDataChart', async (req, res) => {
     res.json(dataThisWeekRegular);
 });
 router.get('/getBillDataChart', async (req, res) => {
+  //Đây là lấy list đơn gửi đi
     const today = new Date();
     const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6); // Ngày bắt đầu là 6 ngày trước hôm nay
 
@@ -169,8 +171,7 @@ router.get('/getBillDataChart', async (req, res) => {
             DataThisweekInvoiceSample[`${dayName}`] = ordersCount;
         }
 
-        // đây là mẫu lấy dữ liệu cột sách thường. Đổi lại tên biến thành dataThisWeekRegular.
-        // Bên dưới khai báo mới lại và lấy keys và values từ Object
+        
         let dataThisWeekInvoi = {};
         dataThisWeekInvoi.label = Object.keys(DataThisweekInvoiceSample);
         dataThisWeekInvoi.data = Object.values(DataThisweekInvoiceSample);
@@ -178,6 +179,7 @@ router.get('/getBillDataChart', async (req, res) => {
     res.json(dataThisWeekInvoi);
 });
 router.get('/getBillThreeDataChart', async (req, res) => {
+  //Đây là lấy list đơn hoàn thành
     const today = new Date();
     const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6); // Ngày bắt đầu là 6 ngày trước hôm nay
 
@@ -197,8 +199,7 @@ router.get('/getBillThreeDataChart', async (req, res) => {
             DataThreeInvoiceSample[`${dayName}`] = ordersCount;
         }
 
-        // đây là mẫu lấy dữ liệu cột sách thường. Đổi lại tên biến thành dataThisWeekRegular.
-        // Bên dưới khai báo mới lại và lấy keys và values từ Object
+        
         let dataThisWeekThree = {};
         dataThisWeekThree.label = Object.keys(DataThreeInvoiceSample);
         dataThisWeekThree.data = Object.values(DataThreeInvoiceSample);
@@ -209,7 +210,7 @@ router.get('/getBillThreeDataChart', async (req, res) => {
 
 router.get('/getAuctionBookDataChart', async (req, res) => {
     // Đoạn mã xử lý lấy dữ liệu sách đấu giá
-    // Giống như bạn đã làm trong hàm getRegularBookDataChart
+  
 
     const today = new Date();
     const startOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6);
@@ -231,8 +232,7 @@ router.get('/getAuctionBookDataChart', async (req, res) => {
         // Save the count in the map
         dataThisWeekAuctionTemplate[`${dayName}`] = postsCount;
     }
-    // Mẫu dữ liệu cột sách đấu giá. Đổi lại tên biến thành dataThisWeekAuctionTemplate.
-    // Dưới đây khai báo mới lại và lấy keys values từ Object
+    
     let dataThisWeekAuction = {};
     dataThisWeekAuction.label = Object.keys(dataThisWeekAuctionTemplate);
     dataThisWeekAuction.data = Object.values(dataThisWeekAuctionTemplate);

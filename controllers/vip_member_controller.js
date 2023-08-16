@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const vipMembersController = {
     listVipMembers: async (req,res)=>{
         try {
-            const listUsersVip = await User.find({role : 1});
+            const listUsersVip = await User.find({role : 1, active: true});
             const listBook = await Post.find({postStatus : 0});
             const listReport = await Report.find({status : 0});
             const listBrowsewithdrawals = await WithdrawRequest.find({status: 0});

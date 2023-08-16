@@ -80,17 +80,29 @@ const autionApprovalController ={
     browseAuction: async (req,res) => {
       try {
         const db = admin.firestore();
+        const FCM = admin.messaging();
         const docRef = db.collection("PostAuction").doc(req.params.id);
 
         const currentTime = moment();
         const updatedTime = moment(currentTime).add(1, 'hour');
         const formattedTime = updatedTime.format('YYYY-MM-DD HH:mm:ss.SSS');
 
-        const endTime = moment(currentTime).add(24, 'hours'); // Calculate end time with 24 hours added
+        const endTime = moment(currentTime).add(24, 'hours');
         const formattedEndTime = endTime.format('YYYY-MM-DD HH:mm:ss.SSS');
 
         if (req.body.action === 'duyet') {
           auctionType = 1;
+
+          const message = {
+            topic: 'Auction', // Chủ đề muốn gửi thông báo tới
+            notification: {
+              title: 'Đấu giá',
+              body: 'Có sách hiếm đang chờ đấu giá',
+            },
+          };
+          
+          // Gửi thông báo bằng FCM
+          await FCM.send(message);
         } else if (req.body.action === 'khongduyet') {
           auctionType = 3;
           const reason = req.body.reason;

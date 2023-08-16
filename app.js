@@ -57,6 +57,7 @@ const shopRouter = require('./routes/shop');
 const rechargeHistoryRouter = require('./routes/rechargehistory');
 const withdrawRequestsRouter = require('./routes/withdrawrequests');
 const browseWithdrawalsRouter = require('./routes/browsewithdrawals');
+const accountisLockedRouter = require('./routes/accountislocked');
 
 
 const apiNotificationRouter =  require('./api_src/route/notification')
@@ -183,6 +184,7 @@ app.use('/Shop',shopRouter)
 app.use('/RechargeHistory',rechargeHistoryRouter)
 app.use('/WithdrawRequests',withdrawRequestsRouter)
 app.use('/BrowseWithdrawals',browseWithdrawalsRouter)
+app.use('/AccountHasBeenLocked',accountisLockedRouter)
 
 
 //API

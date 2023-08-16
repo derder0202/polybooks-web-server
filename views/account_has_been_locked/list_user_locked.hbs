@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Poly Books</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/polyBooks.png" />
+
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
+
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="assets/img/logobook.png" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="../js/listmember.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+</head>
+<body class="nav-fixed">
+{{> nav_header}}
+<div id="layoutSidenav">
+    <!--            Sidebar-->
+    {{> sidebar}}
+    <!--            End Sidebar-->
+
+    <!--          Start Content-->
+ <div id="layoutSidenav_content">
+        <main>
+            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                <div class="container-fluid px-4">
+                    <div class="page-header-content">
+                        <div class="row align-items-center justify-content-between pt-3">
+                            <div class="col-auto mb-3">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><img style="width: 20px;height: 20px;" src="assets/img/illustrations/profiles/unlock.png"></img></div>
+                                    Danh Sách Người Dùng Bị Khóa
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Main page content-->
+            <div class="container-fluid px-4">
+                <div class="card">
+                    <div class="card-body">
+                    
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Ảnh</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Vai trò</th>
+                                {{!-- <th>Hành động</th> --}}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each listAccountBan}} 
+                            <tr>
+                            <td>
+                                <div class="avatar me-1">
+                                    <img style="width: 30px; height: 30px;" class="avatar-img img-fluid" src="{{this.avatar}}" onerror="this.onerror=null; this.src='/assets/img/illustrations/profiles/profile-1.png';" />
+                                </div>
+                            </td><td>{{this.fullName}}</td>
+                                <td class="email-field">{{this.email}}</td>
+
+                                <td>
+                                    <span hidden>{{this.phone}}</span>
+                                    <span class="eye-icon" onclick="toggleVisibility(this)">
+                                        <i data-feather="eye"></i>
+                                    </span>
+                                </td>
+                                
+                                <td>
+                                    <span id="genderValue">{{this.gender}}</span>
+                                </td>
+
+                                <td class="birthday-field">{{formatDateOfBirth this.birthday}}</td>
+                                <td>
+                                    <span id="roleValue" class="badge bg-green-soft text-green">{{this.role}}</span>
+                                </td>
+                                {{!-- <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member/{{this._id}}"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="/RegularMembers/banAccount_member/{{this._id}}"><i data-feather="lock"></i></a>
+                                </td> --}}
+                                
+                            </tr>
+                            {{/each}}
+                            <div class="toast" id="toast">
+                            <div class="toast__message"></div>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!--            End Content-->
+</div>
+
+<script>
+var emailElements = document.querySelectorAll(".email-field");
+emailElements.forEach(function(emailElement) {
+    if (emailElement.textContent === "") {
+        emailElement.textContent = "<trống>";
+    }
+});
+
+var birthdayElements = document.querySelectorAll(".birthday-field");
+birthdayElements.forEach(function(birthdayElement) {
+    var formattedBirthday = birthdayElement.textContent;
+    if (formattedBirthday === "Invalid date" || formattedBirthday === "null") {
+        birthdayElement.textContent = "<trống>";
+    }
+});
+</script>
+<script>
+    let phoneVisibility = {}; // Đối tượng lưu trạng thái hiển thị của số điện thoại cho từng hàng
+    function toggleVisibility(eyeIcon) {
+    const phoneSpan = eyeIcon.previousElementSibling; // Lấy thẻ span chứa số điện thoại
+    const rowId = phoneSpan.closest('tr').id; // Xác định id của hàng
+
+    phoneVisibility[rowId] = !phoneVisibility[rowId];
+
+    if (phoneVisibility[rowId]) {
+    phoneSpan.removeAttribute('hidden');
+    eyeIcon.style.display = 'none';
+    } else {
+    phoneSpan.setAttribute('hidden', '');
+    eyeIcon.style.display = 'inline';
+    }
+
+    feather.replace();
+     }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+<script src="assets/demo/chart-area-demo.js"></script>
+<script src="assets/demo/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables/datatables-simple-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
+<script src="js/litepicker.js"></script>
+</body>
+</html>
