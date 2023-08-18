@@ -13,7 +13,8 @@ router.get('/:id/reviews', shopController.getReviewsByShop);
 router.get('/:id/sellBills', shopController.getSellBillsByShop);
 router.get('/:id/getAllDiscounts', shopController.getAllDiscountsByShop);
 router.get('/:id/statistical', shopController.getShop7DaysStatistical);
-router.post('/:id/getShopStatisticalByTime', shopController.getShopStatisticalByTime);
+router.post('/:id/getShopStatisticalByTime', shopController.getShopStatisticalByTime);//getShopBillStatisticalByTime
+router.post('/:id/getShopBillStatisticalByTime', shopController.getShopBillStatisticalByTime);//getShopBillStatisticalByTime
 
 
 module.exports = router;

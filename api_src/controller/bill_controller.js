@@ -78,8 +78,12 @@ const billController = {
         return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
       }
       // bill.posts = posts;
-      bill.status = status;
-      bill.payment = payment
+        if(status){
+            bill.status = status;
+        }
+        if(payment){
+            bill.payment = payment
+        }
       // bill.address = address;
       // bill.userId = userId;
       await bill.save();
@@ -91,25 +95,26 @@ const billController = {
    deleteBill: async (req, res) => {
     try {
       const bill = await Bill.findById(req.params.id);
+      console.log(bill)
       if (!bill) {
         return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
       }
         if(bill.buyer){
-            await User.findByIdAndUpdate(req.body.buyer,{$pull:{buyBills: bill}})
+            await User.findByIdAndUpdate(req.body.buyer,{$pull:{buyBills: bill._id}})
         }
         if(bill.seller){
-            await User.findByIdAndUpdate(req.body.seller,{$pull:{sellBills: bill}})
+            await User.findByIdAndUpdate(req.body.seller,{$pull:{sellBills: bill._id}})
         }
         if(bill.shopId){
-            await Shop.findByIdAndUpdate(req.body.shopId,{$pull:{sellBills: bill}})
+            await Shop.findByIdAndUpdate(req.body.shopId,{$pull:{sellBills: bill._id}})
         }
       await bill.deleteOne();
       res.json({ msg: 'Hóa đơn đã được xóa' });
     } catch (error) {
       console.error(error.message);
-      if (error.kind === 'ObjectId') {
-        return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
-      }
+      // if (error.kind === 'ObjectId') {
+      //   return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
+      // }
       res.status(500).send('Lỗi máy chủ');
     }
   },
