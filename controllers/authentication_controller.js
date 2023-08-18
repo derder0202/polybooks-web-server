@@ -4,7 +4,8 @@ const authenticationController = {
             res.redirect('/Statistical');
         }
         else{
-            res.render('authentication/login-page')
+
+            res.render('authentication/login-page',)
         }
     },
 }
