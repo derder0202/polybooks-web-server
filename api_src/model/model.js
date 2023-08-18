@@ -272,9 +272,11 @@ BillSchema.pre('save',async function (next) {
     try {
         await this.populate('posts','price')
         let totalMoney = 0;
-        this.posts.forEach((post) => {
-            totalMoney += post.price;
-        });
+        if(this.payment !== 1){
+            this.posts.forEach((post) => {
+                totalMoney += post.price;
+            });
+        }
         this.totalPrice = totalMoney
         next();
         // }

@@ -358,6 +358,69 @@ const shopController = {
         }
     },
 
+    getShopBillStatisticalByTime: async (req, res)=>{
+        try{
+            const startDate = new Date(req.body.startDay)
+            const endDate = new Date(req.body.endDay)
+            startDate.setHours(startDate.getHours()+5)
+            endDate.setHours(endDate.getHours()+5)
+
+            const shop = await Shop.findById(req.params.id).populate('sellBills')
+            // Iterate over each day of the week
+            let sendBills = []
+            let doneBills = []
+
+            for(let bill of shop.sellBills){
+                if(bill.createdAt && bill.createdAt.getTime() > startDate && bill.createdAt.getTime() < endDate){
+                    await bill.populate([
+                        {
+                            path: 'posts',
+                            select: "bookName price images"
+                        },
+                        {
+                            path: 'buyer',
+                            select: "fullName"
+                        },
+                        {
+                            path: 'seller',
+                            select: "fullName"
+                        },
+                        {
+                            path: 'shopId',
+                            select: "name"
+                        },
+                    ])
+
+                    sendBills.push(bill)
+                }
+                if(bill.updatedAt && bill.updatedAt.getTime() > startDate && bill.updatedAt.getTime() < endDate && bill.status === 3){
+                    await bill.populate([
+                        {
+                            path: 'posts',
+                            select: "bookName price images"
+                        },
+                        {
+                            path: 'buyer',
+                            select: "fullName"
+                        },
+                        {
+                            path: 'seller',
+                            select: "fullName"
+                        },
+                        {
+                            path: 'shopId',
+                            select: "name"
+                        },
+                    ])
+                    doneBills.push(bill)
+                }
+            }
+            res.json({sendBills,doneBills})
+        } catch (e) {
+            console.log(e)
+        }
+    },
+
 
 }
 
