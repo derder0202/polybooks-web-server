@@ -93,14 +93,18 @@
                                             <label class="small mb-1" for="">Giá</label>
                                             <input class="form-control" type="text"  value="{{formatCurrency detailBanners.price}}" disabled readonly/>
                                         </div>
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="">Ngày bắt đầu hiển thị</label>
+                                            <input class="form-control" type="text"  value="{{formatDateOfBirth detailBann  ers.startTime}}" disabled readonly/>
+                                        </div>
                                          <div class="col-md-6">
                                             <label class="small mb-1" for="">Ngày hết hạn</label>
                                             <input class="form-control" type="text"  value="{{formatDateOfBirth detailBanners.endTime}}" disabled readonly/>
                                         </div>
-                                         <div class="col-md-6">
+                                         {{!-- <div class="col-md-6">
                                             <label class="small mb-1" for="">Liên kết</label>
                                             <input class="form-control" type="text"  value="{{detailBanners.link}}" disabled readonly/>
-                                        </div>
+                                        </div> --}}
                                         <label class="small mb-1" for="">Hình ảnh</label>
                                         <div style="margin-bottom: 10px;" class=" me-2 ">
                                             <img class="img-fluid" style="object-fit: fill" src="{{detailBanners.image}}" disabled readonly/>

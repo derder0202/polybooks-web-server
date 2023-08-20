@@ -502,17 +502,16 @@ const bannerSchema = new mongoose.Schema({
         type:String,  
         required: true
     },
-    link: {
-        type: String, 
-        required: true
-    },
+    
     description: {
         type: String,
         required: true
     },
     endTime: {
         type: Date,
-        
+    },
+    startTime: {
+        type: Date,
     },
     price: {
         type: String,

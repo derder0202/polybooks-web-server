@@ -5,6 +5,9 @@ var router = express.Router();
 
 router.get('/',checkAuth,accountbanController.listAccountHasBeenLocked)
 
+router.get('/unban_account/:id',checkAuth,accountbanController.formunbanAcc)
+router.post('/unban_account/:id',checkAuth,accountbanController.unbanAccountMember)
+
 
 
 module.exports = router;

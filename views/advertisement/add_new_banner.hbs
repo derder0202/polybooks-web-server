@@ -72,10 +72,16 @@
                                 </div>
                                 <div class="row gx-3 mb-3">  
                                     <div class="col-md-6">
+                                            <label class="small mb-1" for="phoneNumber">Thời gian bắt đầu</label>
+                                            <input class="form-control" id="startTime" type="date" name="startTime" />
+                                            <div id="startTimeError" class="error-message" style="color: red; font-size: 12px;"></div>
+                                    </div>
+                                    <div class="col-md-6">
                                             <label class="small mb-1" for="phoneNumber">Thời gian kết thúc</label>
                                             <input class="form-control" id="endTime" type="date" name="endTime" />
                                             <div id="endTimeError" class="error-message" style="color: red; font-size: 12px;"></div>
                                     </div>
+                                    
                                     {{!-- <div class="col-md-6">
                                             <label class="small mb-1" for="phoneNumber">Liên kết</label>
                                             <input class="form-control" id="link" type="text" name="link" placeholder="Mời nhập liên kết" />
