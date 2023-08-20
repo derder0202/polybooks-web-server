@@ -54,7 +54,7 @@
                                 <th>Số tài khoản</th>
                                 <th>Mã ngân hàng</th>
                                 <th>Chủ tài khoản</th>
-                                <th>Mô tả</th>
+                                <th>Thời gian</th>
                                 
                                 
                             </tr>
@@ -72,10 +72,11 @@
                                 </td>
                                 <td>{{this.bankCode}}</td>
                                 <td>{{this.bankName}}</td>
-                                <td>{{this.description}}</td>
                                 
+                                <td>{{formatTime this.updatedAt}}</td>
                             </tr>
                             {{/each}}
+                            
                             <div class="toast" id="toast">
                             <div class="toast__message"></div>
                             </div>

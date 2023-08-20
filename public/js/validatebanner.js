@@ -7,7 +7,7 @@ function validateFormBanner() {
     // var link = document.getElementById('link').value;
     var price = document.getElementById('price').value;
     var endTime = document.getElementById('endTime').value;
-    
+    var startTime = document.getElementById('startTime').value;
     
 
     // Xóa thông báo lỗi trước đó
@@ -42,6 +42,10 @@ function validateFormBanner() {
     }
     if (endTime === '') {
         displayErrorMessage('endTimeError', 'Vui lòng nhập thời gian hết hạn');
+        isValid = false;
+    }
+    if (startTime === '') {
+        displayErrorMessage('startTimeError', 'Vui lòng nhập thời gian bắt đầu');
         isValid = false;
     }
     return isValid;

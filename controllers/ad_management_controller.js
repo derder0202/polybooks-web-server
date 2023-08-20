@@ -106,12 +106,12 @@ const adManagementController = {
         })
     },
     postAddBanner: async (req,res)=>{
-        const { name, phone, address,image,isActive, link, description, endTime, price} = req.body;
+        const { name, phone, address,image,isActive,startTime, description, endTime, price} = req.body;
             const newBanner = new Banner({
                 name,
                 phone,
                 address,
-                link,
+                startTime,
                 image,
                 isActive,
                 description,

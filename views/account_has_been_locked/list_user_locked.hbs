@@ -61,6 +61,7 @@
                                 <th>Giới tính</th>
                                 <th>Ngày sinh</th>
                                 <th>Vai trò</th>
+                                <th>Hành động</th>
                                 {{!-- <th>Hành động</th> --}}
                             </tr>
                             </thead>
@@ -93,6 +94,9 @@
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/RegularMembers/edit_regular_member/{{this._id}}"><i data-feather="edit"></i></a>
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark" href="/RegularMembers/banAccount_member/{{this._id}}"><i data-feather="lock"></i></a>
                                 </td> --}}
+                                <td>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" href="/AccountHasBeenLocked/unban_account/{{this._id}}"><i data-feather="unlock"></i></a>
+                                </td>
                                 
                             </tr>
                             {{/each}}

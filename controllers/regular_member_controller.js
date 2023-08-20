@@ -171,7 +171,7 @@ const memberController = {
             if (itemUser == null){
                 res.send('Không tìm thấy bản ghi');
         }
-            res.render('regular_member/banAccount_member',{itemUser})
+            res.render('regular_member/banaccount_member',{itemUser})
     },
     banAccountMember:async (req, res) => {
         try {

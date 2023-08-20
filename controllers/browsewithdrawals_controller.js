@@ -1,7 +1,7 @@
 const {WithdrawRequest,Post,Report} = require("../api_src/model/model");
 const admin = require('firebase-admin');
 const User = require("../api_src/model/model").User;
-
+const moment = require('moment');
 const browsewithdrawalsController = {
     listBrowsewithdrawals : async (req,res)=>{
         try {
@@ -81,6 +81,8 @@ const browsewithdrawalsController = {
         
         if (req.body.action === 'replys') {
             detailBrowsewithdrawals.status = 1;
+            const updatedTime = moment().add(1, 'minute');
+            detailBrowsewithdrawals.updatedAt = updatedTime.toDate();
         } else if (req.body.action === 'noreplys') {
             detailBrowsewithdrawals.status = 3;
             detailBrowsewithdrawals.replywithdraw = req.body.replywithdraw;

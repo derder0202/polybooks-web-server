@@ -35,6 +35,29 @@ const accountbanController = {
             res.status(500).send('Lỗi khi lấy danh sách người dùng');
         }
     },
+    formunbanAcc: async (req,res)=>{
+        let itemUser = await User.findById(req.params.id)
+                .exec()
+                .catch(function (err){
+                    console.log(err);
+                });
+            if (itemUser == null){
+                res.send('Không tìm thấy bản ghi');
+        }
+            res.render('account_has_been_locked/unban_account',{itemUser})
+    },
+    unbanAccountMember:async (req, res) => {
+        try {
+            const unActiveAccount = await User.findByIdAndUpdate(req.params.id,{active:false},{new:true})
+            if(!unActiveAccount){
+                return res.status(400).json({message: "User not found"})
+            }
+            await Post.updateMany({seller:unActiveAccount._id},{postStatus:"11"})
+            res.redirect('/AccountHasBeenLocked');
+        } catch (error) {
+            res.status(500).json({ message: 'Server Error', error })
+        }
+    },
 }
 
 module.exports = accountbanController
