@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 const shopController = {
     listShop : async (req,res)=>{
         try {
-            const listShops = await Shop.find();
+            const listShops = await Shop.find().populate("user");
             const userName = req.user.fullName;
             const userEmail = req.user.email;
             const listBook = await Post.find({postStatus : 0});
