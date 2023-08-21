@@ -48,11 +48,11 @@ const accountbanController = {
     },
     unbanAccountMember:async (req, res) => {
         try {
-            const unActiveAccount = await User.findByIdAndUpdate(req.params.id,{active:false},{new:true})
+            const unActiveAccount = await User.findByIdAndUpdate(req.params.id,{active:true},{new:true})
             if(!unActiveAccount){
                 return res.status(400).json({message: "User not found"})
             }
-            await Post.updateMany({seller:unActiveAccount._id},{postStatus:"11"})
+            await Post.updateMany({seller:unActiveAccount._id},{postStatus:"1"})
             res.redirect('/AccountHasBeenLocked');
         } catch (error) {
             res.status(500).json({ message: 'Server Error', error })
