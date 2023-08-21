@@ -36,6 +36,7 @@ admin.initializeApp({
 //connect mongoose
 mongoose.connect(process.env.MONGODBURL).then(()=>{
   console.log("mongodb connected")
+
 })
 
 const indexRouter = require('./routes/index');
