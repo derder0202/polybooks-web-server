@@ -72,7 +72,7 @@ const billController = {
   },
    updateBill: async (req, res) => {
     try {
-      const { status,payment } = req.body;
+      const { status,payment,reviewBuyer,reviewSeller } = req.body;
       let bill = await Bill.findById(req.params.id);
       if (!bill) {
         return res.status(400).json({ msg: 'Không tìm thấy hóa đơn' });
@@ -83,6 +83,12 @@ const billController = {
         }
         if(payment){
             bill.payment = payment
+        }
+        if(reviewBuyer){
+            bill.reviewBuyer = reviewBuyer
+        }
+        if(reviewSeller){
+            bill.reviewSeller = reviewSeller
         }
       // bill.address = address;
       // bill.userId = userId;

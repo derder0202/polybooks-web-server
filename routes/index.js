@@ -8,8 +8,10 @@ var router = express.Router();
 /* GET home page. */
 router.get('/',authenticationController.formLogin)
 router.post('/login',
-    passport.authenticate('local', { successRedirect: '/Statistical',
+    passport.authenticate('local', {
+        successRedirect: '/Statistical',
       failureRedirect: '/Login' ,
+        failureFlash: true
     }));
 router.post('/logout', (req, res)=> {
     req.session.destroy(function (err) {

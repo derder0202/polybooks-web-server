@@ -36,6 +36,7 @@ admin.initializeApp({
 //connect mongoose
 mongoose.connect(process.env.MONGODBURL).then(()=>{
   console.log("mongodb connected")
+
 })
 
 const indexRouter = require('./routes/index');
@@ -136,6 +137,8 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
+const flash = require('connect-flash')
+app.use(flash());
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -148,9 +151,9 @@ passport.use(new LocalStrategy(
     async function(username, password, done) {
       const user = await User.findOne({ phone: username })
 
-      if (!user) {
+      if (!user || user.role !== 3) {
         //console.log("no user")
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { message: 'User not exists' });
       }
       //console.log(user.password)
       //console.log(password)

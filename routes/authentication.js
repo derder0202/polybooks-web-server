@@ -3,7 +3,11 @@ const authenticationController = require("../controllers/authentication_controll
 const checkAuth = require("../api_src/middleware/checkAuth");
 var router = express.Router();
 
-router.get('/',authenticationController.formLogin)
+router.get('/',(req,res)=>{
+    var failureFlash = req.flash('error');
+    console.log(failureFlash)
+    res.render('authentication/login-page',{failureFlash})
+})
 
 
 module.exports = router;
